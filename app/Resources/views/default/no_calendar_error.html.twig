@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}
+
+{% endblock %}
+
+
+
+{% block content_row %}
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2>{{ h1Textua }}</h2>
+            <h3>{{ h3Testua }}</h3>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary">Itzuli</a>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+{% endblock %}
+

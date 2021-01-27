@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block page_header %}
+
+    <h2>Aukeratuta egutegiak: </h2>
+
+{% endblock  %}
+
+{% block content_content %}
+
+    <div id="compareCalendar" class="comparealendar"></div>
+
+    <input id="calendarData" type="hidden" name="calendarData" value="{{ events|json_encode() }}">
+
+{% endblock %}
+
+{% block content_sidebar %}
+
+    <h2>Erabiltzaileak</h2>
+    <ul>
+        {% for c in calendarcolors %}
+            <li style="background-color: {{ c.color }}">{{ c.username }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content_sidebar %}
+
+
+{% block foot_script %}
+    {{ parent() }}
+    <script src="{{ asset('js/calendar-compare.js') }}"></script>
+
+{% endblock %}

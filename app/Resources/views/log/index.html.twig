@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+    {{ parent() }}
+{% endblock %}
+{% block headline %}{{ 'Konexioen zerrenda' | trans }} {% endblock  %}
+
+
+{% block content_row %}
+
+    <table data-toggle="table"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="25"
+           data-search="true"
+            {#data-height="300"#}
+
+           data-sort-name="name"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+        <thead>
+        <tr>
+            <th data-halign="center" data-align="left" data-field="name" data-sortable="true">{{ 'Nor' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="created"  data-sortable="true">{{ 'Noiz' | trans }}</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for log in logs %}
+            <tr>
+                <td>{{ log.description }}</td>
+                <td>{% if log.created %}{{ log.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

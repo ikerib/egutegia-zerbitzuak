@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <label class="controle-label ">
+            Utzi utsik guztieri bidaltzeko
+        </label>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        {{ form_start(form, {'attr': {'id': 'frmMessage'}}) }}
+            {{ form_row(form.user) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+        {{ form_end(form) }}
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            width: '80%',
+            dropdownParent: $("#messageModal")
+        });
+    });
+</script>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+{#<link rel="stylesheet" media="all" href="/css/bootstrap.css">#}
+<link rel="stylesheet" type="text/css" href="{{ absolute_url('/css/bootstrap.css') }}">
+{#<link rel="stylesheet" type="text/css" href="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('/css/bootstrap.css') }}">#}
+
+<head>
+    <meta charset=utf-8/>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-2">
+            <img src="{{ absolute_url('/img/armarria.jpg')}}" alt="Pasiako Udaleko armarria">
+        </div>
+        <div class="col-xs-8">
+            <h1 class="text-center">OPOR EDO BAIMEN ESKAERA</h1>
+        </div>
+        <div class="col-xs-2">
+            <p class="small">
+                IFK/CIF P2006900A
+                Tel. 943 344034
+                Donibane kalea, 19
+                20110 Pasaia
+                GIZA BALIABIDEAK
+                ANTOLAKUNTZA
+                Tel. 943 345361
+                pertsonal@pasaia.net
+            </p>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-xs-4">&nbsp;</div>
+        <div class="col-xs-8">
+            <strong>Langilea &nbsp;&nbsp;</strong>{{ eskaera.user.displayname }}
+        </div>
+        <div class="col-xs-2">&nbsp;</div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-8">
+            <strong>Baimen mota &nbsp;&nbsp;</strong>{{ eskaera.type.name }}
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-8">
+            <strong>Noiztik &nbsp;&nbsp;</strong>{{ eskaera.hasi | date('Y-m-d') }}
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-8">
+            <strong>Noiz arte &nbsp;&nbsp;</strong>{{ eskaera.amaitu | date('Y-m-d') }}
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-8">
+            <span>Guztira zenbat egun edo ordu &nbsp;&nbsp;</span>{{ eskaera.orduak }}
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-8">
+            <p>Pasaian, {{ eskaera.noiz | date('Y-m-d') }}</p>
+
+            <div class="row">&nbsp;</div>
+            <p class="text-center">ESKATZAILEAREN SINDATURA</p>
+            <div class="row">&nbsp;</div>
+            <div class="row">&nbsp;</div>
+            <div class="row">&nbsp;</div>
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-6">
+            <p>SAILEKO ARDURADUNAREN IRITZIA</p>
+            <p class="text-center">
+            <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-8">
+                    <form action="">
+                        <input type="radio" name="moldatu" value="bai" checked="checked"> Moldatuko gara<br>
+                        <input type="radio" name="moldatu" value="ez"> Ezin gara moldatu<br>
+                    </form>
+                </div>
+                <div class="col-xs-2"></div></div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <p>SAILEKO ZINEGOTZI DELEGATUA</p>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="text-center">ANTOLAKUNTZA ETA GIZA BALIABIDEEN TEKNIKARIA</p>
+            <p class="text-center">Ados</p>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <hr>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="text-center">Lore Suárez</p>
+            <p class="text-center">GIZA BALIABIDEETAKO ZINEGOTZI DELEGATUA</p>
+            <p class="text-center">Ados</p>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <hr>
+</div>
+
+<script>
+//    window.print()
+</script>
+
+</body>
+</html>

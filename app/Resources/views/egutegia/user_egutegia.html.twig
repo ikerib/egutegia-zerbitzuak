@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}{{ username }} {% endblock  %}
+
+{% block content_content %}
+
+    {% if calendar is null %}
+        {{ render(controller('AppBundle:Calendar:new', {'username': username})) }}
+    {% else %}
+        {{ render(controller('AppBundle:Calendar:show', {'username': username})) }}
+    {% endif %}
+{% endblock %}

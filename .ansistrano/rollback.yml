@@ -1,0 +1,8 @@
+---
+- name: Rollback egutegia
+  hosts: all
+  remote_user: root
+  vars:
+    ansistrano_deploy_to: "/var/www/egutegia"
+  roles:
+    - carlosbuenosvinos.ansistrano-rollback

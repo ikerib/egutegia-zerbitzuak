@@ -1,0 +1,217 @@
+'Egutegi berria': 'Egutegi berria'
+Gorde: Gorde
+Itxi: Itxi
+Izena: Izena
+'Lan orduak guztira': 'Lan orduak guztira'
+'Opor orduak guztira': 'Opor orduak guztira'
+'Opor orduak hartuta': 'Opor orduak hartuta'
+Ezeztatu: Ezeztatu
+Txantiloiak: Txantiloiak
+Bateraezinak: Bateraezinak
+Hasiera: Hasiera
+Motak: Motak
+Orduak: Orduak
+Kolorea: Kolorea
+Adi!: Adi!
+'Ziur zaude ezabatu nahi duzula?': 'Ziur zaude ezabatu nahi duzula?'
+Onartu: Onartu
+'Norberarentzako orduak': 'Norberarentzako orduak'
+'Urteko lan orduak:': 'Urteko lan orduak:'
+'Urteko opor orduak:': 'Urteko opor orduak:'
+'Urteko norberarentzako orduak:': 'Urteko norberarentzako orduak:'
+Txantiloia: Txantiloia
+'Lan orduak:': 'Lan orduak:'
+'Opor orduak:': 'Opor orduak:'
+'Norberarentzako:': 'Norberarentzako:'
+'Konpentsatutakoo:': 'Konpentsatutako:'
+Egutegia: Egutegia
+'Azken konexioak': 'Azken konexioak'
+Irten: Irten
+Mota: Mota
+Fetxak: Fetxak
+'Langileen zerrenda': 'Langileen zerrenda'
+'Egutegi berria:': 'Egutegi berria:'
+'Konpentsatutakoak:': 'Konpentsatutakoak:'
+Oharrak: Oharrak
+Fitxategiak: Fitxategiak
+Denboralerroa: Denboralerroa
+Nombre: Nombre
+Abizenak: Abizenak
+'Urteko orduak': 'Urteko orduak'
+'Opor orduak': 'Opor orduak'
+'Konpentsatutako orduak': 'Konpentsatutako orduak'
+'Udal Langileen egutegi kudeatzailea': 'Udal Langileen egutegi kudeatzailea'
+Sartu: Sartu
+'Txantiloi berria': 'Txantiloi berria'
+'Egun bat zenbat ordu dira': 'Egun bat zenbat ordu dira'
+'Portzentaia:': 'Portzentaia:'
+'Jornada:': 'Jornada:'
+Portzentaia: Portzentaia
+Konpentsatuak: Konpentsatuak
+'Ordu konpentsatuak': 'Ordu konpentsatuak'
+'Dokumentua gehitu': 'Dokumentua gehitu'
+'Dokumentu berria': 'Dokumentu berria'
+Dokumentua: Dokumentua
+'Noiz igo da': 'Noiz igo da'
+Fetxa: Fetxa
+Minutuak: Minutuak
+Faktorea: Faktorea
+'Orduak konpentsatzera': 'Orduak konpentsatzera'
+Saila: Saila
+Urtea: Urtea
+Ordena: Ordena
+Erakutsi: Erakutsi
+Bai: Bai
+Ez: Ez
+'Aukeratu Dokumentua': 'Aukeratu Dokumentua'
+msg.sindikalak: 'Sindikalak '
+msg.lanaldi: 'Lanaldia '
+msg.eguneko.lanaldia: 'Eguneko lanaldia :'
+msg.konpentsatzeke: 'Konpentsatzeke '
+msg.norberarentzako: 'Norberaren arazoetarako egunak: '
+msg.opor.orduak: 'Opor orduak: '
+msg.urteko.orduak: 'Urteko lan orduak: '
+msg.portzentaia: 'Portzentaia: '
+msg.egutegi.berria: 'Egutegi berria'
+msg.zatitu: 'Zatitu daitezke:'
+msg.egun.osoak: 'Egun osoak:'
+'Sinatzaileen zerrenda': 'Sinatzaileen zerrenda'
+Jakinarazpenak: '  Jakinarazpenak'
+Irakurria: '  Irakurria'
+Erantzunda: '  Erantzunda'
+Erantzuna: '  Erantzuna'
+Gaia: '  Gaia'
+Hasi: Hasi
+Amaitu: '  Amaitu'
+'Noiz jasoa': 'Noiz jasoa'
+Oharra: '  Oharra'
+Eskaeretan: '  Eskaeretan'
+Erlazioa: '  Erlazioa'
+'Mota berria': '  Mota berria'
+'Sinatzaileen zerrenda:': '  Sinatzaileen zerrenda:'
+Erabiltzaileak: '  Erabiltzaileak'
+'Sinatzaileen zerrena aldatu': '  Sinatzaileen zerrena aldatu'
+'Opor edo baimen eskaera berria': '  Opor edo baimen eskaera berria'
+Langilea: '  Langilea'
+Noiztik: '  Noiztik'
+'Noiz arte': '  Noiz arte'
+'Guztira zenbat egun edo ordu': '  Guztira zenbat egun edo ordu'
+Deskribapena: '  Deskribapena'
+'Eskaera data': '  Eskaera data'
+'Lortu inprimatika': '  Lortu inprimatika'
+'Eskaeren zerrenda': '  Instantzien zerrenda'
+Noiz: '  Noiz'
+Sinatzaileak: '  Sinatzaileak'
+Orden: '  Orden'
+'Firma zerrenda': '  Firma zerrenda'
+Nork: '  Nork'
+'Hirurtekoak:': '  Hirurtekoak:'
+'Norberarentzako orduak zatituta (max)': '  Norberarentzako orduak zatituta (max)'
+'Urterako ordu konpentsatuak': '  Urterako ordu konpentsatuak'
+msg.norberarentzakozati: 'Norbere arazoetarako zatituta'
+'Gutxieneko zerbitzuak:': '  Gutxieneko zerbitzuak:'
+'Gutxieneko zerbitzuaen zerrenda': '  Gutxieneko zerbitzuaen zerrenda'
+'Zerrena aldatu': '  Zerrena aldatu'
+'Guztira zenbat <strong>egun</strong>': 'Guztira zenbat <strong>egun</strong>'
+'Guztira zenbat <strong>ordu</strong>': 'Guztira zenbat <strong>ordu</strong>'
+'Nº Jakinarazpena': 'Nº Jakinarazpena'
+'Nº Eskaera': 'Nº Eskaera'
+'Konexioen zerrenda': 'Konexioen zerrenda'
+Nor: Nor
+'Eskatutako <strong>egunak</strong>': 'Eskatutako <strong>egunak</strong>'
+'Eskatutako <strong>orduak</strong>': 'Eskatutako <strong>orduak</strong>'
+Eguna: Eguna
+Azalpena: Azalpena
+msg.eskaera.ezabatu: 'Ziur zaude ezabatu nahi duzula? Hau ezabatzean, sortutako eskaera dokumentua ezabatukok da ere. Datuak egutegian gehituak izan badira EZ DIRA EZABATUKO. Ezabatzeko langilearen egutegira joan eta eskuz egin behar da.'
+'Nondik kendu': 'Nondik kendu'
+'Eskaera gauzatu': 'Eskaera gauzatu'
+Zerrendak: Zerrendak
+'Jakinarazpen guztiak': 'Jakinarazpen guztiak'
+error.udaltzaina: 'Sistemak ez du erabiltzailea ezagutzen.'
+error.no.calendar: 'Ez daukazu Egutegirik sortuta aplikazioan'
+error.call.personal: 'Deitu Pertsonal sailera'
+Lanpostua: Lanpostua
+Datak: Datak
+'Orduak Guztira': 'Orduak Guztira'
+Izaera: Langilea
+Eskaera: 'Instantzia berria'
+Eskaerak: 'Instantzien mantenua'
+Orduak/Egunak: Orduak/Egunak
+Bideratua: Bideratua
+Gauzatua: Prozesatua
+Egutegian: Egutegian
+'Sinatzaile taldea': Sinatzaileak
+Guztiak: Guztiak
+'Bideratu gabeak': 'Bideratu gabeak'
+'Gauzatu gabeak': 'Gauzatu gabeak'
+'Egutegian sartu gabe': 'Egutean sartu gabe'
+Fitxategia: Fitxategia
+'Eskaera berria': 'Instantzia berria'
+Egunak: Egunak
+Lanaldia: Lanaldia
+msg.ezabatu: 'ziur zaude ezabatu nahi duzula?'
+'Eskaera eguna': 'Eskaera eguna'
+main_menu.eskaerak: Eskaerak
+user_menu.eskaerak: Instantziak
+user_menu.eskaera.new: 'Instantzia berria'
+Ekintzak: Ekintzak
+table.eskaera: Data
+'eskaera berria': 'eskaera berria'
+Ikusi: Ikusi
+Ezabatu: Ezabatu
+Bideratu: Bideratu
+'Eskaera editatzen': 'Editando instancia'
+'Guztiak onartu': 'Aceptar todas'
+'Guztiak ez onartu': 'No aceptar todas'
+'Ez onartu': 'No aceptar'
+'Azken sinadura': Aceptar
+erantzuna.Num: Num
+erantzuna.Langilea: Trabajador
+erantzuna.Saila: Departamento
+erantzuna.Mota: Tipo
+erantzuna.Hasi: Comienzo
+erantzuna.Amaitu: Fin
+erantzuna.Orduak: Horas
+erantzuna.Sinatzaileak: Firmantes
+erantzuna.Noiz: 'Fec. instancía'
+erantzuna.firmatzailea: Firmatzailea
+erantzuna.firmatua: 'Firmatua?'
+erantzuna.erantzuna: Erantzuna
+Zabaldu: 'Zabaldu/Itxi guztiak'
+'Irakurri gabeak': 'Irakurri gabeak'
+Irakurritakoak: Irakurritakoak
+'Erantzun gabeak': 'Erantzun gabeak'
+'Justifikantea gehitu': 'Justifikantea gehitu'
+lizentzia_text: 'Justikantea orain gehitu dezakezu edo aurrerago bestela. Emailez bidal dezakezu ere.'
+Lizentziak: Lizentziak
+'Lizentziak (Justifikatu gabe)': 'Lizentziak (Justifikatu gabe)'
+Emaitza: Emaitza
+Nº: Nº
+Edit: Editatu
+Justifikatea: Justifikantea
+'Aukeratu instantzia mota': ' Aukeratu instantzia mota'
+'Aukeratu eta jarraitu': ' Aukeratu eta jarraitu'
+'Aktibatu historikoa': ' Aktibatu historikoa'
+'Desaktibatu historikoa': ' Desaktibatu historikoa'
+'Ikusi justifikatea': ' Ikusi justifikatea'
+'Aukeratu bat': ' Aukeratu bat'
+'Justifikatea bidali': ' Justifikatea bidali'
+'Ezabatu justifikatea': ' Ezabatu justifikatea'
+'# Eskaera': '# Eskaera'
+'Lizentzia Motak': 'Lizentzia Motak'
+'Sinatu behar da': 'Sinadura prozesua behar du?'
+'Mezuen zerrenda': 'Mezuen zerrenda'
+'Langileak irakurri gabeak': 'Langileak irakurri gabeak'
+'Mezu berria': 'Mezu berria'
+Id: Id
+Mezua: Mezua
+'Noiz irakurria': 'Noiz irakurria'
+Lankidea: Lankidea
+'Markatu irakurrita': 'Markatu irakurrita'
+'Instantzia Motak': 'Instantzia Motak'
+'Lizentzia Mota': 'Lizentzia Mota'
+'Sinatu behar da?': 'Sinatu behar da?'
+'Kostua zehaztu behar da?': 'Kostua zehaztu behar da?'
+Kostua: Kostua
+Eskatu: Eskatu
+'Lizentzia mota': 'Lizentzia mota'

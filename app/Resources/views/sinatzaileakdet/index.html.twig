@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sinatzaileakdets list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Orden</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sinatzaileakdet in sinatzaileakdets %}
+            <tr>
+                <td><a href="{{ path('admin_sinatzaileakdet_show', { 'id': sinatzaileakdet.id }) }}">{{ sinatzaileakdet.id }}</a></td>
+                <td>{% if sinatzaileakdet.created %}{{ sinatzaileakdet.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if sinatzaileakdet.updated %}{{ sinatzaileakdet.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ sinatzaileakdet.orden }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_sinatzaileakdet_show', { 'id': sinatzaileakdet.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_sinatzaileakdet_edit', { 'id': sinatzaileakdet.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_sinatzaileakdet_new') }}">Create a new sinatzaileakdet</a>
+        </li>
+    </ul>
+{% endblock %}

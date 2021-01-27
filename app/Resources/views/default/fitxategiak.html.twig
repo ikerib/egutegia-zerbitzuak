@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}{{ 'Fitxategiak' | trans }} {% endblock  %}
+
+{% block content_row %}
+
+    <table data-toggle="table" data-classes="table table-hover table-condensed" data-striped="true"
+           data-pagination="true"
+           data-page-size="25"
+           data-search="true"
+
+           data-sort-name="name"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           >
+
+        <thead>
+        <tr>
+            {#<th data-halign="center" data-align="left" data-field="id" data-sortable="true">ID</th>#}
+            <th data-halign="center" data-align="left" data-field="filename" data-sortable="true">{{ 'Fitxategia' | trans }}</th>
+            <th data-halign="center" data-align="center" data-field="created" data-sortable="true"></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for doc in calendar.documents %}
+            <tr>
+                {#<td>{{ doc.id }}</td>#}
+                <td><a href="{{ vich_uploader_asset(doc, 'uploadfile') }}" target="_blank">{{ doc.filename }}</a></td>
+                <td>
+                    <a class="btn btn-xs btn-primary" href="{{ vich_uploader_asset(doc, 'uploadfile') }}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

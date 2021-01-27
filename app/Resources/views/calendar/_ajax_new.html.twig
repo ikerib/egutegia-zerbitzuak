@@ -1,0 +1,192 @@
+<div class="row">
+    <div class="col-md-1">&nbsp;</div>
+    <div class="col-md-8">
+        {{ form_start(form) }}
+        {#{{ form_start(form, {'action': path('admin_calendar_new', { 'username': username } ), 'method': 'GET'}) }}#}
+        {{ form_errors(form) }}
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#<label for="min-date" class="col-sm-4 control-label">{{ 'Txantiloia' | trans }}</label>#}
+                    <label for="min-date" class="control-label">{{ 'Txantiloia' | trans }}</label>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_widget(form.template, { 'attr': {'class': 'form-control porcenchange'} }) }}
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <label for="min-date" class="control-label">{{ 'Izena' | trans }}</label>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#{{ form_label(form.year, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                    <label class="control-label required" for="appbundle_calendar_year">
+                        Year
+                    </label>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_widget(form.year, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#{{ form_label(form.percentYear, null, {'label_attr': {'class': ''}}) }}#}
+                    <label class="control-label required" for="appbundle_calendar_percentYear">
+                        {{ 'Portzentaia' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_widget(form.percentYear, { 'attr': {'class': 'form-control porcenchange'} }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <label class="control-label required" for="appbundle_calendar_hoursDay">
+                        {{ 'Hirurtekoak:' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-8">
+                    {{ form_widget(form.hirurtekoa, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <label>{% if lastCalendariyear is defined %}{{ lastCalendar.year }}{% endif %}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#{{ form_label(form.hoursYear, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                    <label class="control-label required" for="appbundle_calendar_hoursYear">
+                        {{ 'Urteko lan orduak:' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.hoursYear, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" id="lastHoursYear" value="{% if lastCalendar.hoursYear is defined %}{{ lastCalendar.hoursYear }}{% endif %}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#{{ form_label(form.hoursFree, null, {'label_attr': {'class': ''}}) }}#}
+                    <label class="control-label required" for="appbundle_calendar_hoursFree">
+                        {{ 'Urteko opor orduak:' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.hoursFree, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" id="lasthoursFree" value="{% if lastCalendar.hoursFree is defined %}{{ lastCalendar.hoursFree }} {% endif %}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#{{ form_label(form.hoursSelf, null, {'label_attr': {'class': ''}}) }}#}
+                    <label class="control-label required" for="appbundle_calendar_hoursSelf">
+                        {{ 'Norberarentzako orduak' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.hoursSelf, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" id="lasthoursSelf" value="{% if lastCalendar.hoursSelf is defined %}{{ lastCalendar.hoursSelf}}{% endif %}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <label class="control-label required" for="appbundle_calendar_hoursSelf">
+                        {{ 'Norberarentzako orduak zatituta (max)' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.hoursSelfHalf, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" id="lasthoursSelfHalf" value="{% if lastCalendar.hoursSelfHalf is defined %}{{ lastCalendar.hoursSelfHalf}}{% endif %}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#{{ form_label(form.hoursCompensed, null, {'label_attr': {'class': ''}}) }}#}
+                    <label class="control-label required" for="appbundle_calendar_hoursCompensed">
+                        {{ 'Urterako ordu konpentsatuak' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.hoursCompensed, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" id="lasthoursCompensed" value="{% if lastCalendar.hoursCompensed is defined %}{{ lastCalendar.hoursCompensed }}{% endif %}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#{{ form_label(form.hoursDay, null, {'label_attr': {'class': ''}}) }}#}
+                    <label class="control-label required" for="appbundle_calendar_hoursDay">
+                        {{ 'Jornada:' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.hoursDay, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" id="lasthoursDay" value="{% if lastCalendar.hoursDay is defined%}{{ lastCalendar.hoursDay }}{% endif %}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: none;">
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="col-md-1">&nbsp;</div>
+</div>

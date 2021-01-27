@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block content_div_start %}{% endblock %}
+{% block content_div_end %}{% endblock %}
+{% block headline %}{{ 'Langileen zerrenda' | trans }} {% endblock %}
+
+{% block content_row %}
+
+    <table id="table"
+
+           data-id-field="id"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="15"
+           data-search="true"
+
+           data-sort-name="name"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-editable-url="/my/editable/update/path"
+           data-toolbar="#toolbar"
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+        <thead>
+        <tr>
+            <th data-halign="center" data-align="center" data-checkbox="true" data-sortable="true"></th>
+            <th data-halign="left" data-align="left" data-field="firstName" data-sortable="true">{{ 'Nombre' | trans }}</th>
+            <th data-halign="left" data-align="left" data-field="lastName" data-sortable="true">{{ 'Abizenak' | trans }}</th>
+            <th data-halign="left" data-align="left" data-field="saila" data-sortable="true">{{ 'Saila' | trans }}</th>
+            <th data-halign="left" data-align="left" data-field="notes" data-editable="true" data-editable-emptytext="For free." data-sortable="true">{{ 'Oharrak' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in userdata if user.user.has('firstName') and user.user.has('lastName') %}
+            <tr>
+                <td>{% if user.user.has('firstName') %}{{ user.user.get('firstName') }}{% endif %}</td>
+                <td>{% if user.user.has('lastName') %}{{ user.user.get('lastName') }}{% endif %}</td>
+                <td>{% if user.user.has('department') %}{{ user.user.get('department') }}{% endif %}</td>
+                <td>
+                    {% if user.user.has('notes') %}
+                        <a href="javascript:void(0)" class="btn btnUserNote"
+                           data-username="{{ user.user.get('username') }}"
+                           data-usernote="{{ user.user.get('notes') }}">
+                            {{ user.user.get('notes') }}
+                        </a>
+                    {% else %}
+                        <a href="javascript:void(0)" class="btn btnUserNote"
+                           data-username="{{ user.user.get('username') }}">
+                            <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}</td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="new-modal" tabindex="-1" role="dialog" aria-labelledby="Modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                    <h4 class="modal-title">
+                        {{ 'msg.egutegi.berria' | trans }}
+                    </h4>
+                </div>
+                <div class="modal-body" id="divModalCalendarNew">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="btnGordeModal">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-usernote" tabindex="-1" role="dialog" aria-labelledby="Modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                    <h4 class="modal-title">
+                        {{ 'Oharrak' | trans }}
+                    </h4>
+                </div>
+                <div class="modal-body" id="divUserNoteModal">
+                    {#{{ form_start(frmusernote, { 'attr': {'id':'frmUserNote','class': 'form-horizontal'} }) }}#}
+                    {{ form_widget(frmusernote.notes, { 'id': 'txtUserNotes' }) }}
+                    <input type="hidden" id="usernoteusername" value="">
+                    {#{{ form_end(frmusernote) }}#}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-usernote">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block foot_script %}
+    {{ parent() }}
+    <script>
+      var $table = $('#table'), selections = []
+      function initTable () {
+        $table.bootstrapTable({
+          height: getHeight()
+        })
+      }
+      function getHeight () {
+        var winh = $(window).height()
+        var h2h = $('h2').outerHeight(true)
+        var fooh = $('footer').outerHeight(true)
+        return winh - h2h - fooh - 200
+      }
+
+      $(function () {
+
+        initTable()
+
+        $(document).on('click', '.btnUserNote', function () {
+          $('#txtUserNotes').val($(this).data('usernote'))
+          $('#usernoteusername').val($(this).data('username'))
+          $('#modal-usernote').modal()
+        })
+
+      })
+    </script>
+{% endblock %}

@@ -1,0 +1,661 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/vertical-timeline.css') }}">
+{% endblock %}
+
+{% block page_header %}
+    {% if app.debug %}
+        <div class="row">
+
+            <p><strong>hours_compensed:</strong>{{ calendar.hoursCompensed }}</p>
+            <p><strong>hours_day:</strong>{{ calendar.hoursDay }}</p>
+            <p><strong>hours_free:</strong>{{ calendar.hoursFree }}</p>
+            <p><strong>hours_self:</strong>{{ calendar.hoursSelf }}</p>
+            <p><strong>hours_self_half:</strong>{{ calendar.hoursSelfHalf }}</p>
+            <p><strong>hours_sindikal:</strong>{{ calendar.hoursSindikal}}</p>
+            <p><strong>hours_year:</strong>{{ calendar.hoursYear }}</p>
+            <p><strong>selfHoursPartial:</strong>{{ selfHoursPartial }}</p>
+            <p><strong>selfHoursComplete:</strong>{{ selfHoursComplete }}</p>
+
+        </div>
+    {% endif %}
+
+    <input type="hidden" id="calendarHoursSelf" value="{{ calendar.hoursSelf }}">
+    <input type="hidden" id="calendarHoursSelfHalf" value="{{ calendar.hoursSelfHalf }}">
+
+    <div class="page-header hovebutton">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 class="panel-title">{{ calendar.name }} - ({{ calendar.percentYear }}%)</h3>
+                    </div>
+                    <div class="col-md-2">
+                        <ul class="list-inline">
+                            <li><a class="btn btn-xs btn-default btnPageHeaderEdit" href="javascript:void(0)"
+                                   style="display: none;">Editatu</a></li>
+                            <li><a id="btnEzabatu" class="btn btn-xs btn-danger btnEzabatu" href="javascript:void(0)"
+                                   style="display: none;">Ezabatu</a></li>
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.urteko.orduak' | trans }}</strong>
+                        <span id="hoursYear">{{ calendar.hoursYear }}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.konpentsatzeke' | trans }} </strong>
+                        <span id="hoursCompensed">{{ calendar.hoursCompensed }}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.opor.orduak' | trans }} </strong>
+                        <span id="hoursFree">{{ calendar.hoursFree }}
+                            ({{ (calendar.hoursFree / calendar.hoursDay) | round (2) }} egun) </span>
+                        <input id="txtHoursFree" type="hidden" value="{{ calendar.hoursFree }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.lanaldi' | trans }} </strong>
+                        <span id="percentYear">{{ calendar.percentYear }}%</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.sindikalak' | trans }} </strong>
+                        <span id="hoursCompensed">{{ calendar.hoursSindikal }}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.norberarentzako' | trans }} </strong>
+                        <span id="hoursSelf"> {{ calendar.hoursSelf }}
+                            ordu ({{ (calendar.hoursSelf / calendar.hoursDay) | round (2) }} egun)</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.eguneko.lanaldia' | trans }}</strong>
+                        <span>{{ calendar.hoursDay }}</span><span id="hourLanaldi"></span>
+                        <input id="numberLanaldi" type="hidden" value="{{ calendar.hoursDay }}">
+                    </div>
+
+
+                    <div class="col-sm-4">
+
+                    </div>
+
+                    <div class="col-sm-4">
+                        <input id="txtNorbereZatika" type="hidden" value="{{ selfHoursPartial }}">
+                        <input id="numberHoursPartial" type="hidden" value="{{ selfHoursPartial }}">
+                        <ul class="list-inline">
+                            <li>Zatitu daitezke:</li>
+                            <li id="selfHoursPartial">{{ selfHoursPartial }} <span id="selfHoursPartialToHour"></span>
+                                ({{ (selfHoursPartial / calendar.hoursDay) | round (2) }} egun)
+                            </li>
+                        </ul>
+                        <ul class="list-inline">
+                            <li>Egun osoak:</li>
+                            {% set egunOsoak = (selfHoursComplete / calendar.hoursDay) | round (2) %}
+                            <li id="selfHoursComplete">{{ selfHoursComplete }} ordu ({{ egunOsoak }} egun)</li>
+                        </ul>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock page_header %}
+
+{% block content_content %}
+
+    <div class="row" style="display: none;">
+        {{ form_start(delete_form, {'attr': {'id': 'frmDelCalendar'}}) }}
+        <input id="btnDelete" type="submit" value="Delete">
+        {{ form_end(delete_form) }}
+    </div>
+
+    <div class="modal modal-fade" id="edit-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                    <h4 class="modal-title">
+                        {{ calendar.name }} - ({{ calendar.percentYear }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+
+                    {{ form_start(edit_form, { 'attr': {'id':'frmEditCalendar','class': 'form-horizontal'} }) }}
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'Izena' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.name, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'msg.urteko.orduak' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hoursYear, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'msg.opor.orduak' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hoursFree, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'msg.norberarentzako' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hoursSelf, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date"
+                               class="col-sm-3 control-label">{{ 'msg.norberarentzakozati' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hoursSelfHalf, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'msg.konpentsatzeke' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hoursCompensed, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'msg.sindikalak' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hoursSindikal, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'msg.lanaldi' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.percentYear, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'msg.eguneko.lanaldia' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hoursDay, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="hidden">
+                        {{ form_end(edit_form) }}
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary"
+                            id="saveCalendarEditModal">{{ 'Gorde' | trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-fade" id="event-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                    <h4 class="modal-title">
+                        {{ 'Egutegia' | trans }}
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" name="event-index">
+                    <div class="row">
+                        <form class="form-horizontal">
+
+                            <div class="form-group">
+                                <label for="event-name" class="col-sm-3 control-label">{{ 'Izena' | trans }}</label>
+                                <div class="col-sm-8">
+                                    <input name="event-name" type="text" class="form-control" title="event-name">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="cmbTypeSelect" class="col-sm-3 control-label">{{ 'Mota'|trans }}</label>
+                                <div class="col-sm-8">
+                                    <select id="cmbTypeSelect" name="event-type" class="form-control">
+                                        <option selected value="-1">Aukeratu bat</option>
+                                        {% for type in types %}
+                                            <option data-color="{{ type.color }}" value="{{ type.id }}">{{ type.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="divEgunOrduak" class="form-group" style="display: none;">
+                                <label for="cmbEgunOrduak" class="col-sm-3 control-label">{{ 'Nondik kendu' | trans }}</label>
+                                <div class="col-sm-4">
+                                    <select name="cmbEgunOrduak" id="cmbEgunOrduak" class="form-control">
+                                        <option selected value="-1">::Aukeratu::</option>
+                                        <option value="Orduak">Orduak</option>
+                                        <option value="Egunak">Egunak</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtWorkingDaysSelected" class="col-sm-3 control-label">Aukeratuko egun
+                                    kopurua:</label>
+                                <div class="col-sm-9">
+                                    <input name="txtWorkingDaysSelected" id="txtWorkingDaysSelected" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtJornada" class="col-sm-3 control-label">Jornada orduak: </label>
+                                <div class="col-sm-9">
+                                    <input disabled name="txtJornada" id="txtJornada" type="text" value="{{ calendar.hoursDay }}">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="txtTotalHousSelected"
+                                       class="col-sm-3 control-label">{{ 'Orduak' | trans }}</label>
+                                <div class="col-sm-8">
+                                    <input id="txtTotalHousSelected" data-jornada="{{ calendar.hoursDay }}"
+                                           name="event-hours" type="text" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="event-start-date"
+                                       class="col-sm-3 control-label">{{ 'Fetxak' | trans }}</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group input-daterange" data-provide="datepicker">
+                                        <input name="event-start-date" type="text" class="form-control"
+                                               value="2012-04-05" title="range hasi">
+                                        <span class="input-group-addon">&nbsp;-&nbsp;</span>
+                                        <input name="event-end-date" type="text" class="form-control"
+                                               value="2012-04-19" title="range amaitu">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="display: none;">
+                                <div class="form-group">
+                                    <label for="oldValue" class="col-sm-3 control-label">oldValue</label>
+                                    <div class="col-sm-8">
+                                        <input id="oldValue" name="oldValue" type="text" class="form-control"
+                                               value="2012-04-19">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="txtOldValue" value="">
+                            <input type="hidden" id="txtOldType" value="">
+
+
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btnEzeztatu" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="save-event">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+            <li role="presentation" class="active">
+                <a href="#egutegia" aria-controls="home" role="tab" data-toggle="tab">
+                    {{ "Egutegia" | trans }}
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#notes" aria-controls="profile" role="tab" data-toggle="tab">
+                    {{ "Oharrak" | trans }}{% if calendar.note | length > 0 %} &nbsp;<i
+                            class="fa fa-commenting text-danger" aria-hidden="true"></i>{% endif %}
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#konpentsatuak" aria-controls="messages" role="tab" data-toggle="tab">
+                    {{ "Konpentsatuak" | trans }}
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#files" aria-controls="messages" role="tab" data-toggle="tab">
+                    {{ "Fitxategiak" | trans }}
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#timeline" aria-controls="settings" role="tab" data-toggle="tab">
+                    {{ "Denboralerroa" | trans }}
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+            {# Egutegia #}
+            <div role="tabpanel" class="tab-pane fade in active" id="egutegia">
+                <div id="calendar" class="calendar"></div>
+            </div>
+
+            {# Oharrak #}
+            <div role="tabpanel" class="tab-pane fade" id="notes">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="" id="frmNotes">
+
+                            <div class="form-group">
+                                <label for="txtJornada" class="col-sm-12 control-label"></label>
+                                <div class="col-sm-12">
+
+                                    {{ form_widget(frmnote.note, { 'id': 'txtNotes' }) }}
+
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-10"></div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" id="save-calendar-note">
+                                {{ 'Gorde' | trans }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Konpentsauak #}
+            <div role="tabpanel" class="tab-pane fade in active" id="konpentsatuak">
+                <div class="row">&nbsp</div>
+
+                <div class="row">
+                    <div class="col-sm-11">
+                    </div>
+                    <div class="col-sm-1">
+                        <a id="btnAddKonpentsatua" href="javascript:void(0);"><i class="fa fa-plus-circle"
+                                                                                 aria-hidden="true"></i></a>
+                    </div>
+                </div>
+
+                <div class="row">&nbsp</div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="KonpentsatuakTaula" class="table table-hover table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Eguna</th>
+                                <th>Orduak</th>
+                                <th>Minutuak</th>
+                                <th>Faktorea</th>
+                                <th>Orduak konpentsatzera</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for o in orduak %}
+                                <tr>
+                                    <td>{{ o.date | date('Y/m/d') }}</td>
+                                    <td>{{ o.hours }}</td>
+                                    <td>{{ o.minutes }}</td>
+                                    <td>{{ o.factor }}</td>
+                                    <td>{{ o.total }}</td>
+                                    <td class="text-center">
+                                        <ul class="list-inline">
+                                            <li>
+                                                <a data-id="{{ o.id }}" class="btn-edit-konpentsatua"
+                                                   href="javascript:void(0);"><i class="fa fa-pencil-square-o"
+                                                                                 aria-hidden="true"></i></a>
+                                            </li>
+                                            <li>
+                                                {{ form_start(deletehourforms[o.id],{'attr': {'id': o.id}}) }}
+                                                <a class="btnRemoveHourwRow" data-id="{{ o.id }}"
+                                                   href="javascript:void(0);">
+                                                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                </a>
+                                                {{ form_end(deletehourforms[o.id]) }}
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="modal modal-fade" id="modal-konpentsatuak">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span><span
+                                            class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                                <h4 class="modal-title">
+                                    {{ 'Ordu konpentsatuak' | trans }}
+                                </h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row" id="modal-content-konpentsatuak">
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                                <button type="button" class="btn btn-primary" data-action="" id="save-konpentsatua">
+                                    {{ 'Gorde' | trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {# Fitxategiak #}
+            <div role="tabpanel" class="tab-pane fade" id="files">
+
+                <div class="modal modal-fade" id="modal-files-open">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                            aria-hidden="true">×</span><span
+                                            class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                                <h4 class="modal-title">
+                                    {{ 'Dokumentua gehitu' | trans }}
+                                </h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    {{ render(controller('AppBundle:Document:new', {'calendarid':  calendar.id})) }}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                                <button type="button" class="btn btn-primary" id="save-upload-file">
+                                    {{ 'Gorde' | trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-primary" id="btnModalOpenFile">
+                            {{ "Dokumentu berria" | trans }}
+                        </button>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered table-condensed table-striped table-condensed table-hover"
+                               id="fitxategi_list">
+                            <thead>
+                            <tr>
+                                {#<th></th>#}
+                                <th>{{ "Dokumentua" | trans }}</th>
+                                <th>{{ "Noiz igo da" | trans }}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for f in calendar.documents if calendar.documents %}
+
+                                {#{% if f.egutegian or f.egutegian is null %}#}
+                                    {#{{ dump(f) }}#}
+                                    <tr>
+                                        {% if f.filenamepath is defined %}
+                                            <td>
+                                                <a href="{{ f.filenamepath }}" target="_blank">{{ f.filename }}</a>
+                                            </td>
+                                        {% else %}
+                                            <td>
+                                                <a href="{{ vich_uploader_asset(f, 'uploadfile') }}" target="_blank">{{ f.filename }}</a>
+                                            </td>
+                                        {% endif %}
+                                        <td>{{ f.created | date('Y-m-d H:i:s') }}</td>
+                                        <td>
+                                            <ul class="list-inline text-center">
+                                                <li>
+                                                    <a href="{{ vich_uploader_asset(f, 'uploadfile') }}" target="_blank">
+                                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    {{ form_start(deletedocumentforms[f.id],{'attr': {'id': f.id}}) }}
+                                                    <a class="btnRemoveRow" data-id="{{ f.id }}" href="javascript:void(0);">
+                                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                    </a>
+                                                    {{ form_end(deletedocumentforms[f.id]) }}
+                                                </li>
+                                                <li>
+                                                    <a class="btnFitxategiUp"
+                                                       href="{{ path('admin_document_order_up', {'id': f.id}) }}"><i
+                                                                class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a class="btnFitxategiDown"
+                                                       href="{{ path('admin_document_order_down', {'id': f.id}) }}"><i
+                                                                class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                {#{% endif %}#}
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            {# Denboralerroa #}
+            <div role="tabpanel" class="tab-pane fade" id="timeline">
+
+                <div class="alert alert-warning" role="alert" style="display: none;" id="divTimelineAlert">
+                    Datuak eguneratu behar dira, sakatu F5 (Gorde ez diren aldaketak galduko dira.)
+                </div>
+
+                <section id="cd-timeline" class="cd-container">
+                    {% for log in logs %}
+                        <div class="cd-timeline-block">
+                            <div class="cd-timeline-img">
+                                {% if log.name == "Egutegia sortu" %}
+                                    <img src="{{ asset('img/calendar-add.png') }}" alt="Egutegi berria">
+                                {% elseif log.name == "Egutegia eguneratua" %}
+                                    <img src="{{ asset('img/calendar-edit.png') }}" alt="Aldaketak egutegian">
+                                {% elseif log.name == "Fitxategia ezabatua" %}
+                                    <img src="{{ asset('img/file-del.png') }}" alt="Fitxategia ezabatua">
+                                {% elseif log.name == "Fitxategi berria" %}
+                                    <img src="{{ asset('img/file-new.png') }}" alt="Fitxategi berria">
+                                {% else %}
+                                    <img src="{{ asset('img/calendar.jpg') }}" alt="egutegia">
+                                {% endif %}
+
+                            </div> <!-- cd-timeline-img -->
+
+                            <div class="cd-timeline-content">
+                                <h2>{{ log.name }}</h2>
+                                <p>{{ log.description }}</p>
+                                <span class="cd-date">{{ log.created | date('Y-m-d H:i:s') }}</span>
+                            </div> <!-- cd-timeline-content -->
+                        </div> <!-- cd-timeline-block -->
+
+                    {% endfor %}
+                </section>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    {% if calendar.template is not null %}
+        {% set templateid =  calendar.template.id %}
+    {% else %}
+        {% set templateid =  -1 %}
+    {% endif %}
+    <input type="hidden" id="templateid" value="{{ templateid }}">
+    <input type="hidden" id="calendarid" value="{{ calendar.id }}">
+    <input type="hidden" id="calendarYear" value="{{ calendar.year }}">
+
+{% endblock %}
+
+{% block content_sidebar %}
+    {{ render(controller('AppBundle:Type:list', {'calendarid' : calendar.id}  )) }}
+{% endblock content_sidebar %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script src="{{ asset('js/calendar-admin.js') }}"></script>
+    <script src="{{ asset('js/vertical-timeline.js') }}"></script>
+    <script src="{{ asset('js/calendar-edit-admin.js') }}"></script>
+{% endblock %}

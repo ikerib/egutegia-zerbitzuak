@@ -1,0 +1,26 @@
+{
+  "name": "egutegia",
+  "description": "Pasaiako Udal Egutegien Kudeaketa",
+  "main": "gulpfile.js",
+  "authors": [
+    "Iker Ibarguren Berasaluze"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ikerib/egutegia",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "fontawesome#^4.7.0",
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.7",
+    "bootstrap-year-calendar": "^1.1.0",
+    "moment": "^2.18.1"
+  }
+}

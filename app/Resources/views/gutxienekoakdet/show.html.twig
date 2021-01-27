@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Gutxienekoakdet</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ gutxienekoakdet.id }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if gutxienekoakdet.created %}{{ gutxienekoakdet.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if gutxienekoakdet.updated %}{{ gutxienekoakdet.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_gutxienekoakdet_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_gutxienekoakdet_edit', { 'id': gutxienekoakdet.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

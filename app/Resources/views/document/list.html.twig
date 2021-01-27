@@ -1,0 +1,10 @@
+<hr>
+<h2>Dokumentuak</h2>
+<ul class="doclist">
+    {% for document in documents %}
+        <li><a href="{{ vich_uploader_asset(document, 'uploadfile') }}"
+               target="_blank">{{ document.filename }}</a></li>
+    {% else %}
+        <p>Ez dago dokumenturik</p>
+    {% endfor %}
+</ul>

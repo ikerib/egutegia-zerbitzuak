@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Deployment Wizard Build : 11.0.13-B20150330 -->
+<jnlp codebase="http://hostdemand.sare.gipuzkoa.net/hod/" href="PAYUT.jnlp">
+  <information>
+    <title>IZFE-PAYUT</title>
+    <vendor>IBM Corporation</vendor>
+    <description>Host On-Demand</description>
+    <offline-allowed/>
+    <shortcut online="true">
+    <desktop/>
+    </shortcut>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.3+"/>
+    <jar href="WSCachedSupporter2.jar" download="eager" main="true"/>
+    <jar href="CachedAppletInstaller2.jar" download="eager"/>
+    <property name="jnlp.hod.TrustedJNLP" value="true"/>
+    <property name="jnlp.hod.WSFrameTitle" value="IZFE-PAYUT"/>
+    <property name="jnlp.hod.DocumentBase" value="http://hostdemand.sare.gipuzkoa.net/hod/PAYUT.jnlp"/>
+    <property name="jnlp.hod.PreloadComponentList" value="HABASE;HODBASE;HODIMG;HACP;HAFNTIB;HAFNTAP;HODIMP;HA3270;HODCUT;HAMACUI;HODCFG;HAPD3270;HAKEYMP;HA3270X;HODPOPPAD;HACOLOR;HAKEYPD;HODMAC;HODTLBR;HODZP;HAPRINT;HACLTAU;HODAPPL;HACP1A;HAMACRT;HODSSL;HAXFER;HA_ES"/>
+    <property name="jnlp.hod.DebugComponents" value="false"/>
+    <property name="jnlp.hod.DebugCachedClient" value="false"/>
+    <property name="jnlp.hod.UpgradePromptResponse" value="Background"/>
+    <property name="jnlp.hod.UpgradePercent" value="100"/>
+    <property name="jnlp.hod.InstallerFrameWidth" value="550"/>
+    <property name="jnlp.hod.InstallerFrameHeight" value="350"/>
+    <property name="jnlp.hod.Locale" value="es_ES"/>
+    <property name="jnlp.hod.ParameterFile" value="HODData\PAYUT\params.txt"/>
+    <property name="jnlp.hod.CachedClientSupportedApplet" value="com.ibm.eNetwork.HOD.HostOnDemand"/>
+    <property name="jnlp.hod.CachedClient" value="true"/>
+  </resources>
+  <application-desc main-class="com.ibm.eNetwork.HOD.cached.wssupport.WSCachedSupporter"/>
+</jnlp>

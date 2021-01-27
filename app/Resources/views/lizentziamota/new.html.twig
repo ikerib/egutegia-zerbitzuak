@@ -1,0 +1,25 @@
+{{ form_start(form) }}
+
+    {{ form_row(form.name) }}
+
+    <div class="form-group">
+        <div class="col-sm-3">&nbsp;</div>
+        <div class="col-sm-9">
+            <p>Markata ondokoa sinadura prozesua beharrezkoa bada</p>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        {{ form_label(form.sinatubehar) }}
+        {{ form_widget(form.sinatubehar) }}
+
+        <small>{{ form_help(form.sinatubehar) }}</small>
+
+        <div class="form-error">
+            {{ form_errors(form.sinatubehar) }}
+        </div>
+    </div>
+
+{{ form_end(form) }}
+

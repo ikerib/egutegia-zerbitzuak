@@ -1,0 +1,19 @@
+
+<p>Opor edo baimen eskaera berria</p>
+
+<dl>
+    <dt>Nork</dt>
+    <dd>{{ eskaera.user.displayname }}</dd>
+    <dt>Hasi</dt>
+    <dd>{{ eskaera.hasi |date('Y-m-d') }}</dd>
+    <dt>Amaitu</dt>
+    <dd>{{ eskaera.amaitu |date('Y-m-d') }}</dd>
+    <dt>Egun edo ordu kopurua</dt>
+    <dd>{{ eskaera.orduak }} </dd>
+    <dt>Oharrak</dt>
+    <dd>{{ eskaera.oharra }}</dd>
+</dl>
+
+<p>Eskaera ikusteko egin click estekan</p>
+
+<p>{{ url('notification_index') }}</p>

@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block content_div_start %}{% endblock %}
+{% block content_div_end %}{% endblock %}
+{% block headline %}{{ 'Zerrendak' | trans }} {% endblock %}
+
+{% block content_row %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <i class="fa fa-filter" aria-hidden="true"></i> FILTROAK
+            </button>
+            <div class="collapse" id="collapseExample">
+                <div class="well">
+                    <div class="row">
+                        <form action="{{ path('app_zerrenda_absentismo') }}" class="form-inline" method="post">
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="cmbUrtea">{{ "Urtea" | trans }}</label><br>
+                                    <select name="urtea" id="cmbUrtea" class="form-control">
+                                        <option value="{{ "now"|date('Y') }} ">{{ "now"|date('Y') }} </option>
+                                        {% for u in urteak %}
+                                            <option value="{{ u.year }}">{{ u.year }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3" id="divDateRange">
+                                    <label>{{ "Datak" | trans }}</label>
+                                    <div class="input-daterange input-group" id="filterDatepicker">
+                                        <input type="text" class="input-sm form-control" name="data_hasi" />
+                                        <span class="input-group-addon">-</span>
+                                        <input type="text" class="input-sm form-control" name="data_amaitu" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search fa-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                {{ testua }}
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <table class="table table-condensed table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th><strong>Langilea</strong></th>
+                        <th><strong>Hasi</strong></th>
+                        <th><strong>Amaitu</strong></th>
+                        <th><strong>Mota</strong></th>
+                        <th><strong>Orduak</strong></th>
+                        <th><strong>Bideratua</strong></th>
+                        <th><strong>Egutegian</strong></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in eskaerak %}
+                            <tr>
+                                <td><a href="{{ path('admin_calendar_edit', { 'id': e.calendar.id }) }}" class="btnEskaera" data-id="{{ e.id }}" target="_blank">
+                                        {{ e.name }}
+                                    </a></td>
+                                <td>{{ e.hasi | date('Y-m-d')}}</td>
+                                <td>{{ e.amaitu | date('Y-m-d')}}</td>
+                                <td>{{ e.type}}</td>
+                                <td>{{ e.total}}</td>
+                                <td>
+                                    {% if e.abiatua == true %}
+                                        <label class="label label-success">Bai</label>
+                                    {% else %}
+                                        <label class="label label-danger">Ez</label>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if e.egutegian == true %}
+                                        <label class="label label-success">Bai</label>
+                                    {% else %}
+                                        <label class="label label-danger">Ez</label>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block foot_script %}
+
+    {{ parent() }}
+
+    <script >
+        $( document ).ready(function() {
+            $('.input-daterange input').each(function() {
+                $(this).datepicker({
+                    format: "yyyy-mm-dd",
+                    language: "eu",
+                    autoclose: true
+                });
+            });
+
+        });
+
+    </script>
+
+{% endblock %}

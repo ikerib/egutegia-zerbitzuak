@@ -1,0 +1,408 @@
+{% extends 'base.html.twig' %}
+
+{% block content_div_start %}{% endblock %}
+{% block content_div_end %}{% endblock %}
+{% block headline %}{{ 'Langileen zerrenda' | trans }} {% endblock %}
+
+{% block content_row %}
+
+    <form id="frmCompare" method="post" action="{{ path('calendar_compare') }}">
+        <input id="txtUsers" type="hidden" name="users" value="" title="Users">
+    </form>
+    <div id="toolbar">
+        <button id="btnCompare" class="btn btn-default">Konparatu</button>
+    </div>
+    <table id="table"
+
+           data-id-field="id"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="15"
+           data-search="true"
+
+           data-sort-name="name"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-editable-url="/my/editable/update/path"
+           data-toolbar="#toolbar"
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+        <thead>
+        <tr>
+            <th data-checkbox="true"></th>
+            <th data-visible="false" data-switchable="false" data-field="id"></th>
+            {% if is_granted('ROLE_BIDERATZAILEA') or is_granted('ROLE_SUPER_ADMIN') %}
+                <th data-halign="center" data-align="center"></th>
+            {% endif %}
+            <th data-halign="left" data-align="left" data-field="firstName" data-sortable="true">{{ 'Nombre' | trans }}</th>
+            <th data-halign="left" data-align="left" data-field="lastName"  data-sortable="true">{{ 'Abizenak' | trans }}</th>
+            <th data-halign="left" data-align="left" data-field="saila"     data-sortable="true">{{ 'Saila' | trans }}</th>
+            <th>{{ 'Urtea' | trans }}</th>
+            <th data-halign="left" data-align="left" data-field="notes" data-editable="true" data-editable-emptytext="For free."
+                data-sortable="true">{{ 'Oharrak' | trans }}</th>
+            <th data-halign="left" data-align="left">{{ 'Egutegia' | trans }}</th>
+            <th data-halign="left" data-align="left">{{ 'Txantiloia' | trans }}</th>
+            <th data-halign="left" data-align="left">{{ 'Urteko orduak' | trans }}</th>
+            <th data-halign="center" data-align="center">{{ 'Opor orduak' | trans }}</th>
+            <th data-halign="center" data-align="center">{{ 'Norberarentzako orduak' | trans }}</th>
+            <th data-halign="center" data-align="center">{{ 'Konpentsatutako orduak' | trans }}</th>
+            <th data-halign="center" data-align="center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in userdata if user.user.has('firstName') and user.user.has('lastName') %}
+            <tr>
+                <td></td>
+                <td>{% if user.user.has('username') %}{{ user.user.get('username') }}{% endif %}</td>
+                {% if is_granted('ROLE_BIDERATZAILEA') or is_granted('ROLE_SUPER_ADMIN') %}
+                    <td class="nireTD">
+                        <a href="{{ path('homepage', { _switch_user: user.user.get('username') }) }}">
+                            <i class="fa fa-user-o" aria-hidden="true" title="Inpertsonalizatu"></i>
+                        </a>
+                    </td>
+                {% endif %}
+
+                <td>{% if user.user.has('firstName') %}{{ user.user.get('firstName') }}{% endif %}</td>
+                <td>{% if user.user.has('lastName') %}{{ user.user.get('lastName') }}{% endif %}</td>
+                <td>{% if user.user.has('department') %}{{ user.user.get('department') }}{% endif %}</td>
+                <td>
+                    {% if user.egutegiak is defined %}
+                    <select name="year" class="cmbYear">
+                        <option value="-1">Aukeratu bat</option>
+                        {% for e in user.egutegiak %}
+                            <option value="{{ url('admin_calendar_edit', { 'id': e.id }) }}">{{ e.year }}</option>
+                        {% endfor %}
+                    </select>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.user.has('notes') %}
+                        <a href="javascript:void(0)" class="btn btnUserNote"
+                           data-username="{{ user.user.get('username') }}"
+                           data-usernote="{{ user.user.get('notes') }}">
+                            {{ user.user.get('notes') }}
+                        </a>
+                    {% else %}
+                        <a href="javascript:void(0)" class="btn btnUserNote"
+                           data-username="{{ user.user.get('username') }}">
+                            <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}</td>
+                {% if user.calendar %}
+                    <td>
+                        <a href="{{ path('admin_calendar_edit', { 'id': user.calendar[0].id }) }}">{{ user.calendar[0] }}</a>
+                    </td>
+                    <td>
+                        {#{{ dump(user.calendar[0]) }}#}
+                        {% if user.calendar[0].template is not null %}
+                            <a href="{{ path('admin_template_edit', { 'id': user.calendar[0].template.id }) }}">{{ user.calendar[0].template }}</a>
+                        {% else %}
+                            Ez du
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ user.calendar[0].hoursYear }} /
+                        {% if user.calendar[0].template is not null %}
+                            {{ user.calendar[0].template.hoursYear }}
+                        {% else %}
+                            -
+                        {% endif %}</td>
+                    <td>
+                        {{ user.calendar[0].hoursFree }} /
+                        {% if user.calendar[0].template is not null %}
+                            {{ user.calendar[0].template.hoursFree }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ user.calendar[0].hoursSelf }} /
+                        {% if user.calendar[0].template is not null %}
+                            {{ user.calendar[0].template.hoursSelf }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>{{ user.calendar[0].hoursCompensed }} </td>
+                    <td>
+                        <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"
+                           data-username="{{ user.user.username }}">
+                            <i class="fa fa-plus-square-o" aria-hidden="true"> Berria</i>
+                        </a>
+                    </td>
+                {% else %}
+                    <td>
+                        <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"
+                           data-username="{{ user.user.username }}">
+                            <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
+                        </a>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="new-modal" tabindex="-1" role="dialog" aria-labelledby="Modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                    <h4 class="modal-title">
+                        {{ 'msg.egutegi.berria' | trans }}
+                    </h4>
+                </div>
+                <div class="modal-body" id="divModalCalendarNew">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="btnGordeModal">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-usernote" tabindex="-1" role="dialog" aria-labelledby="Modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                    <h4 class="modal-title">
+                        {{ 'Oharrak' | trans }}
+                    </h4>
+                </div>
+                <div class="modal-body" id="divUserNoteModal">
+                    {#{{ form_start(frmusernote, { 'attr': {'id':'frmUserNote','class': 'form-horizontal'} }) }}#}
+                    {{ form_widget(frmusernote.notes, { 'id': 'txtUserNotes' }) }}
+                    <input type="hidden" id="usernoteusername" value="">
+                    {#{{ form_end(frmusernote) }}#}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-usernote">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block foot_script %}
+    {{ parent() }}
+    <script>
+
+        var $table = $( "#table" ), selections = [];
+
+        function initTable() {
+            $table.bootstrapTable( {
+                                       height: getHeight()
+                                   } );
+            $table.bootstrapTable( "uncheckAll" );
+        }
+
+        function getHeight() {
+            var winh = $( window ).height();
+            var h2h = $( "h2" ).outerHeight( true );
+            var fooh = $( "footer" ).outerHeight( true );
+            return winh - h2h - fooh - 200;
+        }
+
+        $( function () {
+
+            initTable();
+
+            // Compare button click
+            $( document ).on( "click", "#btnCompare", function () {
+                var tableData = $table.bootstrapTable( "getSelections" );
+                var selection = [];
+
+                if ( tableData.length > 5 ) {
+                    bootbox.alert( "Ezin dira 5 baina egutegi gehiagi aukeratu." );
+                    return -1;
+                }
+
+
+                for ( index = 0, len = tableData.length; index < len; ++index ) {
+                    var t1 = tableData[ index ];
+                    selection.push( t1.id );
+                }
+
+                $( "#txtUsers" ).val( selection );
+
+                $( "#frmCompare" ).submit();
+
+            } );
+
+            // New Calendar
+            $( document ).on( "click", ".btnNewCalendar", function () {
+                $( "#divModalCalendarNew" ).empty();
+                var myusername = $( this ).data( "username" );
+                var url = Routing.generate( "admin_calendar_new", { username: myusername } );
+                $( "#divModalCalendarNew" ).load( url, function () {
+                    $( "#appbundle_calendar_template" ).append( "<option value='-1' selected>Aukeratu bat</option>" );
+                    $( "#new-modal" ).modal();
+                } );
+            } );
+
+            // Edir user notes#
+            $( document ).on( "click", ".btnUserNote", function () {
+                $( "#txtUserNotes" ).val( $( this ).data( "usernote" ) );
+                $( "#usernoteusername" ).val( $( this ).data( "username" ) );
+                $( "#modal-usernote" ).modal();
+            } );
+
+            // Save User Note
+            $( document ).on( "click", "#btn-save-usernote", function () {
+                var username = $( "#usernoteusername" ).val();
+                var url = Routing.generate( "post_usernotes", { "username": username } );
+
+                var d = {};
+                d.notes = $( "#txtUserNotes" ).val();
+
+                $.ajax( {
+                            url: url,
+                            data: JSON.stringify( d ),
+                            type: "POST",
+                            contentType: "application/json",
+                            success: function () {
+                                location.reload();
+                            },
+                            error: function () {
+                                alert( "Datuak ez dira gorde, akats bar gertatu da." );
+                            }
+                        } );
+            } );
+
+            // get template data
+            $( document ).on( "click", "#appbundle_calendar_template", function () {
+                var val = $( this ).val();
+                if ( val !== "-1" ) {
+                    var url = Routing.generate( "get_template", { "id": val } );
+                    $.ajax( {
+                                url: url,
+                                data: {
+                                    format: "json"
+                                },
+                                success: function ( result ) {
+                                    $( "#appbundle_calendar_hoursYear" ).val( result.hours_year );
+                                    $( "#appbundle_calendar_hoursFree" ).val( result.hours_free );
+                                    $( "#appbundle_calendar_hoursSelf" ).val( result.hours_self );
+                                    $( "#appbundle_calendar_hoursDay" ).val( result.hours_day );
+                                    birkalkulatu();
+                                    birkalkulatuNorbere();
+                                },
+                                error: function () {
+                                    console.log( "HORROR!" );
+                                }
+                            } );
+                }
+            } );
+
+
+            $( document ).on( "change", ".cmbYear", function () {
+                window.location = $( this ).val();
+            });
+
+            $( document ).on( "change", "#appbundle_calendar_percentYear", function () {
+                birkalkulatu();
+                birkalkulatuNorbere();
+            } );
+
+            $( document ).on( "change", "#appbundle_calendar_hirurtekoa", function () {
+                birkalkulatuNorbere();
+            } );
+
+
+            function birkalkulatu() {
+                var ori = $( "#appbundle_calendar_percentYear" ); // portzentaia
+                var vori = parseFloat( $( ori ).val() );
+
+                var hiru = $( "#appbundle_calendar_hirurtekoa" ); // hirurtekoa
+                var vhiru = parseFloat( $( hiru ).val() );
+
+                // Jornada
+                var des3 = $( "#appbundle_calendar_hoursDay" );
+                var vdes3 = parseFloat( $( des3 ).val() );
+                if ( (vdes3 !== 0) && (vori !== 0) ) {
+                    vdes3 = vdes3 * vori / 100;
+                    $( des3 ).val( vdes3.toFixed( 2 ) );
+                }
+
+                // Oporrak
+                var des1 = $( "#appbundle_calendar_hoursFree" );
+                var vdes1 = parseFloat( $( des1 ).val() );
+                if ( (vdes1 !== 0) && (vori !== 0) ) {
+                    vdes1 = vdes1 * vori / 100;
+                    $( des1 ).val( vdes1.toFixed( 2 ) );
+                }
+
+                // Norberarentzako
+                var des2 = $( "#appbundle_calendar_hoursSelf" );
+                var vdes2 = parseFloat( $( des2 ).val() );
+                // Gehitu hirurtekoak
+                vdes2 = vdes2 + (vdes3 * vhiru);
+                if ( (vdes2 !== 0) && (vori !== 0) ) {
+                    vdes2 = vdes2 * vori / 100;
+                    $( des2 ).val( vdes2.toFixed( 2 ) );
+                }
+            }
+
+            function birkalkulatuNorbere() {
+                var ori = $( "#appbundle_calendar_percentYear" ); // portzentaia
+                var vori = parseFloat( $( ori ).val() );
+                var hiru = $( "#appbundle_calendar_hirurtekoa" ); // hirurtekoa
+                var vhiru = parseFloat( $( hiru ).val() );
+                var des3 = $( "#appbundle_calendar_hoursDay" );
+                var vdes3 = parseFloat( $( des3 ).val() );
+                // Norberarentzako
+                var des2 = $( "#appbundle_calendar_hoursSelf" );
+                var vdes2 = parseFloat( $( des2 ).val() );
+                // Gehitu hirurtekoak
+                vdes2 = vdes2 + (vdes3 * vhiru);
+                $( des2 ).val( vdes2.toFixed( 2 ) );
+
+                // Zatituta Max izango da jornada * 2
+                var zatituta = vdes3 * 2;
+                // ezin du izan norbere orduen baino gehiago noski
+                if ( zatituta > vdes2 ) {
+                    zatituta = vdes2;
+                }
+
+                $( "#appbundle_calendar_hoursSelfHalf" ).val( zatituta );
+
+
+            }
+
+        } );
+    </script>
+{% endblock %}

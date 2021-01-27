@@ -1,0 +1,218 @@
+'Egutegi berria': 'Nuevo Calendario'
+Gorde: Guardar
+Izena: Nombre
+Itxi: Cerrar
+'Lan orduak guztira': 'Total horas trabajadas'
+'Opor orduak guztira': 'Total horas vacaciones'
+'Opor orduak hartuta': 'Total horas disfrutadas'
+Ezeztatu: Cancelar
+Txantiloiak: Plantillas
+Bateraezinak: Incompatibles
+Hasiera: Inicio
+Motak: Tipos
+Orduak: Horas
+Kolorea: Color
+Adi!: Ojo!
+'Ziur zaude ezabatu nahi duzula?': '¿Estas seguro de que deseas eliminar?'
+Onartu: Aceptar
+'Norberarentzako orduak': 'Horas asuntos propios'
+'Urteko lan orduak:': 'Total horas a trabajar:'
+'Urteko opor orduak:': 'Total horas vacaciones:'
+'Urteko norberarentzako orduak:': 'Total horas asuntos propios:'
+Txantiloia: Plantilla
+'Lan orduak:': 'Lan orduak:'
+'Opor orduak:': 'Opor orduak:'
+'Norberarentzako:': 'Norberarentzako:'
+'Konpentsatutakoo:': 'Konpentsatutako:'
+Egutegia: Calendario
+'Azken konexioak': 'Ultimas conexiones'
+Irten: Salir
+Mota: Tipo
+Fetxak: Fechas
+'Langileen zerrenda': 'Langileen zerrenda'
+'Egutegi berria:': 'Egutegi berria:'
+'Konpentsatutakoak:': 'Compensadas:'
+Oharrak: Notas
+Fitxategiak: Ficheros
+Denboralerroa: 'Línea de tiempo'
+Nombre: Nombre
+Abizenak: Apellidos
+'Urteko orduak': 'Horas año'
+'Opor orduak': 'Horas vacaciones'
+'Konpentsatutako orduak': 'Horas compensadas'
+'Udal Langileen egutegi kudeatzailea': 'Gestión de Calendarios del Ayuntamiento'
+Sartu: Entrar
+'Txantiloi berria': 'Nueva Plantilla'
+'Egun bat zenbat ordu dira': 'Cuantas horas son un día'
+'Portzentaia:': 'Porcentage:'
+'Jornada:': 'Jornada:'
+Portzentaia: Porcentage
+Konpentsatuak: Compensadas
+'Ordu konpentsatuak': 'Horas Compensadas'
+'Dokumentua gehitu': 'Añadir Documento'
+'Dokumentu berria': 'Nuevo Documento'
+Dokumentua: Documento
+'Noiz igo da': 'Cuando ha sido subido'
+Fetxa: Fecha
+Minutuak: Minutos
+Faktorea: Factor
+'Orduak konpentsatzera': 'Horas a compensar'
+Saila: Departamento
+Urtea: Año
+Ordena: Orden
+Erakutsi: Mostrar
+Bai: Si
+Ez: 'No'
+'Aukeratu Dokumentua': 'Selecciona Documento'
+msg.sindikalak: 'Sindicales '
+msg.lanaldi: 'Jornada '
+msg.eguneko.lanaldia: 'Jornada diaria :'
+msg.konpentsatzeke: 'A compensar '
+msg.norberarentzako: 'Asuntos propios : '
+msg.opor.orduak: 'Horas vacaciones: '
+msg.urteko.orduak: 'Horas a trabajar año: '
+msg.portzentaia: 'Porcentage: '
+msg.egutegi.berria: 'Nuevo calendario'
+msg.zatitu: 'Se pueden dividir:'
+msg.egun.osoak: 'Días completos:'
+'Sinatzaileen zerrenda': 'Lista firmantes'
+Jakinarazpenak: Notificaciones
+Irakurria: Leido
+Erantzunda: Respondido
+Erantzuna: Respuesta
+Gaia: Tema
+Hasi: Empieza
+Amaitu: Termina
+'Noiz jasoa': Recibido
+Oharra: Notas
+Eskaeretan: Peticiones
+Erlazioa: Relación
+'Mota berria': 'Nuevo tipo'
+'Sinatzaileen zerrenda:': 'Listado de firmantes:'
+Erabiltzaileak: Usuarios
+'Sinatzaileen zerrena aldatu': 'Cambiar lista de firmantes'
+'Opor edo baimen eskaera berria': 'Petición de permiso o vacaciones'
+Langilea: Trabajador
+Noiztik: Desde
+'Noiz arte': Hasta
+'Guztira zenbat egun edo ordu': 'Días y horas en total'
+Deskribapena: Descripción
+'Eskaera data': 'Fecha de la petición'
+'Lortu inprimatika': Grabar
+'Eskaeren zerrenda': 'Listado de instancias'
+Noiz: Cuando
+Sinatzaileak: Firmantes
+Orden: Orden
+'Firma zerrenda': 'Lista formantes'
+Nork: Quien
+'Hirurtekoak:': 'Trienios:'
+'Norberarentzako orduak zatituta (max)': 'Norberarentzako orduak zatituta (max)'
+'Urterako ordu konpentsatuak': 'Urterako ordu konpentsatuak'
+msg.norberarentzakozati: __msg.norberarentzakozati
+'Gutxieneko zerbitzuak:': 'Gutxieneko zerbitzuak:'
+'Gutxieneko zerbitzuaen zerrenda': 'Gutxieneko zerbitzuaen zerrenda'
+'Zerrena aldatu': 'Zerrena aldatu'
+'Nº Jakinarazpena': 'Nº Jakinarazpena'
+'Nº Eskaera': 'Nº Eskaera'
+'Konexioen zerrenda': 'Konexioen zerrenda'
+Nor: Quien
+'Eskatutako <strong>egunak</strong>': '<strong>Días</strong> pedidos'
+'Eskatutako <strong>orduak</strong>': '<strong>Horas</strong> pedidas'
+'Guztira zenbat <strong>ordu</strong>': 'Total <strong>horas</strong>'
+'Guztira zenbat <strong>egun</strong>': 'Total <strong>días</strong>'
+'eskaera berria': 'Nueva instancia'
+Eguna: Día
+Azalpena: Descripcioón
+msg.eskaera.ezabatu: '¿Estas seguro de que deseas eliminar la petición? Si aceptas, también se borraran los documentos asociados. Si las petición ha sido añadida al calendario NO SE BORRARAN del calendario. Hay que hacerlo manualmente desde el calendario del trabajador'
+'Nondik kendu': '__Nondik kendu'
+'Eskaera gauzatu': Solicitar
+Zerrendak: Listados
+'Jakinarazpen guztiak': 'Todas las notificaciones'
+error.udaltzaina: 'El sistema no reconoce al usuario.'
+'Taula Laguntzaileak': 'Tablas auxiliares'
+error.no.calendar: 'No tienes un Calendario creado en el sistema'
+error.call.personal: 'Llama a personal'
+Lanpostua: 'Puesto de trabajo'
+Datak: Fechas
+'Orduak Guztira': 'Total horas'
+Izaera: Trabajador
+Eskaera: Petición
+Eskaerak: 'Gestión instancias'
+Orduak/Egunak: Horas/Días
+Bideratua: Dirigido
+Gauzatua: Completado
+Egutegian: Importado
+'Sinatzaile taldea': Firmantes
+Guztiak: Todos
+'Bideratu gabeak': 'Sin asignar'
+'Gauzatu gabeak': 'Sin completar'
+'Egutegian sartu gabe': 'Sin añadir al calendario'
+Fitxategia: Fichero
+'Eskaera berria': 'Nueva instancia'
+Egunak: Días
+Lanaldia: 'Jornada laboral'
+msg.ezabatu: '¿Seguro de que deseas eliminar?'
+'Eskaera eguna': 'Fecha petición'
+main_menu.eskaerak: Peticiones
+user_menu.eskaerak: Instancias
+user_menu.eskaera.new: 'Nueva instancia'
+Ekintzak: '  Acciones  '
+table.eskaera: Fecha
+Ikusi: __Ikusi
+Ezabatu: __Ezabatu
+Bideratu: __Bideratu
+'Eskaera editatzen': 'Eskaera editatzen'
+'Guztiak onartu': 'Guztiak onartu'
+'Guztiak ez onartu': 'Guztiak ez onartu'
+'Ez onartu': 'Ez onartu'
+'Azken sinadura': 'Azken sinadura'
+erantzuna.Num: Zenb.
+erantzuna.Langilea: Langilea
+erantzuna.Saila: Saila
+erantzuna.Mota: Mota
+erantzuna.Hasi: Hasi
+erantzuna.Amaitu: Amaitu
+erantzuna.Orduak: Orduak
+erantzuna.Sinatzaileak: Orduak
+erantzuna.Noiz: Noiz
+erantzuna.firmatzailea: Firmador
+erantzuna.firmatua: 'Firmado?'
+erantzuna.erantzuna: Respuesta
+Zabaldu: 'Abrir/cerrar todas'
+'Irakurri gabeak': 'Sin leer'
+Irakurritakoak: Leidos
+'Erantzun gabeak': 'Sin Responder'
+'Justifikantea gehitu': 'Añadir justificante'
+lizentziatext: 'Puedes añadir el justificante ahora o bien adjuntarlo más tarde, aunque también es posible enviarlo por email.'
+Lizentziak: Licencias
+'Lizentziak (Justifikatu gabe)': 'Licencias (Sin justificar)'
+Emaitza: Resultado
+Nº: Nº
+Edit: Editar
+Justifikatea: Justificante
+'Aukeratu instantzia mota': ' Selecciona tipo instancia'
+'Aukeratu eta jarraitu': ' Seleccionar y continuar'
+'Aktibatu historikoa': ' Activar historico'
+'Desaktibatu historikoa': ' Desactivar historico'
+'Ikusi justifikatea': ' Ver justificante'
+'Aukeratu bat': ' Sekecciona'
+lizentzia_text: lizentzia_text
+'Justifikatea bidali': ' Enviar justificante'
+'Ezabatu justifikatea': ' Eliminar justificante'
+'# Eskaera': 'Nº Petición'
+'Lizentzia Motak': 'Tipos de Licencia'
+'Sinatu behar da?': '¿Es necesario proceso de firma?'
+'Mezuen zerrenda': 'Listado de mensages'
+'Langileak irakurri gabeak': 'Mensages no leidos por el trabajador'
+'Mezu berria': 'Nuevo mensage'
+Id: Id
+Mezua: Mezua
+'Noiz irakurria': 'Noiz irakurria'
+Lankidea: Lankidea
+'Markatu irakurrita': 'Markatu irakurrita'
+'Instantzia Motak': 'Tipos de instancia'
+'Lizentzia Mota': 'Tipo Licencia'
+'Kostua zehaztu behar da?': '¿Hay que especificar coste?'
+Kostua: Coste
+Eskatu: Pedir
+'Lizentzia mota': 'Tipo de licencia'

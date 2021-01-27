@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Gutxienekoakdets list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gutxienekoakdet in gutxienekoakdets %}
+            <tr>
+                <td><a href="{{ path('admin_gutxienekoakdet_show', { 'id': gutxienekoakdet.id }) }}">{{ gutxienekoakdet.id }}</a></td>
+                <td>{% if gutxienekoakdet.created %}{{ gutxienekoakdet.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if gutxienekoakdet.updated %}{{ gutxienekoakdet.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_gutxienekoakdet_show', { 'id': gutxienekoakdet.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_gutxienekoakdet_edit', { 'id': gutxienekoakdet.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_gutxienekoakdet_new') }}">Create a new gutxienekoakdet</a>
+        </li>
+    </ul>
+{% endblock %}

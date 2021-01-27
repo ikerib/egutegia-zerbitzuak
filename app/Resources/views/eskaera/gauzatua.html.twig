@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}{{ eskaera.type.name ~ ' eskaera berria' | trans }} {% endblock  %}
+
+{% block content_row %}
+
+    <div class="jumbotron">
+        <h1>Eskaera gauzatu da</h1>
+        <p class="lead">Prozesuaren jarraipena zure menuko "Eskaerak" ataletik egin dezakezu.</p>
+        <p><a class="btn btn-lg btn-success" href="{{ path('eskaera_index') }}" role="button">Joan Eskaeretara</a></p>
+    </div>
+
+{% endblock %}
+

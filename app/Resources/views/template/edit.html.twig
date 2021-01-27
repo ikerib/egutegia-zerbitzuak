@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block page_header %}
+    <div class="page-header hovebutton">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-11">
+                        <h3 class="panel-title">{{ template.name }}</h3>
+                    </div>
+                    <div class="col-md-1">
+                        <a class="btn btn-xs btn-default btnPageHeaderEdit" href="javascript:void(0)"
+                           style="display: none;">Editatu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4"><strong>{{ 'msg.urteko.orduak' | trans }}</strong> {{ template.hoursYear }}</div>
+                    <div class="col-sm-4"><strong>{{ 'msg.opor.orduak' | trans }} </strong> {{ template.hoursFree }}</div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.norberarentzako' | trans }} </strong> {{ template.hoursSelf }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_header %}
+
+{% block content_content %}
+
+    <div class="modal modal-fade" id="event-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                    <h4 class="modal-title">
+                        {{ 'Egutegia' | trans }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="event-index">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="event-name" class="col-sm-3 control-label">{{ 'Izena' | trans }}</label>
+                                <div class="col-sm-8">
+                                    <input name="event-name" type="text" class="form-control" title="event name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-type" class="col-sm-3 control-label">{{ 'Mota'|trans }}</label>
+                                <div class="col-sm-8">
+                                    <select name="event-type" class="form-control" title="event type">
+                                        {% for type in types %}
+                                            <option data-color="{{ type.color }}" value="{{ type.id }}">{{ type.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="min-date" class="col-sm-3 control-label">{{ 'Fetxak' | trans }}</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group input-daterange" data-provide="datepicker">
+                                        <input name="event-start-date" type="text" class="form-control" value="2012-04-05" title="range hasi">
+                                        <span class="input-group-addon">&nbsp;-&nbsp;</span>
+                                        <input name="event-end-date" type="text" class="form-control" value="2012-04-19" title="range amaitu">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="save-event">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-fade" id="edit-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Close</span></button>
+                    <h4 class="modal-title">
+                        Event
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(edit_form, { 'attr': {'class': 'form-horizontal'} }) }}
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-4 control-label">{{ 'Izena' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.name, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-4 control-label">{{ 'Lan orduak guztira' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hours_year, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-4 control-label">{{ 'Opor orduak guztira' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hours_free, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-date"
+                               class="col-sm-4 control-label">{{ 'Norberarentzako orduak' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hours_self, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+                    {{ form_end(edit_form) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="btnGordeModal">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a id="btnGrabatu" href="javascript:void(0);" class="btn btn-success">Grabatu</a>
+    <input type="hidden" id="templateid" value="{{ template.id }}">
+    <div id="admincalendar" class="admincalendar"></div>
+
+{% endblock %}
+
+{% block content_sidebar %}
+    {{ render(controller('AppBundle:Type:listtemplatetypes', {'templateid': template.id } )) }}
+{% endblock content_sidebar %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script src="{{ asset('js/calendar-template.js') }}"></script>
+{% endblock %}

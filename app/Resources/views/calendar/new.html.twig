@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}
+    {{ 'Egutegi berria' | trans }}
+{% endblock headline %}
+
+{% block content_row %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+        <div class="form-group">
+            {{ form_widget(form) }}
+        </div>
+    {{ form_end(form) }}
+{% endblock content_row %}
+
+{% block foot_script %}
+
+    {{ parent() }}
+
+    <script>
+        $('#btnGrabatu').on('click', function () {
+            $('form').submit();
+        });
+    </script>
+
+{% endblock foot_script %}

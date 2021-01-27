@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+    {{ parent() }}
+{% endblock %}
+{% block headline %}{{ 'Sinatzaileen zerrenda' | trans }} {% endblock  %}
+
+
+{% block content_row %}
+    <div id="toolbar">
+        <button id="btnBerria" class="btn btn-default">Zerrenda berria</button>
+    </div>
+
+    <table data-toggle="table"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="25"
+           data-search="true"
+            {#data-height="300"#}
+
+           data-sort-name="name"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+
+           data-toolbar="#toolbar"
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+        <thead>
+        <tr>
+            <th data-halign="center" data-align="left" data-field="name" data-sortable="true">{{ 'Izena' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="sinatzaileakdet"  data-sortable="true">{{ 'Erabiltzaileak' | trans }}</th>
+            <th data-halign="center" data-align="center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sinatzaileak in sinatzaileaks %}
+            <tr>
+                <td><a href="{{ path('admin_sinatzaileak_show', { 'id': sinatzaileak.id }) }}">{{ sinatzaileak.name }}</a></td>
+                <td>
+                    {% for d in sinatzaileak.sinatzaileakdet %}
+                        <span class="label label-default">{{ d.user.username }}</span>&nbsp;
+                    {% endfor %}
+                </td>
+                <td>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="{{ path('admin_sinatzaileak_show', { 'id': sinatzaileak.id }) }}"><i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_sinatzaileak_edit', { 'id': sinatzaileak.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            {{ form_start(deleteForms[sinatzaileak.id],{'attr': {'id': sinatzaileak.id}}) }}
+                            <a class="btnRemoveRow" data-id="{{ sinatzaileak.id }}"
+                               href="#sinatzaileakEditModal{{ sinatzaileak.id }}">
+                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                            </a>
+                            {{ form_end(deleteForms[sinatzaileak.id]) }}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Zerrenda berria</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:Sinatzaileak:new')) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Utzi</button>
+                    <button type="button" class="btn btn-primary" id="btnNewZerrenda">Sortu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script >
+      $( document ).ready(function() {
+
+          $('#btnBerria').on('click', function () {
+              $('#myModal').modal()
+          });
+
+          $('#btnNewZerrenda').on('click', function () {
+              if ($('#appbundle_sinatzaileak_name').val().length > 0) {
+                  $('form').submit()
+              } else {
+                  bootbox.alert("Izena ezartzea beharrezkoa da")
+              }
+          });
+
+          $('.btnRemoveRow').on('click', function () {
+              var that = $(this);
+              bootbox.confirm({
+                  title: "{{ 'Adi!' | trans }}",
+                  message: "{{ 'msg.ezabatu' | trans }}",
+                  buttons: {
+                      cancel: {
+                          label: '<i class="fa fa-times"></i> {{ 'Ezeztatu' | trans }}'
+                      },
+                      confirm: {
+                          label: '<i class="fa fa-check"></i> {{ 'Onartu' | trans }}'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result === true) {
+                          $(that).closest('form').submit();
+                      }
+                  }
+              });
+          });
+      });
+    </script>
+
+{% endblock %}

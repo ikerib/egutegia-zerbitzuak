@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}{{ 'Mezuen zerrenda' | trans }} {% endblock %}
+
+{% block content_row %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="col-md-10">
+                <div class="btn-group" role="group" aria-label="...">
+                    {% set q = app.request.get('q') %}
+                    <p>Filtratu:</p>
+                    <a class="btn {% if app.request.get('q') == 'all' %}        btn-info {% else %} btn-default {% endif %}"
+                       href="{{ path('admin_message_list', { 'q': 'all'}) }}">{{ 'Guztiak' | trans }}</a>
+                    <a class="btn {% if app.request.get('q') == 'unread' %}     btn-info {% else %} btn-default {% endif %}"
+                       href="{{ path('admin_message_list', { 'q': 'unread'}) }}">{{ 'Langileak irakurri gabeak' | trans }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <div id="toolbar">
+        <div class="col-md-2">
+            <button id="btnMezua" class="btn btn-default">{{ "Mezu berria" | trans }}</button>
+        </div>
+    </div>
+    <table data-toggle="table" data-classes="table table-hover table-condensed" data-striped="true"
+           data-pagination="true" data-page-size="25" data-search="true" data-sort-name="id" data-sort-order="desc"
+           data-icon-size="sm" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+           data-toolbar="#toolbar">
+        <thead>
+        <tr>
+            <th data-halign="center" data-align="left" data-field="id" data-sortable="true">{{ 'Id' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="user.username" data-sortable="true">{{ 'Langilea' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="name"  data-sortable="true">{{ 'Gaia' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="description" data-sortable="true" >{{ 'Mezua' | trans }}</th>
+            <th data-halign="center" data-align="center" data-field="readed" data-sortable="true" >{{ 'Irakurria' | trans }}</th>
+            <th data-halign="center" data-align="center" data-field="readedat" data-sortable="true">{{ 'Noiz irakurria' | trans }}</th>
+
+            <th data-halign="center" data-align="center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for message in messages %}
+            <tr>
+                <td>{{ message.id }}</a></td>
+                <td>{{ message.user.username }}</td>
+                <td>{{ message.name }}</td>
+                <td>{{ message.description | raw}}</td>
+                <td>{% if message.readed %}
+                        <label class="label label-success">Bai</label>
+                    {% else %}
+                        <label class="label label-danger">Ez</label>
+                    {% endif %}</td>
+                <td>{% if message.readedAt %}{{ message.readedAt|date('Y-m-d H:i:s') }}{% else %}-{% endif %}</td>
+                <td>
+                    <ul class="list-inline">
+                        <li>
+                            {{ include('message/_delete.html.twig') }}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Mezu berria</h4>
+                </div>
+                <div class="modal-body messageModalBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Itxi</button>
+                    <button id="messageButtonSend" type="button" class="btn btn-primary">Bidali</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+{% endblock %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script>
+        var $table = $("#tableEskaerak");
+
+        $(document).ready(function () {
+
+            $(document).on("click", "#btnMezua", function () {
+                var url = Routing.generate("get_messages_newmessages_new");
+                $(".messageModalBody").load(url, function () {
+                    $("#messageModal").modal({show: true});
+                });
+            });
+
+
+            $(document).on('click', '#messageButtonSend', function () {
+                var data = $('#frmMessage').serialize();
+                $.ajax({
+                    url: Routing.generate('post_messages'),
+                    type: 'POST',
+                    data: data,
+                    success: function (data, textSatus, jQxhr) {
+                        location.reload();
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
+                })
+
+            });
+        });
+
+    </script>
+{% endblock %}

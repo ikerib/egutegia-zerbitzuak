@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}{{ 'Eskaeren zerrenda' | trans }} {% endblock %}
+
+{% block content_row %}
+
+<table id="tablaErantzunak" class="table table-bordered table-hover table-striped table-responsive">
+    <thead>
+    <tr>
+        <th></th>
+        <th>{{ "erantzuna.Num" |trans }}</th>
+        <th>{{ "erantzuna.Langilea" | trans }}</th>
+        <th>{{ "erantzuna.Sinatzaileak" | trans }}</th>
+        <th>{{ "erantzuna.Mota" | trans }}</th>
+        <th>{{ "erantzuna.Hasi" | trans }}</th>
+        <th>{{ "erantzuna.Amaitu" | trans }}</th>
+        <th>{{ "erantzuna.Orduak" | trans }}</th>
+        <th>{{ "erantzuna.Noiz" | trans }}</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {#{{ dump(firmadets) }}#}
+    {% set miid = 0 %}
+    {% for firmadet in firmadets %}
+        {% if loop.index0 == 0 %}
+            {% set miid = firmadet.firma.eskaera.id %}
+            {% set berdina = false %}
+        {% else %}
+            {% if miid == firmadet.firma.eskaera.id %}
+                {% set berdina = true %}
+            {% else %}
+                {% set miid = firmadet.firma.eskaera.id %}
+                {% set berdina = false %}
+                                        {#<tr><td>{{ miid}} - {{firmadet.firma.eskaera.id}}{{ dump(null) }}</td></tr>#}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </td>
+                </tr>
+
+            {% endif %}
+        {% endif %}
+
+        {% if berdina == false %}
+            <tr>
+                <td></td>
+                <td>{{ firmadet.firma.eskaera.id }}</td>
+                <td>{{ (firmadet.firma.eskaera.name) }} </td>
+                <td>{{ (firmadet.firma.eskaera.sinatzaileak) }} </td>
+                <td>{{ (firmadet.firma.eskaera.type) }} </td>
+                <td>{% if firmadet.firma.eskaera.hasi %}{{ firmadet.firma.eskaera.hasi|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if firmadet.firma.eskaera.amaitu %}{{ firmadet.firma.eskaera.amaitu|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ firmadet.firma.eskaera.orduak }}</td>
+                <td>{% if firmadet.noiz %}{{ firmadet.noiz|date('Y-m-d H:i:s') }}{% endif %}</td>
+
+            </tr>
+            <tr>
+                <td colspan="9">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th>{{ "erantzuna.firmatzailea"| trans }}</th>
+                                    <th>{{ "erantzuna.firmatua"| trans }}</th>
+                                    <th>{{ "erantzuna.erantzuna"| trans }}</th>
+                                </thead>
+                                <tbody>
+        {% endif %}
+
+
+        <tr>
+
+            <td>{{ firmadet.sinatzaileakdet.user }}</td>
+            <td>{% if firmadet.firmatua %}Yes{% else %}No{% endif %}</td>
+            <td>{% if firmadet.firmatua %}Yes{% else %}No{% endif %}</td>
+
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+
+    </li>
+</ul>
+{% endblock %}

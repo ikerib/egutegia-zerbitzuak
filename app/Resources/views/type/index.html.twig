@@ -1,0 +1,195 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/bootstrap-colorpicker.min.css">
+{% endblock %}
+{% block headline %}{{ 'Instantzia Motak' | trans }} {% endblock  %}
+
+
+{% block content_row %}
+        <div id="toolbar">
+            <button id="btnBerria" class="btn btn-default">Instantzia mota berria</button>
+        </div>
+        <table data-toggle="table"
+               data-classes="table table-hover table-condensed"
+               data-striped="true"
+
+               data-pagination="true"
+               data-page-size="25"
+               data-search="true"
+               {#data-height="300"#}
+
+               data-sort-name="name"
+               data-sort-order="asc"
+
+               data-icon-size="sm"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-show-columns="true"
+
+               data-toolbar="#toolbar"
+               data-show-export="true"
+               data-export-types="['csv','excel', 'pdf']"
+               data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+            <thead>
+                <tr>
+                    <th data-halign="center" data-align="left" data-field="orden" data-sortable="true">{{ 'Ordena' | trans }}</th>
+                    <th data-halign="center" data-align="left" data-field="name" data-sortable="true">{{ 'Izena' | trans }}</th>
+                    <th data-halign="center" data-align="right" data-field="hours"  data-sortable="true">{{ 'Orduak' | trans }}</th>
+                    <th data-halign="center" data-align="center" >{{ 'Kolorea' | trans }}</th>
+                    <th data-halign="center" data-align="center" data-field="erakutsi" data-sortable="true" >{{ 'Erakutsi' | trans }}</th>
+                    <th data-halign="center" data-align="center" data-field="erakutsiEskaera" data-sortable="true" >{{ 'Eskaeretan' | trans }}</th>
+                    <th data-halign="center" data-align="center" data-field="related" data-sortable="true">{{ 'Erlazioa' | trans }}</th>
+                    <th data-halign="center" data-align="center" data-field="lizentziamotabehar" data-sortable="true">{{ 'Lizentzia Motak' | trans }}</th>
+                    <th data-halign="center" data-align="center"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for type in types %}
+                <tr>
+                    <td>{{ type.orden }}</td>
+                    <td>{{ type.name }}</td>
+                    <td>{{ type.hours }}</td>
+                    <td><span class="showColor" style="background-color: {{ type.color }};">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+                    <td>
+                        {% if type.erakutsi == true %}
+                            <span class="label label-success">{{ 'Bai'|trans }}</span>
+                        {% else %}
+                            <span class="label label-danger">{{ 'Ez'|trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if type.erakutsiEskaera == true %}
+                            <span class="label label-success">{{ 'Bai'|trans }}</span>
+                        {% else %}
+                            <span class="label label-danger">{{ 'Ez'|trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ type.related }}</td>
+                    <td>
+                        {% if type.lizentziamotabehar == true %}
+                            <span class="label label-success">{{ 'Bai'|trans }}</span>
+                        {% else %}
+                            <span class="label label-danger">{{ 'Ez'|trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <ul class="list-unstyled list-inline">
+                            <li>
+                                <a href="{{ path('admin_type_edit', {'id': type.id}) }}">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li>
+                                {{ form_start(deleteforms[type.id],{'attr': {'id': type.id}}) }}
+                                <a class="btnRemoveRow" data-id="{{ type.id }}" href="javascript:void(0);">
+                                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                </a>
+                                {{ form_end(deleteforms[type.id]) }}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    <div class="modal modal-fade" id="new-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Close</span></button>
+                    <h4 class="modal-title">
+                        {{ 'Mota berria' | trans }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:Type:new' )) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="btnGordeModal">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script src="/js/bootstrap-colorpicker.min.js"></script>
+    <script >
+        $( document ).ready(function() {
+
+            $('#btnBerria').on('click', function () {
+                $('#new-modal').modal();
+            });
+
+            $('#new-modal').on('shown.bs.modal', function () {
+                $('#appbundle_type_name').focus()
+            });
+
+          $('body').on('click', '.btnEditRow', function () {
+
+                $('#divEditModalBody').empty();
+                var color = $(this).data('color');
+                var miid = $(this).data('id');
+                var url = Routing.generate('admin_type_edit', { id: miid });
+
+                $('#divEditModalBody').load(url, function () {
+                    $('#edit-modal').modal();
+                    $('#appbundle_type_color').val(color)
+                    $('#cp2').colorpicker();
+                });
+            });
+            $('#edit-modal').on('shown.bs.modal', function () {
+                $('#appbundle_type_name').focus()
+            });
+
+            $('#btnGordeEditModal').on('click', function () {
+                $('#form_type_edit').submit();
+            });
+
+            $('body').on('click', '.btnRemoveRow', function () {
+                var that = $(this);
+                bootbox.confirm({
+                    title: "{{ 'Adi!' | trans }}",
+                    message: "{{ 'Ziur zaude ezabatu nahi duzula?' | trans }}",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> {{ 'Ezeztatu' | trans }}'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> {{ 'Onartu' | trans }}'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result === true ) {
+                            $(that).closest('form').submit();
+                        }
+                    }
+                });
+            });
+
+
+        });
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,7 @@
+<ul class="list-unstyled">
+    {% for type in types %}
+        <li class="typestype" data-id="{{ type.id }}" data-name="{{ type.name }}" data-color="{{ type.color }}"><span style="background-color: {{ type.color }}">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            {{ type.name }} {% if  type.hours != "0.00" %}({{ type.hours }}) {% endif %}</li>
+        <li>&nbsp;</li>
+    {% endfor %}
+</ul>

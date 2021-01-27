@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+
+    {{ parent() }}
+    <style>
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block page_header %}
+    <div class="page-header hovebutton">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-11">
+                        <h3 class="panel-title">{{ calendar.name }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.urteko.orduak' | trans }}</strong>
+                        <span id="hoursYear">{{ calendar.hoursYear }}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.konpentsatzeke' | trans }} </strong>
+                        <span id="hoursCompensed">{{ calendar.hoursCompensed }}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.opor.orduak' | trans }} </strong>
+                        {% if calendar.hoursDay > 0 %}
+                            <span id="hoursFree">{{ calendar.hoursFree }} ({{ (calendar.hoursFree / calendar.hoursDay) | round (2) }} egun) </span>
+                            <input id="txtHoursFree" type="hidden" value="{{ calendar.hoursFree }}">
+                        {% else %}
+                            <span>Datuak falta dira</span>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.lanaldi' | trans }} </strong>
+                        <span id="percentYear">{{ calendar.percentYear }}%</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.sindikalak' | trans }} </strong>
+                        <span id="hoursCompensed">{{ calendar.hoursSindikal }}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.norberarentzako' | trans }} </strong>
+                        {% if calendar.hoursDay > 0 %}
+                            <span id="hoursSelf"> {{ calendar.hoursSelf }} ordu ({{ (calendar.hoursSelf / calendar.hoursDay) | round (2) }} egun)</span>
+                        {% else %}
+                            <span>Ez dago daturik</span>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <strong>{{ 'msg.eguneko.lanaldia' | trans }}</strong>
+                        <span>{{ calendar.hoursDay }}</span><span id="hourLanaldi"></span>
+                        <input id="numberLanaldi" type="hidden" value="{{ calendar.hoursDay }}">
+                    </div>
+
+
+                    <div class="col-sm-4">
+
+                    </div>
+
+                    <div class="col-sm-4">
+                        <input id="txtNorbereZatika" type="hidden" value="{{ selfHoursPartial }}">
+                        <input id="numberHoursPartial" type="hidden" value="{{ selfHoursPartial }}">
+                        <ul class="list-inline">
+                            <li>{{ 'msg.zatitu' | trans }}</li>
+                            {% if calendar.hoursDay > 0 %}
+                                <li id="selfHoursPartial">{{ selfHoursPartial }} <span id="selfHoursPartialToHour"></span> ({{ (selfHoursPartial / calendar.hoursDay) | round (2) }}
+                                                                                                                           egun)
+                                </li>
+                            {% else %}
+                                <li>Ez dago daturik</li>
+                            {% endif %}
+
+                        </ul>
+                        <ul class="list-inline">
+                            <li>{{ 'msg.egun.osoak' | trans }}</li>
+                            {% if calendar.hoursDay > 0 %}
+                                <li id="selfHoursComplete">{{ selfHoursComplete }} ({{ (selfHoursComplete / calendar.hoursDay) | round (2) }} egun)</li>
+                            {% else %}
+                                <li>Ez dago daturik</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock page_header %}
+
+{% block content_content %}
+
+
+    <div id="usercalendar" class="usercalendar"></div>
+
+    <input type="hidden" id="calendarid" value="{{ calendar.id }}">
+    <input type="hidden" id="templateid" value="{{ calendar.template.id }}">
+    <input type="hidden" id="locale" value="{{ app.request.getLocale() }}">
+
+{% endblock %}
+
+{% block content_sidebar %}
+    {{ render(controller('AppBundle:Type:list', {'calendarid': calendar.id} )) }}
+    {#{{ render(controller('AppBundle:Document:list', {'calendarid': calendar.id} )) }}#}
+
+{% endblock content_sidebar %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script src="{{ asset('js/calendar-user.js') }}"></script>
+    <script>
+        $(function () {
+            /*************************************************************************************************************/
+            /** MISC *****************************************************************************************************/
+            /*************************************************************************************************************/
+            var x = parseFloat($("#numberLanaldi").val());
+            var textua = " ( " + moment.duration(x, "hours").hours() + " ordu " + moment.duration(x, "hours").minutes() + " minutu )";
+            $("#hourLanaldi").text(textua);
+
+            var x1 = parseFloat($("#numberHoursPartial").val());
+            var textua1 = " ( " + moment.duration(x1, "hours").hours() + " ordu " + moment.duration(x1, "hours").minutes() + " minutu )";
+            $("#selfHoursPartialToHour").text(textua1);
+        });
+    </script>
+{% endblock %}

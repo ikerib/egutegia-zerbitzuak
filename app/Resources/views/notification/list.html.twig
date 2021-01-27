@@ -1,0 +1,229 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+    {{ parent() }}
+    <style>
+        .bs-example {
+            position: relative;
+            border-color: #e5e5e5 #eee #eee;
+            border-style: solid;
+            border-width: 1px 0;
+        }
+    </style>
+{% endblock %}
+{% block headline %}{{ 'Jakinarazpenak' | trans }} {% endblock %}
+
+
+{% block content_row %}
+
+    <div id="toolbar">
+        <div class="btn-group" role="group" aria-label="...">
+            <a class="btn {% if (app.request.get('q') == 'all') or (app.request.get('q') is not defined) or (app.request.get('q') is null) %}        btn-info {% else %} btn-default {% endif %}"
+               href="{{ path('notification_list', { 'q': 'all'}) }}">Guztiak</a>
+            <a class="btn {% if app.request.get('q') == 'unread' %}     btn-info {% else %} btn-default {% endif %}"
+               href="{{ path('notification_list', { 'q': 'unread'}) }}">Irakurri gabeak</a>
+            <a class="btn {% if app.request.get('q') == 'readed' %}   btn-info {% else %} btn-default {% endif %}"
+               href="{{ path('notification_list', { 'q': 'readed'}) }}">Irakurritakoak</a>
+            <a class="btn {% if app.request.get('q') == 'unanswered' %}    btn-info {% else %} btn-default {% endif %}"
+               href="{{ path('notification_list', { 'q': 'unanswered'}) }}">Erantzun gabeak</a>
+        </div>
+    </div>
+    <table id="tableJakinarazpena"
+           data-id-field="id"
+            data-toggle="table"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="25"
+           data-search="true"
+            {#data-height="300"#}
+
+           data-sort-name="name"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+
+           data-toolbar="#toolbar"
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'
+           data-detail-view="true"
+           data-detail-formatter="detailFormatter"
+        >
+
+        <thead>
+        <tr>
+            <th data-halign="center" data-align="center" data-field="id" data-visible="false"
+                data-sortable="true">{{ 'Nº Jakinarazpena' | trans }}</th>
+            <th data-halign="center" data-align="center" data-field="eskaera.id"
+                data-sortable="true">{{ 'Nº Eskaera' | trans }}</th>
+            <th data-halign="center" data-align="center" data-field="readed"
+                data-sortable="true">{{ 'Irakurria' | trans }}</th>
+            <th data-halign="center" data-align="center" data-field="completed"
+                data-sortable="true">{{ 'Erantzunda' | trans }}</th>
+            <th data-halign="center" data-align="center" data-field="result"
+                data-sortable="true">{{ 'Erantzuna' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="name" data-sortable="true">{{ 'Gaia' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="hasi"
+                data-sortable="true">{{ 'Hasi' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="amaitu"
+                data-sortable="true">{{ 'Amaitu' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="orduak"
+                data-sortable="true">{{ 'Orduak' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="created"
+                data-sortable="true">{{ 'Noiz jasoa' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="eskaera.oharra"
+                data-sortable="true"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for notification in notifications %}
+            <tr>
+                <td>{{ notification.id }}</td>
+                <td>{{ notification.eskaera.id }}</td>
+                <td>
+                    <a href="javascript:void(0);" class="btnReaded" data-id="{{ notification.id }}">
+                        {% if notification.readed %}
+                            <span class="label label-success"> Bai</span>
+                        {% else %}
+                            <span class="label label-danger"> Ez</span>
+                        {% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href="javascript:void(0);" class="btnComplete" data-id="{{ notification.id }}">
+                        {% if notification.completed %}
+                            <span class="label label-success"> Bai</span>
+                        {% else %}
+                            <span class="label label-danger"> Ez</span>
+                        {% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href="javascript:void(0);" class="btnComplete" data-id="{{ notification.id }}">
+                        {% if notification.result %}
+                            <span class="label label-success"> Bai</span>
+                        {% else %}
+                            <span class="label label-danger"> Ez</span>
+                        {% endif %}
+                    </a>
+                </td>
+                <td>{{ notification.name }}</td>
+                <td>{{ notification.eskaera.hasi | date('Y-m-d') }}</td>
+                <td>{{ notification.eskaera.amaitu | date('Y-m-d') }}</td>
+                <td>{{ notification.eskaera.orduak }}</td>
+                <td>{{ notification.created | date('Y-m-d') }}</td>
+                <td>
+                    <ul class="list-unstyled list-inline">
+                        <li>&nbsp;</li>
+                        <li>
+                            {{ form_start(deleteforms[notification.id],{'attr': {'id': notification.id}}) }}
+                            <a class="btnRemoveRow" data-id="{{ notification.id }}" href="javascript:void(0);">
+                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                            </a>
+                            {{ form_end(deleteforms[notification.id]) }}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script>
+
+        var $table = $('#tableJakinarazpena');
+
+        $(document).ready(function () {
+
+
+            $('body').on('click', '.btnRemoveRow', function () {
+                var that = $(this);
+                bootbox.confirm({
+                    title: "{{ 'Adi!' | trans }}",
+                    message: "{{ 'Ziur zaude ezabatu nahi duzula?' | trans }}",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> {{ 'Ezeztatu' | trans }}'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> {{ 'Onartu' | trans }}'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result === true ) {
+                            $(that).closest('form').submit();
+                        }
+                    }
+                });
+            });
+
+            $('.btnIrekiModal').on('click', function () {
+                var fr = $(this).data('target');
+                $(fr).modal();
+            });
+
+            $table.bootstrapTable();
+            $table.on('expand-row.bs.table', function (e, index, row, $detail) {
+                var miid = row.id;
+                var url = Routing.generate('get_firmatzaileakfromjakinarazpena', {'jakinarazpenaid': miid});
+
+                $.get(url, function (data) {
+                    var html = "<div class='row'>" +
+
+                        "<div class='col-md-4'></div>"+
+                        "<div class='col-md-4'>" +
+                            "<div class='row'>" +
+                                "<table class='table'>" +
+                                    "<caption>Eskaeraren firma egoera:</caption>"+
+                                    "<thead>"+
+                                        "<tr>" +
+                                            "<th>Firmatzailea</th>" +
+                                            "<th>Firmatua</th>" +
+                                        "</tr>" +
+                                    "</thead><tbody";
+                                        $.each(data, function (i, obj) {
+                                            var myspan = "";
+                                            var fondoa ="";
+                                            if (obj.firmatua === false) {
+                                                myspan = "<span class='label label-danger'>Ez</span>";
+                                                fondoa = "danger";
+                                            } else {
+                                                myspan = "<span class='label label-success'>Bai</span>";
+                                                fondoa = "success";
+                                            }
+                                            html = html + "<tr>" +
+                                                "<td>" + obj.user.username + "</td>"+
+                                                "<td>" + myspan + "</td>"+
+                                            "</tr>";
+                                        });
+                                    html = html +"</tbody>"+
+                                "</table>"+
+                            "</div>" +
+                        "<div class='col-md-4'></div>"+
+                    "</div>";
+
+                    $detail.html(html);
+                });
+            });
+        })
+    </script>
+{% endblock %}

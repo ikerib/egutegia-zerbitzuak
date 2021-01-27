@@ -1,0 +1,427 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+
+    {{ parent() }}
+    <style>
+        .datepicker table tr td.disabled,
+        .datepicker table tr td.disabled:hover {
+            color: #b90000;
+        }
+    </style>
+
+{% endblock %}
+
+{% block headline %}{{ eskaera.type.name ~ ' ' ~ 'eskaera berria' | trans  | lower }} {% endblock %}
+
+{% block content_row %}
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'id': 'frmEskaeraNew'} }) }}
+
+            <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Noiztik' | trans }}</label>
+                <div class="col-sm-7">
+                    {{ form_widget(form.hasi, { 'attr': {'class': 'form-control cmbFetxaKalc', 'autocomplete': 'null'} }) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Noiz arte' | trans }}</label>
+                <div class="col-sm-7">
+                    {{ form_widget(form.amaitu, { 'attr': {'class': 'form-control', 'autocomplete': 'null'} }) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Aukeratu bat' | trans }}</label>
+                <div class="btn-group col-sm-7" role="group">
+                    <button type="button" class="btn btn-default" id="cmdDivOrduak">{{ "Orduak" | trans }}</button>
+                    <button type="button" class="btn btn-default" id="cmdDivEgunak">{{ "Egunak" | trans }}</button>
+                </div>
+            </div>
+
+            <div class="row">&nbsp;</div>
+
+            <div class="form-group" id="divEgunak" style="display: none;">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Eskatutako <strong>egunak</strong>' | trans|raw }}</label>
+                <div class="col-sm-4">
+                    {{ form_widget(form.egunak, { 'attr': {'class': 'form-control', 'autocomplete': 'null'} }) }}
+                </div>
+                <div class="col-sm-3">
+                    <p class="">Dituzun egunak: {{ (calendar.hoursSelf / calendar.hoursDay) | round (2) }} egun ( {{ calendar.hoursSelf }} ordu ) </p>
+                </div>
+            </div>
+
+            <div class="form-group" id="divOrduak" style="display: none;">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Eskatutako <strong>orduak</strong>' | trans | raw }}</label>
+                <div class="col-sm-4">
+                    {{ form_widget(form.orduak, { 'attr': {'class': 'form-control', 'autocomplete': 'null'} }) }}
+                </div>
+                <div class="col-sm-3">
+                    <p class="">Dituzun egunak: {{ (calendar.hoursSelfHalf / calendar.hoursDay) | round (2) }} egun ( {{ calendar.hoursSelfHalf }} ordu ) </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <p>{{ 'Lanaldia' | trans }}: {{ eskaera.calendar.hoursDay }}</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Guztira zenbat <strong>ordu</strong>' | trans | raw }}</label>
+                <div class="col-sm-7">
+                    {{ form_widget(form.total, { 'attr': {'class': 'form-control disabled', 'readonly':'readonly'} }) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {% if 'KONPENTSA' not in eskaera.type.name | upper %}
+                    <label for="appbundle_eskaera_oharra" class="col-sm-4 control-label">{{ 'Deskribapena' | trans }}</label>
+                {% else %}
+                    <label for="appbundle_eskaera_oharra" class="col-sm-4 control-label">{{ 'Azalpena' | trans }}</label>
+                {% endif %}
+                <div class="col-sm-7">
+                    {{ form_widget(form.oharra, { 'attr': {'class': 'form-control', 'autocomplete': 'null'} }) }}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Eskaera data' | trans }}</label>
+                <div class="col-sm-7">
+                    {{ form_widget(form.noiz, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+
+            {% if eskaera.type.id == type_lizentzia %}
+                <hr>
+
+                <div class="form-group">
+                    <label for="appbundle_eskaera_lizentziamota" class="col-sm-4 control-label">{{ 'Lizentzia mota' | trans }}</label>
+                    <div class="col-sm-7">
+                        {{ form_widget(form.lizentziamota, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="form-group divkostua" style="display: none;">
+                    <label for="appbundle_eskaera_lizentziamota" class="col-sm-4 control-label">{{ 'Kostua' | trans }}</label>
+                    <div class="col-sm-7">
+                        {{ form_widget(form.kostua, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="min-date" class="col-sm-4 control-label">{{ "Justifikantea gehitu" | trans }}</label>
+                    <div class="col-sm-7">
+                        {{ form_widget(form.justifikanteFile, { 'attr': {'class': 'form-control'} }) }}
+                    </div>
+
+                    <div class="row">&nbsp;</div>
+                    <div class="row">&nbsp;</div>
+
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-6"><p>{{ 'lizentzia_text' | trans }}</p></div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                </div>
+
+                <hr>
+            {% endif %}
+
+
+            <div class="form-group">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <button id="btnSubmit" type="button" class="btn btn-primary">{{ 'Eskaera gauzatu' | trans }}</button>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div style="display: none">
+                {{ form_end(form) }}
+                <input id="txtJornada" type="text" value="{{ calendar.getHoursDay }}">
+                <input id="hoursFree" type="text" value="{{ calendar.hoursFree }}">
+                <input id="eskaeramota" type="hidden" value="{{ eskaera.type.name }}">
+            </div>
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+
+    <input type="hidden" id="txtJaiEgunak" value="{{ jaiegunak |  serialize('json') }}" />
+
+{% endblock %}
+
+{% block foot_script %}
+    {{ parent() }}
+
+    <script>
+        var kostuabehar = false;
+        $("#appbundle_eskaera_lizentziamota").on("change", function () {
+            if (this.value !== "" ) {
+                var url = Routing.generate("get_lizentziamota", { id: this.value });
+                $.get(url, function(data, status){
+                    if ( status === "success") {
+                        if ( data.kostuabehar === true ) {
+                            kostuabehar = true;
+                            $(".divkostua").show();
+                        } else {
+                            kostuabehar = false;
+                            $(".divkostua").hide();
+                        }
+                    } else {
+                        kostuabehar = false;
+                        $(".divkostua").hide();
+                    }
+                });
+            } else {
+                kostuabehar = false;
+                $(".divkostua").hide();
+            }
+
+        });
+
+        $("#cmdDivOrduak").on("click", function () {
+            $("#appbundle_eskaera_total").val(0);
+            $(this).addClass("btn-primary");
+            $("#cmdDivEgunak").removeClass("btn-primary");
+            $("#divOrduak").show();
+            $("#divEgunak").hide();
+            $("#appbundle_eskaera_egunak").val(0);
+        });
+
+        $("#cmdDivEgunak").on("click", function () {
+            $("#appbundle_eskaera_total").val(0);
+            $(this).addClass("btn-primary");
+            $("#cmdDivOrduak").removeClass("btn-primary");
+            $("#divOrduak").hide();
+            $("#divEgunak").show();
+            $("#appbundle_eskaera_orduak").val(0);
+            calc();
+        });
+
+        $("#appbundle_eskaera_orduak").blur(function () {
+            var orduak = $("#appbundle_eskaera_orduak").val();
+            // var lanaldi= $("#txtJornada").val();
+
+            // var resul = orduak * lanaldi;
+            // resul = parseFloat(resul);
+            orduak = parseFloat(orduak);
+
+            $("#appbundle_eskaera_total").val(orduak.toFixed(2));
+        });
+
+        $("#btnSubmit").on("click", function () {
+            var ongi = true;
+            var eskaeramota = $("#eskaeramota").val();
+            var konpentsatuada = false;
+            var lizentziada = false;
+            if ( eskaeramota.toUpperCase().indexOf("KONPENTSA") !== -1 ) {
+                konpentsatuada = true;
+            }
+            if ( eskaeramota.toUpperCase().indexOf("LIZEN") !== -1 ) {
+                lizentziada = true;
+            }
+
+            if ( $("input[type=radio]:checked").length === 0 ) {
+                bootbox.alert("Mota zehaztea beharrezkoa da.");
+                ongi = false;
+                return;
+            }
+
+            var hasi = $("input[name='appbundle_eskaera[hasi]']").val();
+            if ( hasi.length === 0 ) {
+                if ( konpentsatuada === false ) {
+                    bootbox.alert("Noiztik zehaztea beharrezkoa da.");
+                } else {
+                    bootbox.alert("Eguna zehaztea beharrezkoa da.");
+                }
+
+                ongi = false;
+                return;
+            }
+
+            if ( konpentsatuada === false ) {
+                var amaitu = $("input[name='appbundle_eskaera[amaitu]']").val();
+                if ( amaitu.length === 0 ) {
+                    bootbox.alert("Amaitu zehaztea beharrezkoa da.");
+                    ongi = false;
+                    return;
+                }
+
+                var egunak = $("input[name='appbundle_eskaera[egunak]']").val();
+                if ( egunak.length === 0 ) {
+                    bootbox.alert("Egunak zehaztea beharrezkoa da.");
+                    ongi = false;
+                    return;
+                }
+            } else {
+                // ESKATU DA KONPENTSATUETAN AZALPENA BEHARREZKOA EZ IZATEA
+                // var oharra = $("input[name='appbundle_eskaera[oharra]']").val();
+                // if ( oharra.length === 0 ) {
+                //     bootbox.alert("Azalpena zehaztea beharrezkoa da.");
+                //     ongi = false;
+                //     return;
+                // }
+            }
+
+            if ( lizentziada === true ) {
+                var $lizentziamota = $("#appbundle_eskaera_lizentziamota").val();
+                if ( $lizentziamota === "" ) {
+                    bootbox.alert("Lizentzia mota zehaztea beharrezkoa da.");
+                    ongi = false;
+                    return;
+                }
+            }
+
+
+            var orduak = $("input[name='appbundle_eskaera[orduak]']").val();
+            if ( orduak.length === 0 ) {
+                bootbox.alert("Orduak zehaztea beharrezkoa da.");
+                ongi = false;
+                return;
+            }
+            var noiz = $("input[name='appbundle_eskaera[noiz]']").val();
+            if ( noiz.length === 0 ) {
+                bootbox.alert("Noiz zehaztea beharrezkoa da.");
+                ongi = false;
+                return;
+            }
+
+            var orduakGuztira = $("#appbundle_eskaera_total").val();
+            if ((orduakGuztira === 0) || (orduakGuztira==="0") || (orduakGuztira==="0.00")) {
+                bootbox.alert("Zerbait ez dago ondi. Guztira zenbat ordu > 0 izan behar du.");
+                ongi = false;
+                return;
+            }
+
+            if ( ongi ) {
+                $("#frmEskaeraNew").submit();
+            }
+
+
+        });
+
+        var jaiegunak = JSON.parse($("#txtJaiEgunak").val());
+        var arrayJaiEgunak = [];
+
+        $.each(jaiegunak, function ( key, value ) {
+            var nireFetxa = moment(value.start_date);
+            arrayJaiEgunak.push(moment(nireFetxa).format("YYYY-MM-DD"));
+        });
+
+        $("#appbundle_eskaera_hasi").datepicker({
+            todayBtn: 1,
+            autoclose: true,
+            format: "yyyy-mm-dd",
+            datesDisabled: arrayJaiEgunak,
+            daysOfWeekDisabled: "6,0",
+            language: '{{ app.request.locale }}'
+        }).on('changeDate', function ( selected ) {
+            var fin = $("#appbundle_eskaera_amaitu").val();
+            if ( fin==="") { // Ez badago datarik zehaztuta
+                var minDate = new Date(selected.date.valueOf());
+                $("#appbundle_eskaera_amaitu").datepicker('setStartDate', minDate);
+            }
+        });
+
+        $("#appbundle_eskaera_amaitu").datepicker({
+            autoclose: true,
+            format: "yyyy-mm-dd",
+            datesDisabled: arrayJaiEgunak,
+            daysOfWeekDisabled: "6,0",
+            language: '{{ app.request.locale }}'
+        }).on('changeDate', function ( selected ) {
+            var hasi = $("#appbundle_eskaera_hasi").val();
+            if ( hasi==="") { // Ez badago datarik zehaztuta
+                var maxDate = new Date(selected.date.valueOf());
+                $("#appbundle_eskaera_hasi").datepicker('setEndDate', maxDate);
+            }
+        });
+
+        $("#appbundle_eskaera_noiz").datepicker({
+            autoclose: true,
+            format: "yyyy-mm-dd",
+            datesDisabled: arrayJaiEgunak,
+            daysOfWeekDisabled: "6,0",
+            language: '{{ app.request.locale }}'
+        });
+
+        function workday_count( fstart, fend ) {
+            var start = moment(fstart);
+            var end = moment(fend);
+            var first = start.clone().endOf("week"); // end of first week
+            var last = end.clone().startOf("week"); // start of last week
+            var days = Math.floor(last.diff(first, "days") * 5 / 7); // this will always multiply of 7
+
+            var wfirst = first.day() - start.day(); // check first week
+            if ( start.day() === 0 ) --wfirst; // -1 if start with sunday
+
+            var wlast = end.day() - last.day(); // check last week
+            if ( end.day() === 6 ) --wlast; // -1 if end with saturday
+
+            return wfirst + days + wlast - kendu_jai_egunak(fstart, fend); // get the total
+        }
+
+        function kendu_jai_egunak( fstart, fend ) {
+            /** Funtzio onek fstart eta fend artean loop bat egin eta jai eguna den begiratzen du
+             * uneko eguna arrayJaiEgunak Array-ean dagoen begiratuz, beti ere asteburua ez denean.
+             *
+             * Zenbat egun topatu diren itzultzen du
+             */
+            var a = moment(fstart);
+            var b = moment(fend);
+            var erantzuna = 0;
+            for ( var m = moment(a); m.diff(b, 'days') <= 0; m.add(1, "days") ) {
+
+                if ( (m.weekday() !== 6) && (m.weekday() !== 0) ) {
+                    if ( jQuery.inArray(m.format("YYYY-MM-DD"), arrayJaiEgunak) !== -1 ) {
+                        erantzuna += 1;
+                    }
+
+                }
+            }
+
+            return erantzuna;
+        }
+
+        function calc() {
+            $("#appbundle_eskaera_total").val(0);
+            const txtEgunak = $("#appbundle_eskaera_egunak").val();
+            var d;
+            d = 0;
+
+            const hasi = $("#appbundle_eskaera_hasi").val();
+            const amaitu = $("#appbundle_eskaera_amaitu").val();
+            d = workday_count(hasi, amaitu);
+            if ( isNaN(d) ) {
+                d = 0;
+            }
+
+
+            const orduak = $("#appbundle_eskaera_orduak").val();
+            const egunOrduak = $("#txtJornada").val();
+
+            $("#appbundle_eskaera_egunak").val(d.toFixed(2));
+            var tmp = $("#appbundle_eskaera_egunak").val() * egunOrduak;
+
+            tmp = parseFloat(tmp) + parseFloat(orduak);
+
+            $("#appbundle_eskaera_total").val(tmp.toFixed(2));
+        }
+
+        $(".cmbFetxaKalc").change(function () {
+            calc()
+        });
+
+    </script>
+{% endblock %}
+
+

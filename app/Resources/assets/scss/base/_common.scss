@@ -1,0 +1,21 @@
+// SCSS fitxategia
+
+// Author: Iker Ibarguren Berasaluze
+
+
+body {
+  padding-top: 55px;
+  //overflow: hidden; //iker
+}
+
+.doclist {
+  list-style-type: circle !important;
+}
+
+
+footer { // iker
+  background-color:#ffffff;
+  bottom:0;
+  position:fixed;
+  padding:10px;
+}

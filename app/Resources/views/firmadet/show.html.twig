@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Firmadet</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ firmadet.id }}</td>
+            </tr>
+            <tr>
+                <th>Noiz</th>
+                <td>{% if firmadet.noiz %}{{ firmadet.noiz|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Firmatua</th>
+                <td>{% if firmadet.firmatua %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Postit</th>
+                <td>{% if firmadet.postit %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Autofirma</th>
+                <td>{% if firmadet.autofirma %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Orden</th>
+                <td>{{ firmadet.orden }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if firmadet.created %}{{ firmadet.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{% if firmadet.updated %}{{ firmadet.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('erantzunak_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('erantzunak_edit', { 'id': firmadet.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+{% block html_tag %}
+<html {% block html_class %}class="no-js" {% endblock %}lang="{{ app.request.locale }}">
+{% endblock html_tag %}
+
+{% block head %}
+    <head>
+        <meta charset="{{ _charset }}">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{% block title %}Pasaiako Udala{% endblock title %}</title>
+        <meta name="description" content="{% block description %}{% endblock description %}">
+        {% block favicon %}
+            <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+            <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+        {% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block head_style %}
+            {# Override this block to add your own files! #}
+            {% if app.debug %}
+                <link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet">
+                <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" type="text/css" rel="stylesheet">
+                <link href="{{ asset('css/bootstrap-theme.css') }}" type="text/css" rel="stylesheet">
+                <link href="{{ asset('css/bootstrap-year-calendar.min.css') }}" type="text/css" rel="stylesheet">
+                <link href="{{ asset('css/font-awesome.css') }}" type="text/css" rel="stylesheet">
+                <link href="{{ asset('css/bootstrap-table.css') }}" type="text/css" rel="stylesheet">
+                <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet">
+            {% else %}
+                <link href="{{ asset('css/app.min.css') }}" type="text/css" rel="stylesheet">
+            {% endif %}
+
+        {% endblock head_style %}
+
+        {% block head_script %}
+            {#<script src="{{ asset('js/modernizr.js') }}"></script>#}
+            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                <style>
+                    .inpersonalizatua {
+                        background-color: #2ca741 !important;
+                    }
+
+                    .navbar-inverse {
+
+                    }
+
+                    .navbar-inverse {
+                        background-image: -webkit-linear-gradient(top, #af488f 0%, #68506b 100%);
+                        background-image: -o-linear-gradient(top, #af488f 0%, #68506b 100%);
+                        background-image: -webkit-gradient(linear, left top, left bottom, from(#af488f), to(#68506b)) !important;
+                        background-image: linear-gradient(to bottom, #af488f 0%, #68506b 100%);
+                        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#af488f', endColorstr='#68506b', GradientType=0);
+                        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+                        background-repeat: repeat-x;
+                        border-radius: 4px;
+                    }
+
+                </style>
+            {% endif %}
+        {% endblock head_script %}
+
+    </head>
+{% endblock head %}
+
+{% block body_tag %}
+<body>
+{% endblock body_tag %}
+
+{% block body_start %}
+{% endblock body_start %}
+
+{% block body %}
+{% block navbar %}
+    {% embed '@MopaBootstrap/Navbar/navbar.html.twig' with {'fixedTop': true, 'inverse': true , 'fluid': true } %}
+{% block brand %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="navbar-brand" href="{{ path('dashboard') }}">Egutegiak</a>
+    {% else %}
+    <a class="navbar-brand" href="{{ path('user_homepage') }}">Egutegiak</a>
+    {% endif %}
+{% endblock %}
+
+{% block menu %}
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_BIDERATZAILE') or is_granted('ROLE_SINATZAILEA') %}
+        {{ mopa_bootstrap_menu('AppBundle:Builder:mainMenu', {'automenu':'navbar', 'currentClass': ''}) }}
+    {% endif %}
+    <div class="pull-right">
+        {#<div >#}
+        {% if is_mobile() %}
+            {{ mopa_bootstrap_menu('AppBundle:Builder:movuserMenu', {'automenu':'navbar', 'currentClass': ''}) }}
+        {% else %}
+            {{ mopa_bootstrap_menu('AppBundle:Builder:userMenu', {'automenu':'navbar', 'currentClass': ''}) }}
+        {% endif %}
+    </div>
+{% endblock %}
+    {% endembed %}
+{% endblock navbar %}
+
+{% block container %}
+{% block container_div_start %}<div class="{% block container_class %}container-fluid{% endblock container_class %}">{% endblock container_div_start %}
+    {% block header %}
+    {% endblock header %}
+
+{% block content_div_start %}
+    <div class="content">{% endblock content_div_start %}
+    {% block page_header %}
+        <div class="page-header">
+            <h2>{% block headline %}HEADLIKE{% endblock headline %}</h2>
+
+            {% block subheadline %}{% endblock %}
+        </div>
+    {% endblock page_header %}
+
+    {% block content_row %}
+        <div id="alertSpot">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                {% for type, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        <div class="alert alert-{{ type }} fade in alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            {{ flash }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row">
+            {% block content %}
+                <div class="col-sm-9">
+                    {% block content_content %}
+
+                    {% endblock content_content %}
+                </div>
+                <div class="col-sm-3">
+                    {% block content_sidebar %}
+                        <h2>Sidebar</h2>
+                    {% endblock content_sidebar %}
+                </div>
+            {% endblock content %}
+        </div>
+    {% endblock content_row %}
+
+{% block content_div_end %}</div>{% endblock content_div_end %}
+
+{% block footer_tag_start %}
+    <footer>
+{% endblock footer_tag_start %}
+
+    {% block footer %}
+        <p>Pasaiako Udala 2017</p>
+    {% endblock footer %}
+
+{% block footer_tag_end %}
+    </footer>
+{% endblock footer_tag_end %}
+{% block container_div_end %}</div><!-- /container -->{% endblock container_div_end %}
+{% endblock container %}
+
+    {% block body_end_before_js %}
+    {% endblock body_end_before_js %}
+
+{% block foot_script %}
+    {# Overwrite this block to add your own js here #}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    {#<script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>#}
+
+    {% if app.debug %}
+    <script src="{{ asset('js/respond.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-year-calendar.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-year-calendar.es.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-year-calendar.eu.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-table.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-table-eu-EU.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-table-export.min.js') }}"></script>
+    <script src="{{ asset('js/jspdf.js') }}"></script>
+    <script src="{{ asset('js/jspdf.plugin.autotable.js') }}"></script>
+    <script src="{{ asset('js/tableExport.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-popover.js') }}"></script>
+    <script src="{{ asset('js/bootbox.min.js') }}"></script>
+    <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.eu.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/calendar-share.js') }}"></script>
+    {% else %}
+    <script src="{{ asset('js/app.min.js') }}"></script>
+    {% endif %}
+{% endblock foot_script %}
+{% endblock body %}
+
+{% block body_end %}
+{% endblock body_end %}
+</body>
+</html>

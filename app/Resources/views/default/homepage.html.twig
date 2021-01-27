@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block content_div_start %}{% endblock %}
+{% block content_div_end %}{% endblock %}
+{% block headline %}{{ 'Udal Langileen egutegi kudeatzailea' | trans }} {% endblock %}
+
+{% block content_row %}
+
+    <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary">{{ 'Sartu' | trans }}</a>
+
+{% endblock content_row %}

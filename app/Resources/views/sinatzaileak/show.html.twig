@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <style>
+        .select2-close-mask{
+            z-index: 2099;
+        }
+        .select2-dropdown{
+            z-index: 3051;
+        }
+    </style>
+{% endblock %}
+{% block headline %}{{ 'Sinatzaileen zerrenda: ' | trans }}{{ sinatzaileak.name }} {% endblock %}
+
+
+{% block content_row %}
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" style="overflow:hidden;" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Gehitu Erabiltzailea berria</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:Sinatzaileakdet:new', {'sinatzaileid': sinatzaileak.id})) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Utzi</button>
+                    <button type="button" class="btn btn-primary" id="btnNewZerrendaUser">Sortu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toolbar">
+        <button id="btnBerria" class="btn btn-default">Gehitu langilea
+        </button>
+    </div>
+    <div>&nbsp;</div>
+
+    <table class="table table-condensed table-hover table-striped table-bordered">
+        <thead>
+        <th>Langilea</th>
+        <th>Ordena</th>
+        <th></th>
+        </thead>
+        <tbody>
+        {% for u in sinatzaileak.sinatzaileakdet %}
+            <tr>
+                <td>{{ u.user.username }}</td>
+                <td>{{ u.orden }}</td>
+                <td>
+                    <ul class="list-inline">
+                        <li>{{ form_start(deleteForms[u.id],{'attr': {'id': u.id}}) }}
+                            <a class="btnRemoveRow" data-id="{{ u.id }}" href="javascript:void(0);">
+                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                            </a>
+                            {{ form_end(deleteForms[u.id]) }}
+                        </li>
+                        <li>
+                            <a class="btnUp" data-id="{{ u.id }}"
+                               href="{{ path('admin_sinatzaileakdet_up', {id: u.id}) }}">
+                                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btnDown" data-id="{{ u.id }}"
+                               href="{{ path('admin_sinatzaileakdet_down', {id: u.id}) }}">
+                                <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+{% block foot_script %}
+    {{ parent() }}
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/eu.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.select2').select2({width: '80%'});
+
+            $('#btnBerria').on('click', function () {
+                $('#myModal').modal();
+            });
+
+            $('#btnNewZerrendaUser').on('click', function () {
+                var u = $('#appbundle_sinatzaileakdet_user').val();
+                if (u.length > 0)
+                    $('#frmNewZerrendaUser').submit();
+                else
+                    bootbox.alert("Langile bat aukeratu behar duzu.")
+            });
+
+            $('.btnRemoveRow').on('click', function () {
+                var that = $(this);
+                bootbox.confirm({
+                    title: "{{ 'Adi!' | trans }}",
+                    message: "{{ 'Ziur zaude ezabatu nahi duzula?' | trans }}",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> {{ 'Ezeztatu' | trans }}'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> {{ 'Onartu' | trans }}'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result === true) {
+                            $(that).closest('form').submit();
+                        }
+                    }
+                });
+            });
+        })
+
+    </script>
+{% endblock %}

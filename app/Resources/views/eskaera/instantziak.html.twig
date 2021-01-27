@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}{{ 'Aukeratu instantzia mota' | trans }} {% endblock %}
+
+{% block head_style %}
+    {{  parent() }}
+    <style>
+        .panel {
+            cursor: pointer;
+        }
+    </style>
+{% endblock head_style %}
+
+{% block content_row %}
+
+    <div class="row">
+        <div class="col-md-12"></div>
+        <div class="col-md-12">
+            {% if isMunipa == 1 %}
+                {% for t in types if  t.id != 13 and t.id != 6 %} {# EZ ERAKUTSI ORDU SINDIKALAK ETA KONPENTSATUAK #}
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    {{ t.name }}
+                                </div>
+                                <div class="panel-body">
+                                    {% if t.id != 5 %}
+                                        {{ t.description |raw }}
+                                    {% endif %}
+                                </div>
+                                <div class="panel-footer text-right aurrerabotoia" style="display: none;">
+                                    <a href="{{ path('eskaera_new', { 'q': t.id}) }}">
+                                        {{ "Aukeratu eta jarraitu" | trans }}    <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for t in types %}
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    {{ t.name }}
+                                </div>
+                                <div class="panel-body">
+                                    {{ t.description |raw }}
+                                </div>
+                                <div class="panel-footer text-right aurrerabotoia" style="display: none;">
+                                    <a href="{{ path('eskaera_new', { 'q': t.id}) }}">
+                                        {{ "Aukeratu eta jarraitu" | trans }}    <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row aurrerabotoia" style="display: none;">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+            {#<a href="{{ path('eskaera_new', { 'q': t.id}) }}">{{ t.name }}</a></li>#}
+            {#<a class="btn btn-primary" href="#">{{ "Jarraitu" | trans }} &nbsp; <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>#}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block foot_script %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('.panel').click(function (  ) {
+                if ( !$(this).hasClass('active')) {
+
+                    $('.panel-primary').removeClass("active");
+                    $('.aurrerabotoia').hide();
+                    $('.panel-primary').removeClass("panel-primary").addClass('panel-default');
+
+                    $(this).addClass("active").removeClass("panel-default").addClass("panel-primary");
+
+                    $(this).children(".aurrerabotoia").show();
+
+                }
+            })
+
+
+
+        });
+
+    </script>
+
+{% endblock %}

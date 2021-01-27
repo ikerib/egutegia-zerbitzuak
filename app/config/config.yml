@@ -1,0 +1,278 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: eu
+    app.dir_base_pdf: '%dir_base_pdf%'
+    app.dir_tmp_pdf: '%dir_tmp_pdf%'
+
+framework:
+    ide: "phpstorm://open?file=%%f&line=%%l"
+    #esi: ~
+    translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.root_dir%/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+#        handler_id:  session.handler.native_file
+#        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+
+        handler_id: snc_redis.session.handler
+        cookie_lifetime: 1314000
+        cookie_secure: false
+        cookie_samesite: 'lax'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        type_konpentsatuak: '%type_konpentsatuak%'
+        type_norbere: '%type_norbere%'
+        type_lizentzia: '%type_lizentzia%'
+    form_themes:
+        # Bootstrap:
+#        - bootstrap_3_layout.html.twig
+#        - bootstrap_3_horizontal_layout.html.twig
+        - 'VichUploaderBundle:Form:fields.html.twig'
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+#            engine: InnoDB
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+stof_doctrine_extensions:
+    default_locale: "%locale%"
+    orm:
+        default:
+            sluggable: true
+            timestampable: true
+            sortable: true
+
+nelmio_api_doc: ~
+
+# Nelmio CORS
+nelmio_cors:
+    defaults:
+        allow_origin:  ["%cors_allow_origin%"]
+        allow_methods: ["POST", "PUT", "GET", "DELETE", "OPTIONS"]
+        allow_headers: ["content-type", "authorization"]
+        max_age:       3600
+    paths:
+        '^/': ~
+
+fos_rest:
+    disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    allowed_methods_listener: true
+    access_denied_listener:
+        json: true
+    body_listener: true
+    routing_loader:
+            default_format: json
+    view:
+            view_response_listener: 'force'
+
+fos_js_routing:
+    routes_to_expose:
+        - get_lizentziamota
+        - delete_template_events
+        - post_template_events
+        - get_template_events
+        - get_template
+        - admin_type_edit
+        - admin_calendar_new
+        - backup_events
+        - get_events
+        - post_events
+        - put_event
+        - delete_events
+        - post_notes
+        - post_usernotes
+        - admin_hour_new
+        - admin_hour_edit
+        - admin_document_order_down
+        - admin_document_order_up
+        - admin_calendar_compare
+        - eskaera_index
+        - put_firma
+        - put_postit
+        - put_jakinarazpena_readed
+        - put_jakinarazpena
+        - get_firmatzaileak
+        - get_firmatzaileakfromjakinarazpena
+        - eskaera_add_to_calendar
+        - put_eskaera_egutegian_marka
+
+
+mopa_bootstrap:
+    form: ~ # Adds twig form theme support
+    menu: ~ # enables twig helpers for menu
+
+ldap_tools:
+    domains:
+        pasaia:
+            domain_name: '%ldap_domain%'
+            username: '%ldap_username%'
+            password: '%ldap_password%'
+            base_dn: '%ldap_base_dn%'
+            servers: '%ldap_server%'
+
+
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: informatika@pasaia.net
+        sender_name: "Iker Ibarguren"
+    registration:
+            confirmation:
+                enabled: false
+
+fr3d_ldap:
+   driver:
+      host: '%ldap_domain%'
+      username: '%ldap_username%'
+      password: '%ldap_password%'
+#      useSsl:   '%ldap_ssl%'
+      accountDomainName: donibane.pasaia.net
+      accountDomainNameShort: pasaia
+      bindRequiresDn: false # Ez du gordetzen DN-a datu basean. SE SUPONE
+   user:
+      baseDn: dc=pasaia, dc=net
+      usernameAttribute: sAMAccountName
+      attributes:
+         - { ldap_attr: samaccountname,  user_method: setUsername }
+         - { ldap_attr: mail,  user_method: setEmail }
+         - { ldap_attr: department, user_method: setDepartment }
+         - { ldap_attr: employeeid, user_method: setNan }
+         - { ldap_attr: description, user_method: setLanpostua }
+         - { ldap_attr: displayname, user_method: setDisplayname }
+         - { ldap_attr: memberof, user_method: setMembers }
+      filter: (&(ObjectClass=posixAccount))
+   service:
+      user_hydrator: app.ldap.user_hydrator
+
+
+vich_uploader:
+    db_driver: orm # or mongodb or propel or phpcr
+    mappings:
+        uploadfile:
+            directory_namer: app.document.directory_namer
+            uri_prefix:         /uploads
+            upload_destination: '%kernel.root_dir%/../web/uploads'
+#            namer:              vich_uploader.namer_uniqid # will rename your uploaded files using a uniqueid for the name and keep the extension
+#            namer:              vich_uploader.namer_origname # will rename your uploaded files using a uniqueid as the prefix of the filename and keeping the original name and extension
+            inject_on_load:     true # should the file be injected into the uploadable entity when it is loaded from the data store.
+            delete_on_update:   true # should the file be deleted when a new file is uploaded
+            delete_on_remove:   true # should the file be deleted when the entity is removed
+        justifikanteak:
+            directory_namer: app.document.directory_namer
+            uri_prefix:         /uploads/_justifikanteak
+            upload_destination: '%kernel.root_dir%/../web/uploads/_justifikanteak'
+            #            namer:              vich_uploader.namer_uniqid # will rename your uploaded files using a uniqueid for the name and keep the extension
+            #            namer:              vich_uploader.namer_origname # will rename your uploaded files using a uniqueid as the prefix of the filename and keeping the original name and extension
+            inject_on_load:     true # should the file be injected into the uploadable entity when it is loaded from the data store.
+            delete_on_update:   true # should the file be deleted when a new file is uploaded
+            delete_on_remove:   true # should the file be deleted when the entity is removed
+
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf
+        options:
+            - { name: 'viewport-size', value: ‘1024x768’ }
+            - { name: 'page-size', value: 'A4' }
+            - { name: 'encoding', value: 'UTF-8' }
+
+
+eight_points_guzzle:
+    # (de)activate logging/profiler; default: %kernel.debug%
+    logging: true
+
+    clients:
+        api_put_firma:
+            base_url: '%api_url%'
+            options:
+                headers:
+                    Accept: "application/json"
+
+sensio_framework_extra:
+    router:
+        annotations: false
+
+fos_ck_editor:
+    input_sync: true
+    default_config: simple_config
+    configs:
+        simple_config:
+            toolbar:
+                - { name: "styles", items: ['Bold', 'Italic','Underline', 'BulletedList','NumberedList','Outdent','Indent', 'Link', 'PasteText', 'TextColor', 'BGColor'] }
+            jquery: true
+            forcePasteAsPlainText: true;
+
+mobile_detect:
+
+snc_redis:
+    clients:
+        session_client:
+            dsn: 'redis://localhost'
+            logging: false # https://github.com/snc/SncRedisBundle/issues/161
+            type: phpredis
+    session:
+        client: session_client
+        locking: false
+        prefix: session_prefix_
+        ttl: 1440

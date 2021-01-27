@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}{{ 'Eskaeren zerrenda' | trans }} {% endblock %}
+
+{% block content_row %}
+
+    <div class="row">
+        <div class="col-md-2">
+
+            <!-- Single button -->
+            <div class="btn-group">
+                <a class="btn btn-primary" href="{{ path('eskaera_instantziak') }}">{{ "Eskaera berria" | trans }} </a>
+            </div>
+        </div>
+        <div class="col-md-10"></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tableEskaerak" class="table table-bordered table-striped table-hover table-condensed">
+                <thead>
+                <tr>
+                    {#<th>Id</th>#}
+                    {#<th>{{ "Izaera" | trans }}</th>#}
+                    <th>{{ "# Eskaera" | trans }}</th>
+                    <th>{{ "Mota" | trans }}</th>
+                    <th>{{ "Hasi" | trans }}</th>
+                    <th>{{ "Amaitu" | trans }}</th>
+                    <th>{{ "Egunak" | trans }}</th>
+                    <th>{{ "Orduak" | trans }}</th>
+                    <th>{{ "Orduak Guztira" | trans }}</th>
+                    <th>{{ "Bideratua" | trans }}</th>
+                    <th>{{ "Gauzatua" | trans }}</th>
+                    <th>{{ "Justifikatea" | trans }}</th>
+                    <th>{{ "Oharrak" }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for eskaera in eskaeras %}
+                    <tr>
+                        <td>{{ eskaera.id }}</td>
+                        {#<td><a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">{{ eskaera.id }}</a></td>#}
+                        {#<td><a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">{{ eskaera.name }}</a></td>#}
+                        <td><a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">{{ eskaera.type.name }}</a></td>
+                        <td><a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">{% if eskaera.hasi %}{{ eskaera.hasi|date('Y-m-d') }}{% endif %}</a></td>
+                        <td><a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">{% if eskaera.amaitu %}{{ eskaera.amaitu|date('Y-m-d') }}{% endif %}</a></td>
+                        <td><a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">{{ eskaera.egunak }}</a></td>
+                        <td><a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">{{ eskaera.orduak }}</a></td>
+                        <td><a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">{{ eskaera.total }}</a></td>
+                        <td>
+                            <a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">
+                                {% if eskaera.abiatua == true %}
+                                    <label class="label label-success">{{ "Bai" | trans }}</label>
+                                {% else %}
+                                    <label class="label label-danger">{{ "Ez" | trans }}</label>
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('eskaera_show', { 'id': eskaera.id }) }}">
+                                {% if eskaera.amaitua == true %}
+                                    <label class="label label-success">{{ "Bai" | trans }}</label>
+                                {% else %}
+                                    <label class="label label-danger">{{ "Ez" | trans }}</label>
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td>
+                            {% if eskaera.type.id != type_lizentzia %}
+                                -
+                            {% else %}
+                                {% if eskaera.justifikatua == true %}
+                                    <span class="label label-success">{{ "Bai" | trans }}</span>
+                                    {#<a href="{{ vich_uploader_asset(eskaera, 'justifikanteFile') }}" target="_blank">#}
+                                        {#<i class="fa fa-file-image-o" aria-hidden="true"></i> {{ "Ikusi" | trans }}#}
+                                    {#</a>#}
+                                {% else %}
+                                    <span class="label label-danger">{{ "Ez" | trans }}</span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span data-html="true" data-toggle="tooltip" data-placement="top" title="{{ eskaera.oharra }}">
+                            {{ eskaera.oharra|length > 10 ? eskaera.oharra|slice(0, 10) ~ '...' : eskaera.oharra }}
+                        </span>
+                        </td>
+                        <td>
+                            <ul>
+                                {% if eskaera.type.id == type_lizentzia %}
+                                    {% if eskaera.justifikanteName == null %}
+                                        <li>
+                                            <a href="{{ path('eskaera_justify', { 'id': eskaera.id }) }}">
+                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i> {{ "Justifikatea bidali" | trans }}
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="{{ vich_uploader_asset(eskaera, 'justifikanteFile') }}" target="_blank">
+                                                <i class="fa fa-file-image-o" aria-hidden="true"></i> {{ "Ikusi justifikatea" | trans }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('eskaera_justify_file_delete', {'id': eskaera.id}) }}">
+                                                <i class="fa fa-trash" aria-hidden="true"></i> {{ "Ezabatu justifikatea" | trans }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6"> Ez dago daturik</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

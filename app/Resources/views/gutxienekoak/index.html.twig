@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/bootstrap-colorpicker.min.css">
+{% endblock %}
+{% block headline %}{{ 'Gutxieneko zerbitzuaen zerrenda' | trans }} {% endblock %}
+
+
+{% block content_row %}
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Zerrenda berria</h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:Gutxienekoak:new')) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Utzi</button>
+                    <button type="button" class="btn btn-primary" id="btnNewZerrenda">Sortu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toolbar">
+        <button id="btnBerria" class="btn btn-default">Zerrenda berria</button>
+    </div>
+
+    <table data-toggle="table"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="25"
+           data-search="true"
+            {#data-height="300"#}
+
+           data-sort-name="name"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+
+           data-toolbar="#toolbar"
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+        <thead>
+        <tr>
+            <th data-halign="center" data-align="left" data-field="name" data-sortable="true">{{ 'Izena' | trans }}</th>
+            <th data-halign="center" data-align="right" data-field="portzentaia" data-sortable="true">{{ 'Portzentaia' | trans }}</th>
+            <th data-halign="center" data-align="left" data-field="gutxienekoakdet" data-sortable="true">{{ 'Erabiltzaileak' | trans }}</th>
+            <th data-halign="center" data-align="center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for gutxienekoak in gutxienekoaks %}
+            <tr>
+                <td><a href="{{ path('admin_gutxienekoak_show', { 'id': gutxienekoak.id }) }}">{{ gutxienekoak.name }}</a></td>
+                <td><a href="{{ path('admin_gutxienekoak_show', { 'id': gutxienekoak.id }) }}">{{ gutxienekoak.portzentaia }}</a></td>
+                <td>
+                    {% for d in gutxienekoak.gutxienekoakdet %}
+                        <span class="label label-default">{{ d.user.displayname }}</span>&nbsp;
+                    {% endfor %}
+                </td>
+                <td>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="{{ path('admin_gutxienekoak_show', { 'id': gutxienekoak.id }) }}"><i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_gutxienekoak_edit', { 'id': gutxienekoak.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            {{ form_start(deleteForms[gutxienekoak.id],{'attr': {'id': gutxienekoak.id}}) }}
+                            <a class="btnRemoveRow" data-id="{{ gutxienekoak.id }}"
+                               href="#gutxienekoakEditModal{{ gutxienekoak.id }}">
+                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                            </a>
+                            {{ form_end(deleteForms[gutxienekoak.id]) }}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+
+            $("#btnBerria").on("click", function () {
+                $("#myModal").modal();
+            });
+
+            $("#btnNewZerrenda").on("click", function () {
+                if ( $("#appbundle_gutxienekoak_name").val().length > 0 ) {
+                    $("#frmNewGutxienekoak").submit();
+                } else {
+                    bootbox.alert("Izena ezartzea beharrezkoa da");
+                }
+            });
+
+            $('.btnRemoveRow').on('click', function () {
+                var that = $(this);
+                bootbox.confirm({
+                    title: "{{ 'Adi!' | trans }}",
+                    message: "{{ 'msg.ezabatu' | trans }}",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> {{ 'Ezeztatu' | trans }}'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> {{ 'Onartu' | trans }}'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result === true) {
+                            $(that).closest('form').submit();
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,325 @@
+{% extends 'base.html.twig' %}
+
+{% block head_style %}
+    {{ parent() }}
+    <style>
+        body {
+            background: rgb(204, 204, 204);
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font: 12pt "Tahoma";
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            display: block;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 10mm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+
+            box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 20px;
+        }
+
+        .ttiki {
+            font-size: 8px;
+        }
+
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                background: white;
+                margin: 25mm 25mm 25mm 10mm;
+                font-size: 26px;
+                /*font-family: "Times New Roman", Georgia, Serif, sans-serif;*/
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;;
+            }
+
+            .page {
+                background: white;
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: 0;
+                page-break-after: always;
+            }
+
+            *,
+            *:before, enter code here
+            *:after {
+                color: #000 !important;
+                text-shadow: none !important;
+                background: transparent !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important;
+            }
+
+            a,
+            a:visited {
+                text-decoration: underline;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+
+            abbr[title]:after {
+                content: " (" attr(title) ")";
+            }
+
+            a[href^="#"]:after,
+            a[href^="javascript:"]:after {
+                content: "";
+            }
+
+            pre,
+            blockquote {
+                border: 1px solid #999;
+
+                page-break-inside: avoid;
+            }
+
+            thead {
+                display: table-header-group;
+            }
+
+            tr,
+            img {
+                page-break-inside: avoid;
+            }
+
+            img {
+                max-width: 100% !important;
+            }
+
+            p,
+            h2,
+            h3 {
+                orphans: 3;
+                widows: 3;
+            }
+
+            h2,
+            h3 {
+                page-break-after: avoid;
+            }
+
+            select {
+                background: #fff !important;
+            }
+
+            .navbar {
+                display: none;
+            }
+
+            .btn > .caret,
+            .dropup > .btn > .caret {
+                border-top-color: #000 !important;
+            }
+
+            .label {
+                border: 1px solid #000;
+            }
+
+            .table {
+                border-collapse: collapse !important;
+            }
+
+            .table td,
+            .table th {
+                background-color: #fff !important;
+            }
+
+            .table-bordered th,
+            .table-bordered td {
+                border: 1px solid #ddd !important;
+            }
+
+            .ttiki {
+                font-size: 12px;
+            }
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block headline %}{{ eskaera.name }} {% endblock  %}
+
+ {% block subheadline %}
+     <div class="row">
+         <div class="col-md-12 text-center">
+            {# <a class="btn btn-primary" target="_blank" href="{{ path('eskaera_pdf',{id:eskaera.id}) }}">Eskuratu PDF fitxategia</a>#}
+         </div>
+     </div>
+ {% endblock %}
+
+{% block content_row %}
+
+
+    <div class="container page">
+
+
+
+
+        <div class="row">
+            <div class="col-xs-2">
+                <img src="/img/armarria.jpg" alt="Pasiako Udaleko armarria">
+            </div>
+            <div class="col-xs-8">
+                <h1 class="text-center">OPOR EDO BAIMEN ESKAERA</h1>
+            </div>
+            <div class="col-xs-2">
+                <p class="ttiki">
+                    IFK/CIF P2006900A
+                    Tel. 943 344034
+                    Donibane kalea, 19
+                    20110 Pasaia
+                    GIZA BALIABIDEAK
+                    ANTOLAKUNTZA
+                    Tel. 943 345361
+                    pertsonal@pasaia.net
+                </p>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <strong>Langilea &nbsp;&nbsp;</strong>{{ eskaera.user.displayname }}
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <strong>Baimen mota &nbsp;&nbsp;</strong>{{ eskaera.type.name }}
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <strong>Noiztik &nbsp;&nbsp;</strong>{{ eskaera.hasi | date('Y-m-d') }}
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <strong>Noiz arte &nbsp;&nbsp;</strong>{{ eskaera.amaitu | date('Y-m-d') }}
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <div>
+                    <span>Eskatutako egunak: &nbsp;&nbsp;</span>{{ eskaera.egunak }}
+                </div>
+                <div>
+                    <span>Eskatutako orduak: &nbsp;&nbsp;</span>{{ eskaera.orduak }}
+                </div>
+                <div>
+                    <span>Guztira zenbat ordu &nbsp;&nbsp;</span>{{ eskaera.total }}
+                </div>
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-8">
+                <p>Pasaian, {{ eskaera.noiz | date('Y-m-d') }}</p>
+                <div class="row">&nbsp;</div>
+                <div class="row">&nbsp;</div>
+                <div class="row">&nbsp;</div>
+                <p class="text-center">ESKATZAILEAREN SINDATURA</p>
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <p>SAILEKO ARDURADUNAREN IRITZIA</p>
+                <p class="text-center">
+                    <div class="row">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-8">
+                        <form action="">
+                            <input type="radio" name="moldatu" value="bai" checked="checked"> Moldatuko gara<br>
+                            <input type="radio" name="moldatu" value="ez"> Ezin gara moldatu<br>
+                        </form>
+                    </div>
+                    <div class="col-xs-2"></div></div>
+                </p>
+            </div>
+            <div class="col-xs-6">
+                <p>SAILEKO ZINEGOTZI DELEGATUA</p>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="text-center">ANTOLAKUNTZA ETA GIZA BALIABIDEEN TEKNIKARIA</p>
+                <p class="text-center">Ados</p>
+            </div>
+        </div>
+
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">&nbsp;</div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="text-center">Lore Suárez</p>
+                <p class="text-center">GIZA BALIABIDEETAKO ZINEGOTZI DELEGATUA</p>
+                <p class="text-center">Ados</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

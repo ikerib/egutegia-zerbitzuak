@@ -1,0 +1,21 @@
+
+<h1>ESKAERA HAU EZ DA ONARTUA IZAN!</h1>
+
+<dl>
+    <dt>Nork</dt>
+    <dd>{{ eskaera.user.displayname }}</dd>
+    <dt>Hasi</dt>
+    <dd>{{ eskaera.hasi |date('Y-m-d') }}</dd>
+    <dt>Amaitu</dt>
+    <dd>{{ eskaera.amaitu |date('Y-m-d') }}</dd>
+    <dt>Egun edo ordu kopurua</dt>
+    <dd>Egunak: {{ eskaera.egunak}} ordu </dd>
+    <dd>Orduak: {{ eskaera.orduak }} egun </dd>
+    <dd>Guztira: {{ eskaera.total}} ordu</dd>
+    <dt>Oharrak</dt>
+    <dd>{{ eskaera.oharra }}</dd>
+</dl>
+
+<p>Eskaera ikusteko egin click estekan</p>
+
+<p>{{ url('admin_eskaera_list', {'q':'unadded'}) }}</p>

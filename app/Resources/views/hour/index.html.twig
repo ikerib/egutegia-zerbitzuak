@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Hours list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Hours</th>
+                <th>Minutes</th>
+                <th>Factor</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hour in hours %}
+            <tr>
+                <td><a href="{{ path('admin_hour_show', { 'id': hour.id }) }}">{{ hour.id }}</a></td>
+                <td>{% if hour.date %}{{ hour.date|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ hour.hours }}</td>
+                <td>{{ hour.minutes }}</td>
+                <td>{{ hour.factor }}</td>
+                <td>{{ hour.total }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_hour_show', { 'id': hour.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_hour_edit', { 'id': hour.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_hour_new') }}">Create a new hour</a>
+        </li>
+    </ul>
+{% endblock %}

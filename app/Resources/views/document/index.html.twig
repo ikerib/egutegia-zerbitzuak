@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Documents list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Filename</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for document in documents %}
+            <tr>
+                <td><a>{{ document.id }}</a></td>
+                <td>{{ document.filename }}</td>
+                <td>{% if document.created %}{{ document.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if document.updated %}{{ document.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+
+                        <li>
+                            <a href="{{ path('admin_document_edit', { 'id': document.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_document_new') }}">Create a new document</a>
+        </li>
+    </ul>
+{% endblock %}
