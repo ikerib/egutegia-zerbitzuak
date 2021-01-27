@@ -10,6 +10,10 @@
 /app/spool/*
 
 # Cache, session files and logs (Symfony3)
+var/logs
+var/cache
+var/sessions
+web/uploads
 /var/cache/*
 /var/logs/*
 /var/sessions/*
