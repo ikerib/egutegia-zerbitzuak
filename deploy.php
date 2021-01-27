@@ -53,13 +53,8 @@ task('yarn:install', function () {
 });
 
 desc('Build my assets');
-task('yarn:build', function () {
-    if (has('previous_release')) {
-        if (test('[ -d {{previous_release}}/node_modules ]')) {
-            run('cp -R {{previous_release}}/node_modules {{release_path}}');
-        }
-    }
-    run("cd {{release_path}} && {{bin/yarn}} build");
+task('gulp prod', function () {
+    run("cd {{release_path}} && gulp prod");
 });
 
 after( 'deploy:symlink', 'yarn:install' );
