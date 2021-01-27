@@ -53,9 +53,9 @@ task('yarn:install', function () {
 });
 
 desc('Build my assets');
-task('gulp prod', function () {
+task('gulp:prod', function () {
     run("cd {{release_path}} && gulp prod");
 });
 
 after( 'deploy:symlink', 'yarn:install' );
-after( 'yarn:install', 'yarn:build' );
+after( 'yarn:install', 'gulp:prod' );
