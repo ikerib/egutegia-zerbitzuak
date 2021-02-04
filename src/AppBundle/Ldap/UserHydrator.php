@@ -49,6 +49,14 @@ class UserHydrator implements HydratorInterface
                     $rol = 'ROLE_ADMIN';
                     $user->addRole($rol);
                 }
+                if ($sp[ 0 ] === 'ROL-Zerbitzuak_Administrazioa') {
+                    $rol = 'ROLE_BIDERATZAILEA';
+                    $user->addRole($rol);
+                    $rol = 'ROLE_ADMIN';
+                    $user->addRole($rol);
+                    $rol = 'ROLE_ZERBITZUAK_ADMINISTRAZIOA';
+                    $user->addRole($rol);
+                }
                 if ($sp[ 0 ] === 'APP-Web_Egutegia-Bideratzaile') {
                     $rol = 'ROLE_BIDERATZAILEA';
                     $user->addRole($rol);
@@ -59,10 +67,6 @@ class UserHydrator implements HydratorInterface
                     $rol = 'ROLE_SUPER_ADMIN';
                     $user->addRole($rol);
                 }
-                if (strpos($sp[ 0 ], 'daltzaing') !== false) { // UDALTZAINA BADA
-                    $rol = 'ROLE_UDALTZAINA';
-                    $user->addRole($rol);
-                }
                 if (strpos($sp[ 0 ], 'App-Web_Egutegia-Sinatzailea') !== false) {
                     $rol = 'ROLE_SINATZAILEA';
                     $user->addRole($rol);
@@ -71,15 +75,8 @@ class UserHydrator implements HydratorInterface
                     $rol = 'ROLE_SAILBURUA';
                     $user->addRole($rol);
                 }
-                if (strpos($sp[ 0 ], 'ROL-Udaltzaingoa_Administrazioa') !== false) { // UDALTZAINA BADA
-                    $udaltzainAdministrariaDa = true;
-                }
-            }
 
-            if ($udaltzainAdministrariaDa) { // Udaltzaingoan dagoen administraria denez, egutegira sartu behar du, beraz ROLE_UDALTZAINA kendu
-                $user->removeRole('ROLE_UDALTZAINA');
             }
-
             if ($user->getSailburuada()) {
                 $user->addRole('ROLE_SAILBURUA');
             }
