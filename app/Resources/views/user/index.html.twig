@@ -49,7 +49,7 @@
                 <th data-halign="left" data-align="left" data-field="department"    data-sortable="true">{{ 'Saila' | trans }}</th>
                 <th data-halign="left" data-align="left" data-field="nan"           data-sortable="true">{{ 'Nan' | trans }}</th>
                 <th data-halign="left" data-align="left" data-field="lanpostua"     data-sortable="true">{{ 'Lanpostua' | trans }}</th>
-
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -60,6 +60,22 @@
                 <td>{{ user.department }}</td>
                 <td>{{ user.nan }}</td>
                 <td>{{ user.lanpostua }}</td>
+                <td>
+                    <ul class="list-unstyled list-inline">
+                        <li>
+                            <a class="btnEditRow" data-id="{{ user.id }}" href="{{ path('admin_user_edit', { 'id': user.id }) }}">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            {{ form_start(deleteforms[user.id],{'attr': {'id': user.id}}) }}
+                            <a class="btnRemoveRow" data-id="{{ user.id }}" href="javascript:void(0);">
+                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                            </a>
+                            {{ form_end(deleteforms[user.id]) }}
+                        </li>
+                    </ul>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -117,6 +133,28 @@
             $('#new-modal').on('shown.bs.modal', function () {
                 $('#appbundle_user_displayname').focus()
             });
+
+            $('.btnRemoveRow').on('click', function () {
+                var that = $(this);
+                bootbox.confirm({
+                    title: "{{ 'Adi!' | trans }}",
+                    message: "{{ 'Ziur zaude ezabatu nahi duzula?' | trans }}",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> {{ 'Ezeztatu' | trans }}'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> {{ 'Onartu' | trans }}'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result === true ) {
+                            $(that).closest('form').submit();
+                        }
+                    }
+                });
+            });
+
         } );
 
     </script>
