@@ -49,6 +49,11 @@ class Builder implements ContainerAwareInterface
             $em       = $this->container->get('doctrine.orm.entity_manager');
             $eskaerak = $em->getRepository('AppBundle:Eskaera')->findBideratugabeak();
 
+            $menu->addChild('Langileak', [
+                'icon' => 'user',
+                'route' => 'admin_user_index'
+            ])->setLinkAttribute('class', 'childClass')->setExtra('translation_domain', 'messages');
+
             if (\count($eskaerak) > 0) {
                 $menu->addChild(
                     'Eskaerak',

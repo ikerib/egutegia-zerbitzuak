@@ -1,16 +1,26 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    <h1>User creation</h1>
-
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('admin_user_index') }}">Back to the list</a>
-        </li>
-    </ul>
-{% endblock %}
+{{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+        <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Izena Abizenak' | trans }}</label>
+                <div class="col-sm-7">
+                        {{ form_widget(form.displayname, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+        </div>
+        <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Saila' | trans }}</label>
+                <div class="col-sm-7">
+                        {{ form_widget(form.department, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+        </div>
+        <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'NAN' | trans }}</label>
+                <div class="col-sm-7">
+                        {{ form_widget(form.nan, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+        </div>
+        <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Lanpostua' | trans }}</label>
+                <div class="col-sm-7">
+                        {{ form_widget(form.lanpostua, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+        </div>
+{{ form_end(form) }}
