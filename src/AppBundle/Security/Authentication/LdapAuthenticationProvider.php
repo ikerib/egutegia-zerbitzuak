@@ -137,17 +137,26 @@ class LdapAuthenticationProvider extends BaseProvider
                         if ($alka['alkateada']) {
                             $user->addRole('ROLE_ARDURADUNA');
                         }
-                        $this->userManager->updateUser($user);
+
+                        // Begiratu ea erabiltzailea existitzen den
+                        $langilea = $this->em->getRepository('AppBundle:User')->getByUsername($user->getUsername());
+                        if ( $langilea ) {
+                            $this->userManager->updateUser($user);
+                            $log = new Log();
+                            $log->setName('Login');
+                            $log->setUser($user);
+                            $log->setDescription($user->getUsername());
+                            $this->em->persist($log);
+                            $this->em->flush();
+                        } else {
+                            $this->userManager->createUser($user);
+                        }
+
                     }
                 }
             }
 
-            $log = new Log();
-            $log->setName('Login');
-            $log->setUser($user);
-            $log->setDescription($user->getUsername());
-            $this->em->persist($log);
-            $this->em->flush();
+
 
 
             return $user;
