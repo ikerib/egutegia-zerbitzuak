@@ -82,10 +82,10 @@
                 <td>{{ user.displayname }}</td>
                 <td>{{ user.department }}</td>
                 <td>
-                    {% if user.egutegiak is defined %}
+                    {% if user.calendars is defined %}
                     <select name="year" class="cmbYear">
                         <option value="-1">Aukeratu bat</option>
-                        {% for e in user.egutegiak %}
+                        {% for e in user.calendars %}
                             <option value="{{ url('admin_calendar_edit', { 'id': e.id }) }}">{{ e.year }}</option>
                         {% endfor %}
                     </select>
@@ -107,40 +107,43 @@
                 {% if user.calendars | length > 0 %}
                     <td>
                         {% if user.calendars | length > 0 %}
-                            <a href="{{ path('admin_calendar_edit', { 'id': user.calendars.first.id }) }}">{{ user.calendars.first.id }}</a>
+                            <a href="{{ path('admin_calendar_edit', { 'id': user.calendars.first.id }) }}">{{ user.calendars.first.year }}</a>
                         {% endif %}
                     </td>
                     <td>
                         {% if user.calendars.first.template is not null %}
-                            <a href="{{ path('admin_template_edit', { 'id': user.calendars.firts.template.id }) }}">{{ user.calendars.first.template }}</a>
+                            <a href="{{ path('admin_template_edit', { 'id': user.calendars[0].template.id }) }}">{{ user.calendars[0].template }}</a>
                         {% else %}
                             Ez du
                         {% endif %}
                     </td>
                     <td>
-                        {{ user.calendar[0].hoursYear }} /
-                        {% if user.calendar[0].template is not null %}
-                            {{ user.calendar[0].template.hoursYear }}
-                        {% else %}
-                            -
-                        {% endif %}</td>
+                        {% if user.calendars | length > 0 %}
+                            {{ user.calendars[0].hoursYear }} /
+                            {% if user.calendars[0].template is not null %}
+                                {{ user.calendars[0].template.hoursYear }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        {% endif %}
+                    </td>
                     <td>
-                        {{ user.calendar[0].hoursFree }} /
-                        {% if user.calendar[0].template is not null %}
-                            {{ user.calendar[0].template.hoursFree }}
+                        {{ user.calendars[0].hoursFree }} /
+                        {% if user.calendars[0].template is not null %}
+                            {{ user.calendars[0].template.hoursFree }}
                         {% else %}
                             -
                         {% endif %}
                     </td>
                     <td>
-                        {{ user.calendar[0].hoursSelf }} /
-                        {% if user.calendar[0].template is not null %}
-                            {{ user.calendar[0].template.hoursSelf }}
+                        {{ user.calendars[0].hoursSelf }} /
+                        {% if user.calendars[0].template is not null %}
+                            {{ user.calendars[0].template.hoursSelf }}
                         {% else %}
                             -
                         {% endif %}
                     </td>
-                    <td>{{ user.calendar[0].hoursCompensed }} </td>
+                    <td>{{ user.calendars[0].hoursCompensed }} </td>
                     <td>
                         <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"
                            data-username="{{ user.username }}">
