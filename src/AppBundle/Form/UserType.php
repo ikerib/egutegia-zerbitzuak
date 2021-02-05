@@ -15,10 +15,22 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options):void
     {
         $builder
-            ->add('displayname')
-            ->add('nan')
-            ->add('department')
-            ->add('lanpostua')
+            ->add('displayname', null, [
+                'label' => 'Izen Abizenak',
+                'required' => true
+            ])
+            ->add('nan', null, [
+                'label' => 'NAN',
+                'required' => true
+            ])
+            ->add('department', null, [
+                'label' => 'Saila',
+                'required' => true
+            ])
+            ->add('lanpostua', null, [
+                'label' => 'Lanpostua',
+                'required' => true
+            ])
             ;
     }/**
      * {@inheritdoc}
@@ -35,7 +47,7 @@ class UserType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'appbundle_user';
+        return '';
     }
 
 

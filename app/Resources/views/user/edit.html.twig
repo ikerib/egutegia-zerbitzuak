@@ -1,21 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>User edit</h1>
+{% block head_style %}
+    {{ parent() }}
+{% endblock %}
+
+{% block headline %}{{ 'Langilearen datuak aldatu' | trans }} {% endblock  %}
+
+{% block content_row %}
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <div class="row text-center">
+            <input class="btn btn-primary" type="submit" value="{{ 'Gorde'|trans }}">
+        </div>
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('admin_user_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}
