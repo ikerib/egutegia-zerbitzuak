@@ -5,7 +5,15 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Form\UserType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 /**
  * User controller.
@@ -36,19 +44,35 @@ class UserController extends Controller
      *
      * @Route("/new", name="admin_user_new")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return RedirectResponse|Response|null
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
+        $form = $this->createForm(UserType::class, $user,
+        [
+            'action' => $this->generateUrl('admin_user_new'),
+            'method' => 'POST'
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            // 3) Encode the password (you could also do this via Doctrine listener)
+            $password = $passwordEncoder->encodePassword($user, preg_replace('/\s+/', '', $user->getDisplayname()));
 
-            return $this->redirectToRoute('admin_user_show', array('id' => $user->getId()));
+            $user->setUsername(preg_replace('/\s+/', '', $user->getDisplayname()));
+            $user->setEmail(preg_replace('/\s+/', '', $user->getDisplayname()));
+            $user->setDn(preg_replace('/\s+/', '', $user->getDisplayname()));
+            $user->setPassword($password);
+
+            // 4) save the User!
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_user_index');
         }
 
         return $this->render('user/new.html.twig', array(
@@ -103,8 +127,11 @@ class UserController extends Controller
      *
      * @Route("/{id}", name="admin_user_delete")
      * @Method("DELETE")
+     * @param Request $request
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, User $user)
+    public function deleteAction(Request $request, User $user): RedirectResponse
     {
         $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
@@ -123,9 +150,9 @@ class UserController extends Controller
      *
      * @param User $user The user entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return FormInterface
      */
-    private function createDeleteForm(User $user)
+    private function createDeleteForm(User $user): FormInterface
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_user_delete', array('id' => $user->getId())))
