@@ -35,58 +35,39 @@ class AdminController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $ldap = $this->get('ldap_tools.ldap_manager');
+        $users = $em->getRepository('AppBundle:User')->findAll();
 
-        /****************************************************************************************************************
-         ***  OJO ALDATZEN BADA CalendarController newAction ere aldatu *************************************************
-         ****************************************************************************************************************/
-        $ldapusers = $ldap->buildLdapQuery()
-            ->select(
-                [
-                    'name',
-                    'guid',
-                    'username',
-                    'emailAddress',
-                    'firstName',
-                    'lastName',
-                    'dn',
-                    'department',
-                    'description',
-                ]
-            )
-            ->fromUsers()->orderBy('username')->getLdapQuery()->getResult();
-
-        $userdata = [];
-        foreach ($ldapusers as $user) {
-            /** @var $user User */
-            $u = [];
-            $u['user'] = $user;
-            $calendar = $em->getRepository('AppBundle:Calendar')->findByUsernameYear(
-                $user->getUsername(),
-                date('Y')
-            );
-            $u['calendar'] = $calendar;
-
-            $egutegiguztiak = $em->getRepository('AppBundle:Calendar')->findAllCalendarsByUsername($user->getUsername());
-            $u[ 'egutegiak' ] = $egutegiguztiak;
-
-            /** @var $usernotes User */
-            $usernotes = $em->getRepository('AppBundle:User')->getByUsername($user->getUsername());
-
-            if ($usernotes) {
-                $user->setNotes($usernotes->getNotes());
-            }
-            $userdata[] = $u;
-        }
+//        $userdata = [];
+//        foreach ($users as $user) {
+//            /** @var $user User */
+//            $u = [];
+//            $u['user'] = $user;
+//            $calendar = $em->getRepository('AppBundle:Calendar')->findByUsernameYear(
+//                $user->getUsername(),
+//                date('Y')
+//            );
+//            $u['calendar'] = $calendar;
+//
+//            $egutegiguztiak = $em->getRepository('AppBundle:Calendar')->findAllCalendarsByUsername($user->getUsername());
+//            $u[ 'egutegiak' ] = $egutegiguztiak;
+//
+//            /** @var $usernotes User */
+//            $usernotes = $em->getRepository('AppBundle:User')->getByUsername($user->getUsername());
+//
+//            if ($usernotes) {
+//                $user->setNotes($usernotes->getNotes());
+//            }
+//            $userdata[] = $u;
+//        }
 
         $user = new User();
         $frmusernote = $this->createForm(UserNoteType::class, $user);
-
+        dump($users);
 
         return $this->render(
             'default/index.html.twig',
             [
-                'userdata' => $userdata,
+                'userdata' => $users,
                 'frmusernote' => $frmusernote->createView(),
             ]
         );

@@ -52,8 +52,7 @@
             {% if is_granted('ROLE_BIDERATZAILEA') or is_granted('ROLE_SUPER_ADMIN') %}
                 <th data-halign="center" data-align="center"></th>
             {% endif %}
-            <th data-halign="left" data-align="left" data-field="firstName" data-sortable="true">{{ 'Nombre' | trans }}</th>
-            <th data-halign="left" data-align="left" data-field="lastName"  data-sortable="true">{{ 'Abizenak' | trans }}</th>
+            <th data-halign="left" data-align="left" data-field="firstName" data-sortable="true">{{ 'Langilea' | trans }}</th>
             <th data-halign="left" data-align="left" data-field="saila"     data-sortable="true">{{ 'Saila' | trans }}</th>
             <th>{{ 'Urtea' | trans }}</th>
             <th data-halign="left" data-align="left" data-field="notes" data-editable="true" data-editable-emptytext="For free."
@@ -68,21 +67,20 @@
         </tr>
         </thead>
         <tbody>
-        {% for user in userdata if user.user.has('firstName') and user.user.has('lastName') %}
+        {% for user in userdata  %}
             <tr>
                 <td></td>
-                <td>{% if user.user.has('username') %}{{ user.user.get('username') }}{% endif %}</td>
+                <td>{{ user.username }}</td>
                 {% if is_granted('ROLE_BIDERATZAILEA') or is_granted('ROLE_SUPER_ADMIN') %}
                     <td class="nireTD">
-                        <a href="{{ path('homepage', { _switch_user: user.user.get('username') }) }}">
+                        <a href="{{ path('homepage', { _switch_user: user.username }) }}">
                             <i class="fa fa-user-o" aria-hidden="true" title="Inpertsonalizatu"></i>
                         </a>
                     </td>
                 {% endif %}
 
-                <td>{% if user.user.has('firstName') %}{{ user.user.get('firstName') }}{% endif %}</td>
-                <td>{% if user.user.has('lastName') %}{{ user.user.get('lastName') }}{% endif %}</td>
-                <td>{% if user.user.has('department') %}{{ user.user.get('department') }}{% endif %}</td>
+                <td>{{ user.displayname }}</td>
+                <td>{{ user.department }}</td>
                 <td>
                     {% if user.egutegiak is defined %}
                     <select name="year" class="cmbYear">
@@ -94,26 +92,27 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if user.user.has('notes') %}
+                    {% if user.notes %}
                         <a href="javascript:void(0)" class="btn btnUserNote"
-                           data-username="{{ user.user.get('username') }}"
-                           data-usernote="{{ user.user.get('notes') }}">
-                            {{ user.user.get('notes') }}
+                           data-username="{{ user.username }}"
+                           data-usernote="{{ user.notes }}">
+                            {{ user.notes }}
                         </a>
                     {% else %}
                         <a href="javascript:void(0)" class="btn btnUserNote"
-                           data-username="{{ user.user.get('username') }}">
+                           data-username="{{ user.username }}">
                             <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
                         </a>
                     {% endif %}</td>
-                {% if user.calendar %}
+                {% if user.calendars | length > 0 %}
                     <td>
-                        <a href="{{ path('admin_calendar_edit', { 'id': user.calendar[0].id }) }}">{{ user.calendar[0] }}</a>
+                        {% if user.calendars | length > 0 %}
+                            <a href="{{ path('admin_calendar_edit', { 'id': user.calendars.first.id }) }}">{{ user.calendars.first.id }}</a>
+                        {% endif %}
                     </td>
                     <td>
-                        {#{{ dump(user.calendar[0]) }}#}
-                        {% if user.calendar[0].template is not null %}
-                            <a href="{{ path('admin_template_edit', { 'id': user.calendar[0].template.id }) }}">{{ user.calendar[0].template }}</a>
+                        {% if user.calendars.first.template is not null %}
+                            <a href="{{ path('admin_template_edit', { 'id': user.calendars.firts.template.id }) }}">{{ user.calendars.first.template }}</a>
                         {% else %}
                             Ez du
                         {% endif %}
@@ -144,14 +143,14 @@
                     <td>{{ user.calendar[0].hoursCompensed }} </td>
                     <td>
                         <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"
-                           data-username="{{ user.user.username }}">
+                           data-username="{{ user.username }}">
                             <i class="fa fa-plus-square-o" aria-hidden="true"> Berria</i>
                         </a>
                     </td>
                 {% else %}
                     <td>
                         <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"
-                           data-username="{{ user.user.username }}">
+                           data-username="{{ user.username }}">
                             <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
                         </a>
                     </td>
