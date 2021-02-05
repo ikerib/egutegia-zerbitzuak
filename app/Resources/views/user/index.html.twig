@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block content_div_start %}{% endblock %}
+{% block content_div_end %}{% endblock %}
+{% block headline %}{{ 'Langileen Kudeaketa' | trans }} {% endblock %}
+
+{% block content_row %}
+    <div id="toolbar">
+        <a class="btn btn-default" href="{{ path('admin_user_new') }}">Langile berria</a>
+    </div>
+    <table id="table"
+
+           data-id-field="id"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="15"
+           data-search="true"
+
+           data-sort-name="displayname"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-toolbar="#toolbar"
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+        <thead>
+            <tr>
+                <th data-visible="false" data-switchable="false" data-field="id"></th>
+
+                <th data-halign="left" data-align="left" data-field="displayname"   data-sortable="true">{{ 'Izena' | trans }}</th>
+                <th data-halign="left" data-align="left" data-field="department"    data-sortable="true">{{ 'Saila' | trans }}</th>
+                <th data-halign="left" data-align="left" data-field="nan"           data-sortable="true">{{ 'Nan' | trans }}</th>
+                <th data-halign="left" data-align="left" data-field="lanpostua"     data-sortable="true">{{ 'Lanpostua' | trans }}</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.displayname }}</td>
+                <td>{{ user.department }}</td>
+                <td>{{ user.nan }}</td>
+                <td>{{ user.lanpostua }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+{% block foot_script %}
+    {{ parent() }}
+    <script>
+
+        var $table = $( "#table" ), selections = [];
+
+        function initTable() {
+            $table.bootstrapTable( {
+                height: getHeight()
+            } );
+            $table.bootstrapTable( "uncheckAll" );
+        }
+
+        function getHeight() {
+            var winh = $( window ).height();
+            var h2h = $( "h2" ).outerHeight( true );
+            var fooh = $( "footer" ).outerHeight( true );
+            return winh - h2h - fooh - 200;
+        }
+
+        $( function () {
+            initTable();
+        } );
+
+    </script>
+{% endblock %}

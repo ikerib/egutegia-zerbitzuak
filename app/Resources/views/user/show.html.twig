@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Dn</th>
+                <td>{{ user.dn }}</td>
+            </tr>
+            <tr>
+                <th>Department</th>
+                <td>{{ user.department }}</td>
+            </tr>
+            <tr>
+                <th>Displayname</th>
+                <td>{{ user.displayname }}</td>
+            </tr>
+            <tr>
+                <th>Nan</th>
+                <td>{{ user.nan }}</td>
+            </tr>
+            <tr>
+                <th>Sailburuada</th>
+                <td>{% if user.sailburuada %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Ldapsaila</th>
+                <td>{{ user.ldapsaila }}</td>
+            </tr>
+            <tr>
+                <th>Hizkuntza</th>
+                <td>{{ user.hizkuntza }}</td>
+            </tr>
+            <tr>
+                <th>Lanpostua</th>
+                <td>{{ user.lanpostua }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ user.notes }}</td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>{{ user.members }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_user_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_user_edit', { 'id': user.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -62,7 +62,6 @@ class AdminController extends Controller
 
         $user = new User();
         $frmusernote = $this->createForm(UserNoteType::class, $user);
-        dump($users);
 
         return $this->render(
             'default/index.html.twig',
