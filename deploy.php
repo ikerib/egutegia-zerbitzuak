@@ -39,17 +39,30 @@ after('deploy:failed', 'deploy:unlock');
 // Migrate database before symlink new release.
 
 
-set('bin/yarn', function () {
-    return run('which yarn');
+//set('bin/yarn', function () {
+//    return run('which yarn');
+//});
+//desc('Install Yarn packages');
+//task('yarn:install', function () {
+//    if (has('previous_release')) {
+//        if (test('[ -d {{previous_release}}/node_modules ]')) {
+//            run('cp -R {{previous_release}}/node_modules {{release_path}}');
+//        }
+//    }
+//    run("cd {{release_path}} && {{bin/yarn}}");
+//});
+
+set('npm', function () {
+    return run('which npm');
 });
-desc('Install Yarn packages');
-task('yarn:install', function () {
+desc('Install npm packages');
+task('npm:install', function () {
     if (has('previous_release')) {
         if (test('[ -d {{previous_release}}/node_modules ]')) {
             run('cp -R {{previous_release}}/node_modules {{release_path}}');
         }
     }
-    run("cd {{release_path}} && {{bin/yarn}}");
+    run("cd {{release_path}} && /usr/bin/npm install");
 });
 
 desc('Build my assets');
@@ -57,5 +70,5 @@ task('gulp:prod', function () {
     run("cd {{release_path}} && gulp prod");
 });
 
-after( 'deploy:symlink', 'yarn:install' );
-after( 'yarn:install', 'gulp:prod' );
+after( 'deploy:symlink', 'npm:install' );
+after( 'npm:install', 'gulp:prod' );
