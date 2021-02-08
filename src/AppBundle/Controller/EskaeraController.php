@@ -98,7 +98,7 @@ class EskaeraController extends Controller {
      */
     public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
-        $this->denyAccessUnlessGranted(['ROLE_ADMIN', 'ROLE_SINATZAILEA'], null, 'Egin login');
+//        $this->denyAccessUnlessGranted(['ROLE_ADMIN', 'ROLE_SINATZAILEA'], null, 'Egin login');
         $em = $this->getDoctrine()->getManager();
 
         $q       = $request->query->get('q');
@@ -177,16 +177,18 @@ class EskaeraController extends Controller {
         {
             $this->addFlash('error', 'Ez ditu nahikoa ordu.');
 
-            return $this->redirectToRoute('admin_eskaera_list');
+//            return $this->redirectToRoute('admin_eskaera_list');
+            return $this->redirectToRoute('user_homepage');
         }
 
         $eskaera->setEgutegian(true);
         $em->persist($eskaera);
         $em->flush();
 
-        $this->addFlash('success', 'Datuak ongi gordeak izan dira.');
+//        $this->addFlash('success', 'Datuak ongi gordeak izan dira.');
 
-        return $this->redirectToRoute('admin_eskaera_list');
+//        return $this->redirectToRoute('admin_eskaera_list');
+        return $this->redirectToRoute('user_homepage');
     }
 
     /**
@@ -319,6 +321,7 @@ class EskaeraController extends Controller {
             }
 
 
+
             /**
              * PDF Fitxategia sortu
              */
@@ -340,10 +343,16 @@ class EskaeraController extends Controller {
             if ($data->getJustifikanteFile() !== null) {
                 $eskaera->setJustifikatua(1);
             }
+
+            /** Hack zerbitzuak */
+            $eskaera->setBideratua(true);
+            $eskaera->setAmaitua(true);
+
             $em->persist($eskaera);
             $em->flush();
 
-            return $this->redirectToRoute('eskaera_gauzatua', array('id' => $eskaera->getId()));
+//            return $this->redirectToRoute('eskaera_gauzatua', array('id' => $eskaera->getId()));
+            return $this->redirectToRoute('eskaera_add_to_calendar', array('id' => $eskaera->getId()));
         }
 
         $jaiegunak = $em->getRepository('AppBundle:TemplateEvent')->findBy(
