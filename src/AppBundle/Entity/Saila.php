@@ -86,4 +86,40 @@ class Saila
     {
         return $this->name;
     }
+
+    /**
+     * Add azpisailak.
+     *
+     * @param \AppBundle\Entity\Azpisaila $azpisailak
+     *
+     * @return Saila
+     */
+    public function addAzpisailak(\AppBundle\Entity\Azpisaila $azpisailak)
+    {
+        $this->azpisailak[] = $azpisailak;
+
+        return $this;
+    }
+
+    /**
+     * Remove azpisailak.
+     *
+     * @param \AppBundle\Entity\Azpisaila $azpisailak
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAzpisailak(\AppBundle\Entity\Azpisaila $azpisailak)
+    {
+        return $this->azpisailak->removeElement($azpisailak);
+    }
+
+    /**
+     * Get azpisailak.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAzpisailak()
+    {
+        return $this->azpisailak;
+    }
 }

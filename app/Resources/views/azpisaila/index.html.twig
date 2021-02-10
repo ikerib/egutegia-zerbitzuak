@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block content_div_start %}{% endblock %}
+{% block content_div_end %}{% endblock %}
+{% block headline %}{{ 'Azpisailen Kudeaketa' | trans }} {% endblock %}
+
+{% block content_row %}
+    <div id="toolbar">
+        <button id="btnBerria" class="btn btn-default">Azpi sail berria</button>
+    </div>
+    <table id="table"
+
+           data-id-field="id"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="15"
+           data-search="true"
+
+           data-sort-name="displayname"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-toolbar="#toolbar"
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+        <thead>
+        <tr>
+            <th data-visible="false" data-switchable="false" data-field="id"></th>
+            <th data-halign="left" data-align="left" data-field="displayname"   data-sortable="true">{{ 'Izena' | trans }}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for azpisaila in azpisailak %}
+            <tr>
+                <td>{{ azpisaila.id }}</td>
+                <td>{{ azpisaila.name }}</td>
+                <td>
+                    <ul class="list-unstyled list-inline">
+                        <li>
+                            <a class="btnEditRow" data-id="{{ azpisaila.id }}" href="{{ path('admin_azpisaila_edit', { 'id': azpisaila.id }) }}">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            {{ form_start(deleteforms[azpisaila.id],{'attr': {'id': azpisaila.id}}) }}
+                            <a class="btnRemoveRow" data-id="{{ azpisaila.id }}" href="javascript:void(0);">
+                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                            </a>
+                            {{ form_end(deleteforms[azpisaila.id]) }}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="modal modal-fade" id="new-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Close</span></button>
+                    <h4 class="modal-title">
+                        {{ 'Azpi sail berria' | trans }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:Azpisaila:new' )) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="btnGordeModal">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block foot_script %}
+    {{ parent() }}
+    <script>
+
+        var $table = $( "#table" ), selections = [];
+
+        function initTable() {
+            $table.bootstrapTable( {
+                height: getHeight()
+            } );
+            $table.bootstrapTable( "uncheckAll" );
+        }
+
+        function getHeight() {
+            var winh = $( window ).height();
+            var h2h = $( "h2" ).outerHeight( true );
+            var fooh = $( "footer" ).outerHeight( true );
+            return winh - h2h - fooh - 200;
+        }
+
+        $( function () {
+            initTable();
+            $('#btnBerria').on('click', function () {
+                $('#new-modal').modal();
+            });
+
+            $('#new-modal').on('shown.bs.modal', function () {
+                $('#appbundle_user_displayname').focus()
+            });
+
+            $('.btnRemoveRow').on('click', function () {
+                var that = $(this);
+                bootbox.confirm({
+                    title: "{{ 'Adi!' | trans }}",
+                    message: "{{ 'Ziur zaude ezabatu nahi duzula?' | trans }}",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> {{ 'Ezeztatu' | trans }}'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> {{ 'Onartu' | trans }}'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result === true ) {
+                            $(that).closest('form').submit();
+                        }
+                    }
+                });
+            });
+
+        } );
+
+    </script>
+{% endblock %}

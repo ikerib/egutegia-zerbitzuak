@@ -33,7 +33,7 @@ class Azpisaila
     /*****************************************************************************************************************/
 
     /**
-     * @var \AppBundle\Entity\Saila
+     * @var Saila
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Saila", inversedBy="azpisailak")
      * @ORM\JoinColumn(name="saila_id", referencedColumnName="id",onDelete="CASCADE")
@@ -76,5 +76,29 @@ class Azpisaila
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set saila.
+     *
+     * @param \AppBundle\Entity\Saila|null $saila
+     *
+     * @return Azpisaila
+     */
+    public function setSaila(\AppBundle\Entity\Saila $saila = null)
+    {
+        $this->saila = $saila;
+
+        return $this;
+    }
+
+    /**
+     * Get saila.
+     *
+     * @return \AppBundle\Entity\Saila|null
+     */
+    public function getSaila()
+    {
+        return $this->saila;
     }
 }
