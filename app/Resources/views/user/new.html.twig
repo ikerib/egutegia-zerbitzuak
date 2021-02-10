@@ -23,4 +23,16 @@
                         {{ form_widget(form.lanpostua, { 'attr': {'class': 'form-control'} }) }}
                 </div>
         </div>
+        <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Saila' | trans }}</label>
+                <div class="col-sm-7">
+                        {{ form_widget(form.saila, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+        </div>
+        <div class="form-group">
+                <label for="min-date" class="col-sm-4 control-label">{{ 'Azpi Saila' | trans }}</label>
+                <div class="col-sm-7">
+                        {{ form_widget(form.azpisaila, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+        </div>
 {{ form_end(form) }}

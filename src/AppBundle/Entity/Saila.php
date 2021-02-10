@@ -40,6 +40,11 @@ class Saila
      */
     private $azpisailak;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="saila",cascade={"persist"})
+     */
+    private $user;
+
     public function __construct()
     {
         $this->azpisailak = new ArrayCollection();
@@ -121,5 +126,55 @@ class Saila
     public function getAzpisailak()
     {
         return $this->azpisailak;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \AppBundle\Entity\User|null $user
+     *
+     * @return Saila
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add user.
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Saila
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user.
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        return $this->user->removeElement($user);
     }
 }

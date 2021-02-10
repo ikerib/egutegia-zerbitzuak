@@ -33,12 +33,20 @@ class Azpisaila
     /*****************************************************************************************************************/
 
     /**
-     * @var Saila
-     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Saila", inversedBy="azpisailak")
      * @ORM\JoinColumn(name="saila_id", referencedColumnName="id",onDelete="CASCADE")
      */
     private $saila;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="azpisaila",cascade={"persist"})
+     */
+    private $user;
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
@@ -100,5 +108,62 @@ class Azpisaila
     public function getSaila()
     {
         return $this->saila;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \AppBundle\Entity\User|null $user
+     *
+     * @return Azpisaila
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add user.
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Azpisaila
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user.
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        return $this->user->removeElement($user);
     }
 }

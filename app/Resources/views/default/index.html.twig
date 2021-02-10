@@ -54,6 +54,7 @@
             {% endif %}
             <th data-halign="left" data-align="left" data-field="firstName" data-sortable="true">{{ 'Langilea' | trans }}</th>
             <th data-halign="left" data-align="left" data-field="saila"     data-sortable="true">{{ 'Saila' | trans }}</th>
+            <th data-halign="left" data-align="left" data-field="azpisaila"     data-sortable="true">{{ 'Azpi saila' | trans }}</th>
             <th>{{ 'Urtea' | trans }}</th>
             <th data-halign="left" data-align="left" data-field="notes" data-editable="true" data-editable-emptytext="For free."
                 data-sortable="true">{{ 'Oharrak' | trans }}</th>
@@ -80,7 +81,8 @@
                 {% endif %}
 
                 <td>{{ user.displayname }}</td>
-                <td>{{ user.department }}</td>
+                <td>{{ user.saila }}</td>
+                <td>{{ user.azpisaila }}</td>
                 <td>
                     {% if user.calendars is defined %}
                     <select name="year" class="cmbYear">

@@ -31,6 +31,14 @@ class UserType extends AbstractType
                 'label' => 'Lanpostua',
                 'required' => true
             ])
+            ->add('saila', null, [
+                'label' => 'Saila',
+                'required' => false
+            ])
+            ->add('azpisaila', null, [
+                'label' => 'Azpi saila',
+                'required' => false
+            ])
             ;
     }/**
      * {@inheritdoc}
