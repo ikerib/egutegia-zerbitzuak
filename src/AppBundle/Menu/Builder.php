@@ -35,6 +35,7 @@ class Builder implements ContainerAwareInterface
             $menu[ 'Taula Laguntzaileak' ]->addChild('Txantiloiak', ['icon' => 'bookmark', 'route' => 'admin_template_index'])->setExtra('translation_domain', 'messages');
             $menu[ 'Taula Laguntzaileak' ]->addChild('Lizentzia Motak', ['icon' => 'briefcase', 'route' => 'admin_lizentziamota_index'])->setExtra('translation_domain', 'messages');
             $menu[ 'Taula Laguntzaileak' ]->addChild('divider', ['divider' => true]);
+            $menu[ 'Taula Laguntzaileak' ]->addChild('Sailak', ['icon' => 'object-align-horizontal', 'route' => 'admin_saila_index'])->setExtra('translation_domain', 'messages');
             $menu[ 'Taula Laguntzaileak' ]->addChild('Bateraezinak', ['icon' => 'lock', 'route' => 'admin_gutxienekoak_index'])->setExtra('translation_domain', 'messages');
             $menu[ 'Taula Laguntzaileak' ]->addChild('Sinatzaileak', ['icon' => 'pencil', 'route' => 'admin_sinatzaileak_index'])->setExtra('translation_domain', 'messages');
             $menu[ 'Taula Laguntzaileak' ]->addChild('divider2', ['divider' => true]);

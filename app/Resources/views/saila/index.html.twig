@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+
+{% block headline %}{{ 'Sailen zerrenda' | trans }} {% endblock %}
+
+{% block content_row %}
+
+    <div id="toolbar">
+        <button id="btnBerria" class="btn btn-default">Sail berria</button>
+    </div>
+
+    <table data-toggle="table"
+           data-classes="table table-hover table-condensed"
+           data-striped="true"
+
+           data-pagination="true"
+           data-page-size="25"
+           data-search="true"
+            {#data-height="300"#}
+
+           data-sort-name="name"
+           data-sort-order="asc"
+
+           data-icon-size="sm"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+
+           data-toolbar="#toolbar"
+           data-show-export="true"
+           data-export-types="['csv','excel', 'pdf']"
+           data-export-options='{
+                 "fileName": "export",
+                 "worksheetName": "export",
+                 "jspdf": {
+                   "autotable": {
+                     "styles": { "rowHeight": 20, "fontSize": 10 },
+                     "headerStyles": { "fillColor": 255, "textColor": 0 },
+                     "alternateRowStyles": { "fillColor": [60, 69, 79], "textColor": 255 }
+                   }
+                 }
+               }'>
+
+        <thead>
+        <tr>
+            <th data-halign="center" data-align="left" data-field="name" data-sortable="true">{{ 'Izena' | trans }}</th>
+            <th data-halign="center" data-align="center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for saila in sailak %}
+            <tr>
+                <td>{{ saila.name }}</td>
+
+                <td>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="{{ path('admin_saila_edit', { 'id': saila.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            {{ form_start(deleteForms[saila.id],{'attr': {'id': saila.id}}) }}
+                            <a class="btnRemoveRow" data-id="{{ saila.id }}"
+                               href="#sailaEditModal{{ saila.id }}">
+                                <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                            </a>
+                            {{ form_end(deleteForms[saila.id]) }}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="modal modal-fade" id="new-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Close</span></button>
+                    <h4 class="modal-title">
+                        {{ 'Sail berria' | trans }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('AppBundle:Saila:new' )) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                    <button type="button" class="btn btn-primary" id="btnGordeModal">
+                        {{ 'Gorde' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block foot_script %}
+    {{ parent() }}
+    <script>
+
+        var $table = $( "#table" ), selections = [];
+
+        function initTable() {
+            $table.bootstrapTable( {
+                height: getHeight()
+            } );
+            $table.bootstrapTable( "uncheckAll" );
+        }
+
+        function getHeight() {
+            var winh = $( window ).height();
+            var h2h = $( "h2" ).outerHeight( true );
+            var fooh = $( "footer" ).outerHeight( true );
+            return winh - h2h - fooh - 200;
+        }
+
+        $( function () {
+            initTable();
+            $('#btnBerria').on('click', function () {
+                $('#new-modal').modal();
+            });
+
+            $('#new-modal').on('shown.bs.modal', function () {
+                $('#appbundle_user_displayname').focus()
+            });
+
+            $('.btnRemoveRow').on('click', function () {
+                var that = $(this);
+                bootbox.confirm({
+                    title: "{{ 'Adi!' | trans }}",
+                    message: "{{ 'Ziur zaude ezabatu nahi duzula?' | trans }}",
+                    buttons: {
+                        cancel: {
+                            label: '<i class="fa fa-times"></i> {{ 'Ezeztatu' | trans }}'
+                        },
+                        confirm: {
+                            label: '<i class="fa fa-check"></i> {{ 'Onartu' | trans }}'
+                        }
+                    },
+                    callback: function (result) {
+                        if ( result === true ) {
+                            $(that).closest('form').submit();
+                        }
+                    }
+                });
+            });
+
+        } );
+
+    </script>
+{% endblock %}
