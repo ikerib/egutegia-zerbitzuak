@@ -43,6 +43,7 @@
         <thead>
         <tr>
             <th data-halign="center" data-align="left" data-field="name" data-sortable="true">{{ 'Izena' | trans }}</th>
+            <th data-halign="center" data-align="left" >{{ 'Azpisailak' | trans }}</th>
             <th data-halign="center" data-align="center"></th>
         </tr>
         </thead>
@@ -50,13 +51,18 @@
         {% for saila in sailak %}
             <tr>
                 <td>{{ saila.name }}</td>
-
+                <td>
+                    {% for az in saila.azpisailak  %}
+                        <span class="label label-default">{{ az.name }}</span>&nbsp;
+                    {% endfor %}
+                </td>
                 <td>
                     <ul class="list-inline">
                         <li>
                             <a href="{{ path('admin_saila_edit', { 'id': saila.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
                         </li>
+
                         <li>
                             {{ form_start(deleteForms[saila.id],{'attr': {'id': saila.id}}) }}
                             <a class="btnRemoveRow" data-id="{{ saila.id }}"
