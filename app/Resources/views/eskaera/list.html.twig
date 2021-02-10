@@ -238,7 +238,7 @@
                                 {% endif %}
 
 
-                                {% if eskaera.egutegian == false %}
+{#                                {% if eskaera.egutegian == false %}#}
                                     <li>
                                         {{ form_start(deleteForms[eskaera.id],{'attr': {'id': eskaera.id}}) }}
                                         <a class="btnRemoveRow" data-id="{{ eskaera.id }}"
@@ -247,7 +247,7 @@
                                         </a>
                                         {{ form_end(deleteForms[eskaera.id]) }}
                                     </li>
-                                {% endif %}
+{#                                {% endif %}#}
 
                                 {% if eskaera.amaitua != true %}
                                     {% set sinatzeprozesua = true %}
@@ -276,28 +276,28 @@
                                 {% endif %}
 
                                 {#BIDERATUA ETA GAUZATUA BADAGO,EGUTEGIAN GEHITZEKO AUKERA EMAN#}
-                                {% if eskaera.amaitua and eskaera.emaitza == true %}
+{#                                {% if eskaera.amaitua and eskaera.emaitza == true %}#}
 
-                                    <li>
-                                        <a href="javascript:void(0);" class="btnEskaeraEgutegira"
-                                           data-id="{{ eskaera.id }}" data-egutegian="{{ eskaera.egutegian }}">
-                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
+{#                                    <li>#}
+{#                                        <a href="javascript:void(0);" class="btnEskaeraEgutegira"#}
+{#                                           data-id="{{ eskaera.id }}" data-egutegian="{{ eskaera.egutegian }}">#}
+{#                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
 
-                                    <li>
-                                        <a href="javascript:void(0);" class="btnEskaeraGauzatuaMarkatu"
-                                           data-id="{{ eskaera.id }}" data-egutegian="{{ eskaera.egutegian }}">
-                                            <i class="fa fa-check" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
+{#                                    <li>#}
+{#                                        <a href="javascript:void(0);" class="btnEskaeraGauzatuaMarkatu"#}
+{#                                           data-id="{{ eskaera.id }}" data-egutegian="{{ eskaera.egutegian }}">#}
+{#                                            <i class="fa fa-check" aria-hidden="true"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
 
-                                {% endif %}
-                                <li>
-                                    <a class="btnMezua" data-userid="{{ eskaera.user.id }}" data-eskaeraid="{{ eskaera.id }}" href="javascript:void(0);">
-                                        <i class="fa fa-envelope"></i> Mezua bidali
-                                    </a>
-                                </li>
+{#                                {% endif %}#}
+{#                                <li>#}
+{#                                    <a class="btnMezua" data-userid="{{ eskaera.user.id }}" data-eskaeraid="{{ eskaera.id }}" href="javascript:void(0);">#}
+{#                                        <i class="fa fa-envelope"></i> Mezua bidali#}
+{#                                    </a>#}
+{#                                </li>#}
                             </ul>
                         </td>
                     </tr>

@@ -140,21 +140,21 @@ class Builder implements ContainerAwareInterface
                 ]
             )->setExtra('translation_domain', 'messages');
 
-            $menu[ 'User' ]->addChild(
-                'Fitxategiak',
-                array(
-                    'route' => 'user_documents',
-                    'icon'  => 'folder-open',
-                )
-            )->setExtra('translation_domain', 'messages');
+//            $menu[ 'User' ]->addChild(
+//                'Fitxategiak',
+//                array(
+//                    'route' => 'user_documents',
+//                    'icon'  => 'folder-open',
+//                )
+//            )->setExtra('translation_domain', 'messages');
 
-            $menu[ 'User' ]->addChild(
-                'user_menu.eskaerak',
-                array(
-                    'route' => 'eskaera_index',
-                    'icon'  => 'send',
-                )
-            )->setExtra('translation_domain', 'messages');
+//            $menu[ 'User' ]->addChild(
+//                'user_menu.eskaerak',
+//                array(
+//                    'route' => 'eskaera_index',
+//                    'icon'  => 'send',
+//                )
+//            )->setExtra('translation_domain', 'messages');
 
             $menu[ 'User' ]->addChild('divider', ['divider' => true]);
 
@@ -186,13 +186,13 @@ class Builder implements ContainerAwareInterface
                 $menu[ 'User' ]->addChild('divider2', ['divider' => true]);
             }
 
-            $menu[ 'User' ]->addChild(
-                'Irten',
-                array(
-                    'route' => 'fos_user_security_logout',
-                    'icon'  => 'log-out',
-                )
-            )->setExtra('translation_domain', 'messages');
+//            $menu[ 'User' ]->addChild(
+//                'Irten',
+//                array(
+//                    'route' => 'fos_user_security_logout',
+//                    'icon'  => 'log-out',
+//                )
+//            )->setExtra('translation_domain', 'messages');
         } else {
             $menu->addChild('login', ['route' => 'fos_user_security_login']);
         }
