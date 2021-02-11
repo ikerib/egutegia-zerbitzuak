@@ -45,10 +45,48 @@ class UserHydrator implements HydratorInterface
             $udaltzainAdministrariaDa = false;
             foreach ($members as $key => $value) {
                 $sp = ldap_explode_dn($value, 1);
+
                 if ($sp[ 0 ] === 'APP-Web_Egutegia') {
                     $rol = 'ROLE_ADMIN';
                     $user->addRole($rol);
                 }
+
+                if ($sp[ 0 ] === 'APP-Web_Egutegia_Zerbitzuak-Bulegoak') {
+                    $rol = 'ROLE_ADMIN';
+                    $user->addRole($rol);
+                    $user->addRole('APP-Web_Egutegia_Zerbitzuak-Bulegoak');
+                }
+
+                if ($sp[ 0 ] === 'APP-Web_Egutegia_Zerbitzuak-Garbiketa') {
+                    $rol = 'ROLE_ADMIN';
+                    $user->addRole($rol);
+                    $user->addRole('APP-Web_Egutegia_Zerbitzuak-Garbiketa');
+                }
+
+                if ($sp[ 0 ] === 'APP-Web_Egutegia_Zerbitzuak-Instalazioak') {
+                    $rol = 'ROLE_ADMIN';
+                    $user->addRole($rol);
+                    $user->addRole('APP-Web_Egutegia_Zerbitzuak-Instalazioak');
+                }
+
+                if ($sp[ 0 ] === 'APP-Web_Egutegia_Zerbitzuak-Mantentzelanak') {
+                    $rol = 'ROLE_ADMIN';
+                    $user->addRole($rol);
+                    $user->addRole('APP-Web_Egutegia_Zerbitzuak-Mantentzelanak');
+                }
+
+                if ($sp[ 0 ] === 'APP-Web_Egutegia_Zerbitzuak-Sareak') {
+                    $rol = 'ROLE_ADMIN';
+                    $user->addRole($rol);
+                    $user->addRole('APP-Web_Egutegia_Zerbitzuak-Sareak');
+                }
+
+                if ($sp[ 0 ] === 'APP-Web_Egutegia_Zerbitzuak-Zerbitzuak') {
+                    $rol = 'ROLE_ADMIN';
+                    $user->addRole($rol);
+                    $user->addRole('APP-Web_Egutegia_Zerbitzuak-Zerbitzuak');
+                }
+
                 if ($sp[ 0 ] === 'ROL-Zerbitzuak_Administrazioa') {
                     $rol = 'ROLE_BIDERATZAILEA';
                     $user->addRole($rol);

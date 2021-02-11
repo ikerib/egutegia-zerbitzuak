@@ -164,8 +164,8 @@ class User extends BaseUser implements LdapUserInterface
         parent::__construct();
         $this->members = [];
         $this->calendars = new ArrayCollection();
-        $this->azpisaila = new ArrayCollection();
-        $this->saila = new ArrayCollection();
+//        $this->azpisaila = new ArrayCollection();
+//        $this->saila = new ArrayCollection();
         if (empty($this->roles)) {
             $this->roles[] = 'ROLE_USER';
         }
