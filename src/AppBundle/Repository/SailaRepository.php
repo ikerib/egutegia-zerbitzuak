@@ -10,4 +10,28 @@ namespace AppBundle\Repository;
  */
 class SailaRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findUsersBySailaRoles($role)
+    {
+//        $qm = $this->createQueryBuilder('s')
+//            ->select('s')
+//            ->where('s.rola LIKE :role')
+//            ->setParameter('role', $role)
+//        ;
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->select('s')
+            ->from('AppBundle:Saila', 's')
+            ->where($qb->expr()->andX(
+                $qb->expr()->like('UPPER(s.rola)', '?1'),
+            ))
+            ->setParameter('1', '%' . strtoupper($role) . '%');
+
+
+        return $qb->getQuery()->execute();
+
+//        return $qm->getQuery()->getResult();
+    }
+
 }

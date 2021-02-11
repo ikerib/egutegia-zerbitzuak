@@ -9,6 +9,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Saila;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserNoteType;
 use Doctrine\ORM\EntityManager;
@@ -35,7 +36,27 @@ class AdminController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('AppBundle:User')->findAll();
+        $sailaRol=null;
+        foreach ($this->getUser()->getRoles() as $rol) {
+            if (strpos($rol, 'WEB_EGUTEGIA_ZERBITZUAK' ) > 0) {
+                $sailaRol = $rol;
+            }
+        }
+
+        if ($sailaRol === null) {
+            $users = $em->getRepository('AppBundle:User')->findAll();
+        } else {
+            /** @var Saila $sailak */
+            $sailak = $em->getRepository('AppBundle:Saila')->findUsersBySailaRoles($sailaRol);
+            if ($sailak)
+            {
+                /** @var Saila $saila */
+                $saila = $sailak[0];
+                $users = $saila->getUser();
+            }
+
+        }
+
 
 //        $userdata = [];
 //        foreach ($users as $user) {
