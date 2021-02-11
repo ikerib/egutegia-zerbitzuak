@@ -23,10 +23,6 @@ class UserType extends AbstractType
                 'label' => 'NAN',
                 'required' => true
             ])
-            ->add('department', null, [
-                'label' => 'Saila',
-                'required' => true
-            ])
             ->add('lanpostua', null, [
                 'label' => 'Lanpostua',
                 'required' => true

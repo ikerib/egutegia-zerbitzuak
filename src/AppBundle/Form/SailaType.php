@@ -13,12 +13,18 @@ class SailaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', null, [
+        $builder
+            ->add('name', null, [
             'label' => 'Sail izena',
             'required' => true
-        ])
+            ])
+            ->add('rola', null, [
+                'label' => 'LDAP Rola'
+            ])
         ;
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

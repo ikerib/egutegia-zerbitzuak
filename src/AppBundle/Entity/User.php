@@ -89,6 +89,12 @@ class User extends BaseUser implements LdapUserInterface
     protected $notes;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Expose
+     */
+    protected $rola;
+
+    /**
      * @ORM\Column(type="json_array", nullable=true)
      */
     private $members = [];
@@ -645,5 +651,29 @@ class User extends BaseUser implements LdapUserInterface
     public function getAzpisaila()
     {
         return $this->azpisaila;
+    }
+
+    /**
+     * Set rola.
+     *
+     * @param string|null $rola
+     *
+     * @return User
+     */
+    public function setRola($rola = null)
+    {
+        $this->rola = $rola;
+
+        return $this;
+    }
+
+    /**
+     * Get rola.
+     *
+     * @return string|null
+     */
+    public function getRola()
+    {
+        return $this->rola;
     }
 }

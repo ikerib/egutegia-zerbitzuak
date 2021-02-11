@@ -138,6 +138,8 @@ class LdapAuthenticationProvider extends BaseProvider
                             $user->addRole('ROLE_ARDURADUNA');
                         }
 
+
+
                         // Begiratu ea erabiltzailea existitzen den
                         $langilea = $this->em->getRepository('AppBundle:User')->getByUsername($user->getUsername());
                         if ( $langilea ) {

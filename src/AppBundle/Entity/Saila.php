@@ -24,11 +24,14 @@ class Saila
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+
+    /**
+     * @ORM\Column(name="rola", type="string", length=255, unique=true)
+     */
+    private $rola;
 
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
@@ -57,6 +60,8 @@ class Saila
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
     /*****************************************************************************************************************/
+
+
 
     /**
      * Get id.
@@ -90,6 +95,30 @@ class Saila
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set rola.
+     *
+     * @param string $rola
+     *
+     * @return Saila
+     */
+    public function setRola($rola)
+    {
+        $this->rola = $rola;
+
+        return $this;
+    }
+
+    /**
+     * Get rola.
+     *
+     * @return string
+     */
+    public function getRola()
+    {
+        return $this->rola;
     }
 
     /**
@@ -129,30 +158,6 @@ class Saila
     }
 
     /**
-     * Set user.
-     *
-     * @param \AppBundle\Entity\User|null $user
-     *
-     * @return Saila
-     */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return \AppBundle\Entity\User|null
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Add user.
      *
      * @param \AppBundle\Entity\User $user
@@ -176,5 +181,15 @@ class Saila
     public function removeUser(\AppBundle\Entity\User $user)
     {
         return $this->user->removeElement($user);
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
