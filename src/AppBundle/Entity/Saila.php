@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Pure;
 
 /**
  * Saila
@@ -29,7 +28,7 @@ class Saila
     private $name;
 
     /**
-     * @ORM\Column(name="rola", type="string", length=255, unique=true)
+     * @ORM\Column(name="rola", type="string", length=255)
      */
     private $rola;
 
@@ -62,6 +61,8 @@ class Saila
     /*****************************************************************************************************************/
 
 
+
+    
 
     /**
      * Get id.
