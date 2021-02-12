@@ -142,6 +142,78 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/{userid}/calendar", name="user_calendar")
+     */
+    public function usercalendarAction($userid): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Egin login');
+
+        $em = $this->getDoctrine()->getManager();
+        /** @var $user User */
+        $user = $em->getRepository('AppBundle:User')->find($userid);
+
+        $unreadMessages = $em->getRepository('AppBundle:Message')->findUserUnreadMessages($user->getId());
+
+        // impertsonalizazioa bada ez du erakutsi behar
+        $authorizationChecker = $this->get('security.authorization_checker');
+
+        if (($unreadMessages) && (! $authorizationChecker->isGranted('ROLE_PREVIOUS_ADMIN'))) {
+            return $this->redirectToRoute('user_notifycation');
+        }
+
+        $calendar = $em->getRepository('AppBundle:Calendar')->findByUsernameYear($user->getUsername(), date('Y'));
+
+        if ((!$calendar) || (count($calendar) > 1)) {
+            if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('dashboard');
+            }
+
+            return $this->render(
+                'default/no_calendar_error.html.twig',
+                [
+                    'h1Textua' => $this->get('translator')->trans('error.no.calendar'),
+                    'h3Testua' => $this->get('translator')->trans('error.call.personal'),
+                    'user'     => $user,
+                ]
+            );
+        }
+
+        /** @var Calendar $calendar */
+        $calendar = $calendar[ 0 ];
+        // norberarentzako orduak
+        /** @var Event $selfHours */
+        $selfHours         = $em->getRepository('AppBundle:Event')->findCalendarSelfEvents($calendar->getId());
+        $selfHoursPartial  = 0;
+        $selfHoursComplete = 0;
+
+        foreach ($selfHours as $s) {
+            /** @var Event $s */
+            if ($s->getHours() < $calendar->getHoursDay()) {
+                $selfHoursPartial += (float)$s->getHours();
+            } else {
+                $selfHoursComplete += (float)$s->getHours();
+            }
+        }
+
+        //        $selfHoursPartial = round($calendar->getHoursSelfHalf() - $selfHoursPartial,2);
+        $selfHoursPartial = round($calendar->getHoursSelfHalf(), 2);
+        //        $selfHoursComplete = round( $calendar->getHoursSelf() - (float) $selfHoursComplete,2);
+        $selfHoursComplete = round($calendar->getHoursSelf(), 2);
+
+
+        return $this->render(
+            'default/user_homepage.html.twig',
+            [
+                'user'              => $user,
+                'calendar'          => $calendar,
+                'selfHoursPartial'  => $selfHoursPartial,
+                'selfHoursComplete' => $selfHoursComplete,
+                'unreadMessages'    => $unreadMessages
+            ]
+        );
+    }
+
+    /**
      * @Route("/fitxategiak", name="user_documents")
      */
     public function userdocumetsAction(): Response

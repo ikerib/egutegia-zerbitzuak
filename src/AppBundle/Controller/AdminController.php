@@ -55,6 +55,23 @@ class AdminController extends Controller
                 $users = $saila->getUser();
             }
 
+            $sailaName = '';
+            /** @var User $logedUser */
+            $logedUser = $this->getUser();
+            /** @var Saila $logedUserSaila */
+            $logedUserSaila = $logedUser->getSaila();
+            if ( $logedUserSaila) {
+                $sailaName = $logedUserSaila->getName();
+            }
+
+
+            return $this->render(
+                'default/sailaindex.html.twig',
+                [
+                    'saila' => $sailaName,
+                    'userdata' => $users
+                ]
+            );
         }
 
 

@@ -148,13 +148,13 @@ class User extends BaseUser implements LdapUserInterface
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Saila", inversedBy="user")
      * @ORM\JoinColumn(name="saila_id", referencedColumnName="id",onDelete="CASCADE")
      */
-    private $saila;
+    protected $saila;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Azpisaila", inversedBy="user")
      * @ORM\JoinColumn(name="azpisaila_id", referencedColumnName="id",onDelete="CASCADE")
      */
-    private $azpisaila;
+    protected $azpisaila;
 
     /**
      * Constructor.
