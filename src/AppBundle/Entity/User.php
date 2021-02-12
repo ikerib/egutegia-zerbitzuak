@@ -88,11 +88,6 @@ class User extends BaseUser implements LdapUserInterface
      */
     protected $notes;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Expose
-     */
-    protected $rola;
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
