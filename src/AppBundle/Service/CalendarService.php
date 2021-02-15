@@ -13,6 +13,7 @@ use AppBundle\Entity\Event;
 use AppBundle\Entity\Type;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class CalendarService
@@ -39,7 +40,7 @@ class CalendarService
      *               event_hours_self_half_before
      *
      * @return array
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
      */
     public function addEvent($datuak): array
     {
@@ -80,8 +81,8 @@ class CalendarService
                  * 1-. Begiratu eskatuta orduak jornada bat baino gehiago direla edo berdin,
                  * horrela bada hours_self-etik kendu bestela ordueta hours_self_half
                  */
-                $jornada = floatval( $calendar->getHoursDay() );
-                $orduak  = floatval( $datuak[ 'event_hours' ] );
+                $jornada = (float)$calendar->getHoursDay() ;
+                $orduak  = (float)$datuak[ 'event_hours' ] ;
                 $nondik  = $datuak[ 'event_nondik' ];
 
                 $partziala           = 0;
@@ -89,10 +90,10 @@ class CalendarService
                 $egutegiaOrduakTotal = floatval( $calendar->getHoursSelf() ) + floatval( $calendar->getHoursSelfHalf() );
 
 
-                if ( $nondik === 'orduak') {
+                if ( strtoupper($nondik) === 'ORDUAK') {
                     // Begiratu nahiko ordu dituen
                     if ( $calendar->getHoursSelfHalf() >= $orduak ) {
-                        $partziala = $calendar->getHoursSelfHalf();
+                        $partziala = $orduak;
                     } else {
                         $resp = array(
                             'result' => -1,
@@ -101,7 +102,8 @@ class CalendarService
 
                         return $resp;
                     }
-
+                    $calendar->setHoursSelf( (float)$calendar->getHoursSelf() - (float)($partziala) );
+                    $calendar->setHoursSelfHalf( (float)$calendar->getHoursSelfHalf() - (float)$partziala );
                 } else {
                     // Begiratu nahiko ordu dituen Egunetan
                     // Eskatutako ordu adina edo gehiago baditu
@@ -117,10 +119,13 @@ class CalendarService
                         $egunOsoaOrduak = $egunOsoak * $jornada;
                         $partziala      = $gainontzekoa * $jornada;
                     }
-                }
+                    $calendar->setHoursSelf( (float)$calendar->getHoursSelf() - (float)($egunOsoaOrduak) );
+                    $calendar->setHoursSelfHalf( (float)$calendar->getHoursSelfHalf() - (float)$partziala );
 
-                $calendar->setHoursSelf( $calendar->getHoursSelf() - $egunOsoaOrduak );
-                $calendar->setHoursSelfHalf( $calendar->getHoursSelfHalf() - $partziala );
+                    if ( (float)$calendar->getHoursSelfHalf() > (float)$calendar->getHoursSelf()) {
+                        $calendar->setHoursSelfHalf($calendar->getHoursSelf());
+                    }
+                }
             }
             if ( $t->getRelated() === 'hours_compensed' ) {
                 $calendar->setHoursCompensed(
