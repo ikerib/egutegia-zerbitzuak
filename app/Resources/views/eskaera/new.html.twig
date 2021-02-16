@@ -365,7 +365,7 @@
             autoclose: true,
             format: "yyyy-mm-dd",
             datesDisabled: arrayJaiEgunak,
-            daysOfWeekDisabled: "6,0",
+            // daysOfWeekDisabled: "6,0",
             language: '{{ app.request.locale }}'
         }).on('changeDate', function ( selected ) {
             var fin = $("#appbundle_eskaera_amaitu").val();
@@ -379,7 +379,7 @@
             autoclose: true,
             format: "yyyy-mm-dd",
             datesDisabled: arrayJaiEgunak,
-            daysOfWeekDisabled: "6,0",
+            // daysOfWeekDisabled: "6,0",
             language: '{{ app.request.locale }}'
         }).on('changeDate', function ( selected ) {
             var hasi = $("#appbundle_eskaera_hasi").val();
@@ -393,24 +393,32 @@
             autoclose: true,
             format: "yyyy-mm-dd",
             datesDisabled: arrayJaiEgunak,
-            daysOfWeekDisabled: "6,0",
+            // daysOfWeekDisabled: "6,0",
             language: '{{ app.request.locale }}'
         });
 
         function workday_count( fstart, fend ) {
             var start = moment(fstart);
             var end = moment(fend);
-            var first = start.clone().endOf("week"); // end of first week
-            var last = end.clone().startOf("week"); // start of last week
-            var days = Math.floor(last.diff(first, "days") * 5 / 7); // this will always multiply of 7
+            // var first = start.clone().endOf("week"); // end of first week
+            // var last = end.clone().startOf("week"); // start of last week
+            // var days = Math.floor(last.diff(first, "days") * 5 / 7); // this will always multiply of 7
+            //
+            // var wfirst = first.day() - start.day(); // check first week
+            // if ( start.day() === 0 ) --wfirst; // -1 if start with sunday
+            //
+            // var wlast = end.day() - last.day(); // check last week
+            // if ( end.day() === 6 ) --wlast; // -1 if end with saturday
 
-            var wfirst = first.day() - start.day(); // check first week
-            if ( start.day() === 0 ) --wfirst; // -1 if start with sunday
+            // return wfirst + days + wlast - kendu_jai_egunak(fstart, fend); // get the total
+            // return wfirst + days + wlast ; // get the total
 
-            var wlast = end.day() - last.day(); // check last week
-            if ( end.day() === 6 ) --wlast; // -1 if end with saturday
+            // console.log("start => " + start);
+            // console.log("end   => " + end);
+            // console.log("diff  => " + end.diff(start, 'days'));
+            // console.log("kendu => " + kendu_jai_egunak(fstart, fend));
+            return end.diff(start, 'days') + 1 - kendu_jai_egunak(fstart, fend);
 
-            return wfirst + days + wlast - kendu_jai_egunak(fstart, fend); // get the total
         }
 
         function kendu_jai_egunak( fstart, fend ) {
