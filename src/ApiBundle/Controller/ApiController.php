@@ -503,7 +503,7 @@ class ApiController extends FOSRestController
             /** @var Type $t */
             $t = $event->getType();
             if ('hours_free' === $t->getRelated()) {
-                $calendar->setHoursFree((float)($calendar->getHoursFree()) + $event->getHours());
+                $calendar->setHoursFree((float)($calendar->getHoursFree()) + (float)$event->getHours());
             }
             if ('hours_self' === $t->getRelated()) {
                 /* Maiatzean (2018) Event entitarean sortu aurretik zuten balioak gordetzen hasi nintzen
@@ -514,6 +514,7 @@ class ApiController extends FOSRestController
                         $calendar->setHoursSelf((float)($calendar->getHoursSelf()) + (float)($event->getHours()));
                     } else {
                         $calendar->setHoursSelfHalf((float)($calendar->getHoursSelfHalf()) + (float)($event->getHours()));
+                        $calendar->setHoursSelf((float)$calendar->getHoursSelf() + (float)($event->getHours()));
                     }
                 } else { // Kalkuluak egin behar. 2019rako egutegirako datorren elseko kodea ezaba daiteke, event guztiek izango bait dituzte datuak
                     $jornada = (float)($calendar->getHoursDay());

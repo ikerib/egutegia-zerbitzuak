@@ -120,10 +120,6 @@
                     <th data-halign="center" data-align="left" data-field="hasi" data-sortable="true">{{ "Hasi" | trans }}</th>
                     <th data-halign="center" data-align="left" data-field="amaitu" data-sortable="true">{{ "Amaitu" | trans }}</th>
                     <th data-halign="center" data-align="left" data-field="orduak" data-sortable="true">{{ "Orduak" | trans }}</th>
-                    <th data-halign="center" data-align="center" data-field="abiatua" data-sortable="false">{{ "Bideratua" | trans }}</th>
-                    <th data-halign="center" data-align="center" data-field="amaitua" data-sortable="false">{{ "Gauzatua" | trans }}</th>
-                    <th data-halign="center" data-align="center" data-field="egutegian" data-sortable="false">{{ "Egutegian" | trans }}</th>
-                    <th data-halign="center" data-align="center" data-field="sinatzaileak" data-sortable="false">{{ "Sinatzaile taldea" | trans }}</th>
                     <th data-halign="center" data-align="center" data-field="konfliktoa" data-sortable="false">{{ "Bateraezinak" | trans }}</th>
                     <th data-halign="center" data-align="center" data-field="oharrak" data-sortable="false">{{ "Oharrak" | trans }}</th>
                     <th>{{ "Ekintzak" | trans }}</th>
@@ -158,47 +154,7 @@
                         </td>
                         <td>{{ eskaera.amaitu | date('Y-m-d') }}</td>
                         <td>{{ eskaera.total }}</td>
-                        <td>
-                            <a href="javascript:void(0);" class="btnEskaera" data-id="{{ eskaera.id }}">
-                                {% if eskaera.abiatua == true %}
-                                    <label class="label label-success">Bai</label>
-                                {% else %}
-                                    <label class="label label-danger">Ez</label>
-                                {% endif %}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0);" class="btnEskaera" data-id="{{ eskaera.id }}">
-                                {% if eskaera.amaitua == true %}
-                                    <label class="label label-success">Bai</label>
-                                {% else %}
-                                    <label class="label label-danger">Ez</label>
-                                {% endif %}
-                            </a>
-                        </td>
-                        <td>
-                            {% if eskaera.amaitua == true %}
-                                <a href="javascript:void(0);" class="btnEskaeraEgutegira" data-id="{{ eskaera.id }}"
-                                   data-egutegian="{{ eskaera.egutegian }}">
-                                    {% if eskaera.egutegian == true %}
-                                        <label class="label label-success">Bai</label>
-                                    {% else %}
-                                        <label class="label label-danger">Ez</label>
-                                    {% endif %}
-                                </a>
-                            {% else %}
-                                -
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if eskaera.sinatzaileak %}
-                                <a href="{{ path('admin_sinatzaileak_show', { 'id': eskaera.sinatzaileak.id} ) }}"
-                                   target="_blank">{{ eskaera.sinatzaileak }}</a>
-                            {% else %}
-                                Bideratu gabe.
-                            {% endif %}
 
-                        </td>
 
                         <td>
                             {% if eskaera.konfliktoa == true %}
@@ -260,7 +216,6 @@
                                             {% endif %}
                                         {% endif %}
                                     {% endif %}
-{#                                    {% if sinatzeprozesua ==true %}#}
                                         <li>
                                             {% if eskaera.bideratua %}
                                                 <i class="fa fa-paper-plane" aria-hidden="true"></i>
@@ -272,32 +227,8 @@
                                             {% endif %}
 
                                         </li>
-{#                                    {% endif %}#}
                                 {% endif %}
 
-                                {#BIDERATUA ETA GAUZATUA BADAGO,EGUTEGIAN GEHITZEKO AUKERA EMAN#}
-{#                                {% if eskaera.amaitua and eskaera.emaitza == true %}#}
-
-{#                                    <li>#}
-{#                                        <a href="javascript:void(0);" class="btnEskaeraEgutegira"#}
-{#                                           data-id="{{ eskaera.id }}" data-egutegian="{{ eskaera.egutegian }}">#}
-{#                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>#}
-{#                                        </a>#}
-{#                                    </li>#}
-
-{#                                    <li>#}
-{#                                        <a href="javascript:void(0);" class="btnEskaeraGauzatuaMarkatu"#}
-{#                                           data-id="{{ eskaera.id }}" data-egutegian="{{ eskaera.egutegian }}">#}
-{#                                            <i class="fa fa-check" aria-hidden="true"></i>#}
-{#                                        </a>#}
-{#                                    </li>#}
-
-{#                                {% endif %}#}
-{#                                <li>#}
-{#                                    <a class="btnMezua" data-userid="{{ eskaera.user.id }}" data-eskaeraid="{{ eskaera.id }}" href="javascript:void(0);">#}
-{#                                        <i class="fa fa-envelope"></i> Mezua bidali#}
-{#                                    </a>#}
-{#                                </li>#}
                             </ul>
                         </td>
                     </tr>

@@ -147,4 +147,37 @@ class CalendarService
             'id' => $event->getId()
         );
     }
+
+    /**
+     *
+     */
+    public function removeEvent($id)
+    {
+        /** @var Event $event */
+        $event = $this->em->getRepository('AppBundle:Event')->find($id);
+        if (!$event) {
+            return array(
+                'result' => 0,
+                'error' => "Event #$id not found"
+            );
+        }
+        /** @var Calendar $calendar */
+        $calendar = $event->getCalendar();
+        $orduak="";
+        $nondik = "";
+        // Oporrak badira
+        if ( $event->getType()->getRelated() === "hours_free" ) {
+            $orduak = $event->getHours();
+            $calendar->setHoursFree((float)$calendar->getHoursFree() + (float)$orduak);
+            $this->em->persist($calendar);
+            $this->em->remove($event);
+            $this->em->flush();
+            return array(
+                'result' => 1,
+                'hours_free' => $calendar->getHoursFree()
+            );
+        }
+
+
+    }
 }
