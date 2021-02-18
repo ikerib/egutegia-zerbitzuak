@@ -338,12 +338,12 @@
                     {{ "Egutegia" | trans }}
                 </a>
             </li>
-            <li role="presentation">
-                <a href="#notes" aria-controls="profile" role="tab" data-toggle="tab">
-                    {{ "Oharrak" | trans }}{% if calendar.note | length > 0 %} &nbsp;<i
-                            class="fa fa-commenting text-danger" aria-hidden="true"></i>{% endif %}
-                </a>
-            </li>
+{#            <li role="presentation">#}
+{#                <a href="#notes" aria-controls="profile" role="tab" data-toggle="tab">#}
+{#                    {{ "Oharrak" | trans }}{% if calendar.note | length > 0 %} &nbsp;<i#}
+{#                            class="fa fa-commenting text-danger" aria-hidden="true"></i>{% endif %}#}
+{#                </a>#}
+{#            </li>#}
             <li role="presentation">
                 <a href="#konpentsatuak" aria-controls="messages" role="tab" data-toggle="tab">
                     {{ "Konpentsatuak" | trans }}
@@ -370,35 +370,35 @@
             </div>
 
             {# Oharrak #}
-            <div role="tabpanel" class="tab-pane fade" id="notes">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <form class="" id="frmNotes">
+{#            <div role="tabpanel" class="tab-pane fade" id="notes">#}
+{#                <div class="row">#}
+{#                    <div class="col-sm-12">#}
+{#                        <form class="" id="frmNotes">#}
 
-                            <div class="form-group">
-                                <label for="txtJornada" class="col-sm-12 control-label"></label>
-                                <div class="col-sm-12">
+{#                            <div class="form-group">#}
+{#                                <label for="txtJornada" class="col-sm-12 control-label"></label>#}
+{#                                <div class="col-sm-12">#}
 
-                                    {{ form_widget(frmnote.note, { 'id': 'txtNotes' }) }}
+{#                                    {{ form_widget(frmnote.note, { 'id': 'txtNotes' }) }}#}
 
-                                </div>
-                            </div>
+{#                                </div>#}
+{#                            </div>#}
 
-                        </form>
-                    </div>
-                </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-sm-10"></div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary" id="save-calendar-note">
-                                {{ 'Gorde' | trans }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{#                        </form>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="row">&nbsp;</div>#}
+{#                <div class="row">#}
+{#                    <div class="col-sm-10"></div>#}
+{#                    <div class="col-sm-2">#}
+{#                        <div class="form-group">#}
+{#                            <button type="button" class="btn btn-primary" id="save-calendar-note">#}
+{#                                {{ 'Gorde' | trans }}#}
+{#                            </button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
 
             {# Konpentsauak #}
             <div role="tabpanel" class="tab-pane fade in active" id="konpentsatuak">
@@ -651,6 +651,29 @@
 
 {% block content_sidebar %}
     {{ render(controller('AppBundle:Type:list', {'calendarid' : calendar.id}  )) }}
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="" id="frmNotes">
+                <div class="form-group">
+                    <label for="txtJornada" class="col-sm-12 control-label"></label>
+                    <div class="col-sm-12">
+                        {{ form_widget(frmnote.note, { 'id': 'txtNotes' }) }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-sm-10"></div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="save-calendar-note">
+                    {{ 'Gorde' | trans }}
+                </button>
+            </div>
+        </div>
+    </div>
 {% endblock content_sidebar %}
 
 {% block foot_script %}
