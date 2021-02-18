@@ -133,7 +133,6 @@ class Type
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\TemplateEvent", mappedBy="type",cascade={"persist"})
      * @ORM\OrderBy({"name" = "ASC"})
-     * @Expose()
      */
     private $template_events;
 

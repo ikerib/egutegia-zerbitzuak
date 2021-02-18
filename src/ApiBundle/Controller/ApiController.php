@@ -110,6 +110,8 @@ class ApiController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
 
         $tevents = $em->getRepository('AppBundle:TemplateEvent')->getTemplateEvents($templateid);
+//        /** @var TemplateEvent $tevents */
+//        $tevents = $em->getRepository('AppBundle:TemplateEvent')->findByTemplate($templateid);
 
         if (null === $tevents) {
             return new View('there are no users exist', Response::HTTP_NOT_FOUND);

@@ -9,6 +9,7 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -22,10 +23,10 @@ class TemplateEventRepository extends EntityRepository
     public function getTemplateEvents($templateid)
     {
         $em = $this->getEntityManager();
-        /** @var $query \Doctrine\DBAL\Query\QueryBuilder */
+        /** @var $query QueryBuilder */
         $query = $em->createQuery('
             SELECT te,tt
-                FROM AppBundle:TemplateEvent te 
+                FROM AppBundle:TemplateEvent te
                   LEFT JOIN te.template t
                   LEFT JOIN te.type tt
                 WHERE t.id = :templateid
