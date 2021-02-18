@@ -98,7 +98,7 @@
                         {% if user.calendars | length > 0 %}
                             {# <a href="{{ path('admin_calendar_edit', { 'id': user.calendars.first.id }) }}">{{ user.calendars.first.year }}</a>#}
 {#                            <a href="{{ path('user_calendar', {'userid': user.id}) }}" target="_blank">{{ user.calendars.first.year }}</a>#}
-                            <a href="{{ path('admin_calendar_edit', {'id': user.id}) }}" target="_blank">{{ user.calendars.first.year }}</a>
+                            <a href="{{ path('admin_calendar_edit', {'id': user.calendars.first.id}) }}" target="_blank">{{ user.calendars.first.year }}</a>
                         {% endif %}
                     </td>
                     <td>
