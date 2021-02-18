@@ -338,12 +338,6 @@
                     {{ "Egutegia" | trans }}
                 </a>
             </li>
-{#            <li role="presentation">#}
-{#                <a href="#notes" aria-controls="profile" role="tab" data-toggle="tab">#}
-{#                    {{ "Oharrak" | trans }}{% if calendar.note | length > 0 %} &nbsp;<i#}
-{#                            class="fa fa-commenting text-danger" aria-hidden="true"></i>{% endif %}#}
-{#                </a>#}
-{#            </li>#}
             <li role="presentation">
                 <a href="#konpentsatuak" aria-controls="messages" role="tab" data-toggle="tab">
                     {{ "Konpentsatuak" | trans }}
@@ -369,47 +363,14 @@
                 <div id="calendar" class="calendar"></div>
             </div>
 
-            {# Oharrak #}
-{#            <div role="tabpanel" class="tab-pane fade" id="notes">#}
-{#                <div class="row">#}
-{#                    <div class="col-sm-12">#}
-{#                        <form class="" id="frmNotes">#}
-
-{#                            <div class="form-group">#}
-{#                                <label for="txtJornada" class="col-sm-12 control-label"></label>#}
-{#                                <div class="col-sm-12">#}
-
-{#                                    {{ form_widget(frmnote.note, { 'id': 'txtNotes' }) }}#}
-
-{#                                </div>#}
-{#                            </div>#}
-
-{#                        </form>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="row">&nbsp;</div>#}
-{#                <div class="row">#}
-{#                    <div class="col-sm-10"></div>#}
-{#                    <div class="col-sm-2">#}
-{#                        <div class="form-group">#}
-{#                            <button type="button" class="btn btn-primary" id="save-calendar-note">#}
-{#                                {{ 'Gorde' | trans }}#}
-{#                            </button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-
             {# Konpentsauak #}
-            <div role="tabpanel" class="tab-pane fade in active" id="konpentsatuak">
+            <div role="tabpanel" class="tab-pane fade in" id="konpentsatuak">
                 <div class="row">&nbsp</div>
 
                 <div class="row">
-                    <div class="col-sm-11">
-                    </div>
+                    <div class="col-sm-11"></div>
                     <div class="col-sm-1">
-                        <a id="btnAddKonpentsatua" href="javascript:void(0);"><i class="fa fa-plus-circle"
-                                                                                 aria-hidden="true"></i></a>
+                        <a id="btnAddKonpentsatua" href="javascript:void(0);"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                     </div>
                 </div>
 
@@ -438,14 +399,11 @@
                                     <td class="text-center">
                                         <ul class="list-inline">
                                             <li>
-                                                <a data-id="{{ o.id }}" class="btn-edit-konpentsatua"
-                                                   href="javascript:void(0);"><i class="fa fa-pencil-square-o"
-                                                                                 aria-hidden="true"></i></a>
+                                                <a data-id="{{ o.id }}" class="btn-edit-konpentsatua" href="javascript:void(0);"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                             </li>
                                             <li>
                                                 {{ form_start(deletehourforms[o.id],{'attr': {'id': o.id}}) }}
-                                                <a class="btnRemoveHourwRow" data-id="{{ o.id }}"
-                                                   href="javascript:void(0);">
+                                                <a class="btnRemoveHourwRow" data-id="{{ o.id }}" href="javascript:void(0);">
                                                     <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                                                 </a>
                                                 {{ form_end(deletehourforms[o.id]) }}
@@ -463,24 +421,19 @@
                 <div class="modal modal-fade" id="modal-konpentsatuak">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
-
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span
-                                            aria-hidden="true">×</span><span
-                                            class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">×</span><span class="sr-only">{{ 'Itxi' | trans }}</span>
+                                </button>
                                 <h4 class="modal-title">
                                     {{ 'Ordu konpentsatuak' | trans }}
                                 </h4>
                             </div>
-
                             <div class="modal-body">
-                                <div class="row" id="modal-content-konpentsatuak">
-
-                                </div>
+                                <div class="row" id="modal-content-konpentsatuak"></div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
                                 <button type="button" class="btn btn-primary" data-action="" id="save-konpentsatua">
                                     {{ 'Gorde' | trans }}
                                 </button>
