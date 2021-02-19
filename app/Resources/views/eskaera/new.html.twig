@@ -38,8 +38,16 @@
             <div class="row">
                 <label for="min-date" class="col-sm-4 control-label">{{ 'Aukeratu bat' | trans }}</label>
                 <div class="btn-group col-sm-7" role="group">
-                    <button type="button" class="btn btn-default" id="cmdDivOrduak">{{ "Orduak" | trans }}</button>
-                    <button type="button" class="btn btn-default" id="cmdDivEgunak">{{ "Egunak" | trans }}</button>
+                    {# Opor eskaera bada, ezin dira orduak eskatu #}
+                    {% if  eskaera.type.related == "hours_free" %}
+                        <button type="button" class="btn disabled"  disabled>{{ "Orduak" | trans }}</button>
+                        <button type="button" class="btn btn-default" id="cmdDivEgunak">{{ "Egunak" | trans }}</button>
+                    {% else %}
+                        <button type="button" class="btn btn-default" id="cmdDivOrduak">{{ "Orduak" | trans }}</button>
+                        <button type="button" class="btn btn-default" id="cmdDivEgunak">{{ "Egunak" | trans }}</button>
+                    {% endif %}
+
+
                 </div>
             </div>
 
