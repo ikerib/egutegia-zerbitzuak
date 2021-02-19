@@ -152,11 +152,12 @@
                 </div>
                 <div class="col-md-4"></div>
             </div>
-            <div style="display: none">
+            <div style="display: hidden">
                 {{ form_end(form) }}
-                <input id="txtJornada" type="text" value="{{ calendar.getHoursDay }}">
-                <input id="hoursFree" type="text" value="{{ calendar.hoursFree }}">
-                <input id="eskaeramota" type="hidden" value="{{ eskaera.type.name }}">
+                <label for="txtJornada">Lanaldia</label><input id="txtJornada" type="text" value="{{ calendar.getHoursDay }}">
+                <label for="hoursFree">Opor orduak</label><input id="hoursFree" type="text" value="{{ calendar.hoursFree }}">
+                <label for="hoursSelf">NAE orduak</label><input id="hoursSelf" type="text" value="{{ calendar.hoursSelf }}">
+                <label for="eskaeramota">Eskaera Mota</label><input id="eskaeramota" type="text" value="{{ eskaera.type.name }}">
             </div>
 
         </div>
@@ -254,6 +255,7 @@
             var konpentsatuada = false;
             var lizentziada = false;
             var naeda = false;
+            var oporrada = false;
             if ( eskaeramota.toUpperCase().indexOf("KONPENTSA") !== -1 ) {
                 konpentsatuada = true;
             }
@@ -262,6 +264,9 @@
             }
             if ( eskaeramota.toUpperCase().indexOf("ARAZO") !== -1 ) {
                 naeda = true;
+            }
+            if ( eskaeramota.toUpperCase().indexOf("OPOR") !== -1 ) {
+                oporrada = true;
             }
 
             if ( $("input[type=radio]:checked").length === 0 ) {
@@ -352,6 +357,29 @@
                 ongi = false;
                 return;
             }
+
+            // Begiratu ea eskatu dituen ordu kopurua hartu ahal dituen ordu kopurua baina txikiagoa den
+            if ( (naeda === true) || (oporrada === true) ) {
+                var eskaera_egunak_ordutan = parseFloat($('#appbundle_eskaera_egunak').val()) * parseFloat($('#txtJornada').val());
+                var egutegi_orduak = parseFloat($('#hoursFree').val());
+                if (eskaera_egunak_ordutan > egutegi_orduak) {
+                    bootbox.alert("Dituzun ordu/egun kopurua baina gehiago eskatzea ezinezkoa da.");
+                    ongi = false;
+                    return;
+                }
+            }
+
+            // Begiratu ea eskatu dituen ordu kopurua hartu ahal dituen ordu kopurua baina txikiagoa den
+            if ( (naeda === true) || (oporrada === true) ) {
+                var eskaera_egunak_ordutan = parseFloat($('#appbundle_eskaera_egunak').val()) * parseFloat($('#txtJornada').val());
+                var egutegi_orduak = parseFloat($('#hoursSelf').val());
+                if (eskaera_egunak_ordutan > egutegi_orduak) {
+                    bootbox.alert("Dituzun ordu/egun kopurua baina gehiago eskatzea ezinezkoa da.");
+                    ongi = false;
+                    return;
+                }
+            }
+
 
             if ( ongi ) {
                 $("#frmEskaeraNew").submit();
