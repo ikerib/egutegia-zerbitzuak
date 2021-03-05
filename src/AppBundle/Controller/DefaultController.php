@@ -68,7 +68,6 @@ class DefaultController extends Controller
         return $this->redirectToRoute('user_homepage');
     }
 
-
     /**
      * @Route("/mycalendar", name="user_homepage")
      */
@@ -349,6 +348,7 @@ class DefaultController extends Controller
                     $events[]       = $temp;
                 }
 
+                
 
                 $calendarcolors[] = array(
                     'username' => $u,

@@ -1,7 +1,3 @@
-/**
- * egutegia6
- * Created by iibarguren on 3/13/17.
- */
 
 $(function () {
     var currentYear = new Date().getFullYear();
