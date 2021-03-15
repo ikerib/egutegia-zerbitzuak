@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 
 {% block content_div_start %}{% endblock %}
 {% block content_div_end %}{% endblock %}
 {% block headline %}{{ saila }} {% endblock %}
 
 {% block content_row %}
-
+sailaindez
     <form id="frmCompare" method="post" action="{{ path('calendar_compare') }}">
         <input id="txtUsers" type="hidden" name="users" value="" title="Users">
     </form>
@@ -63,7 +63,7 @@
             <th data-halign="center" data-align="center">{{ 'Opor orduakaaaa' | trans }}</th>
             <th data-halign="center" data-align="center">{{ 'Norberarentzako orduak' | trans }}</th>
             <th data-halign="center" data-align="center">{{ 'Konpentsatutako orduak' | trans }}</th>
-
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -84,8 +84,8 @@
                 <td>{{ user.azpisaila }}</td>
                 <td>
                     {% if user.calendars is defined %}
-                    <select name="year" class="cmbYear">
-                        <option value="-1">Aukeratu bat</option>
+                    <select name="year" class="cmbYear" style="width: 100px;">
+                        <option value="-1">Aukeratu</option>
                         {% for e in user.calendars %}
                             <option value="{{ url('admin_calendar_edit', { 'id': e.id }) }}">{{ e.year }}</option>
                         {% endfor %}
@@ -96,8 +96,7 @@
                 {% if user.calendars | length > 0 %}
                     <td>
                         {% if user.calendars | length > 0 %}
-                            {# <a href="{{ path('admin_calendar_edit', { 'id': user.calendars.first.id }) }}">{{ user.calendars.first.year }}</a>#}
-                            <a href="{{ path('user_calendar', {'userid': user.id}) }}" target="_blank">{{ user.calendars.first.year }}</a>
+                            <a href="{{ path('user_calendar', {'userid': user.id}) }}" target="_blank" title="{{ user.calendars.first.name }}" >{{ user.calendars.first.year }}</a>
                         {% endif %}
                     </td>
                     <td>
@@ -134,7 +133,12 @@
                         {% endif %}
                     </td>
                     <td>{{ user.calendars[0].hoursCompensed }} </td>
-
+                    <td>
+                        <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"
+                           data-username="{{ user.username }}">
+                            <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
+                        </a>
+                    </td>
                 {% else %}
                     <td>
                         <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"

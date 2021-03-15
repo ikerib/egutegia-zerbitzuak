@@ -64,7 +64,6 @@ class AdminController extends Controller
                 $sailaName = $logedUserSaila->getName();
             }
 
-
             return $this->render(
                 'default/sailaindex.html.twig',
                 [
