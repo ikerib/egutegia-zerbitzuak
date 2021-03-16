@@ -166,6 +166,7 @@
 
 
     <input type="hidden" id="txtJaiEgunak" value="{{ jaiegunak |  serialize('json') }}" />
+{#    <textarea  rows="40" cols="100">{{ jaiegunak |  serialize('json') }}" </textarea>#}
 
 {% endblock %}
 
@@ -468,12 +469,12 @@
             var erantzuna = 0;
             for ( var m = moment(a); m.diff(b, 'days') <= 0; m.add(1, "days") ) {
 
-                if ( (m.weekday() !== 6) && (m.weekday() !== 0) ) {
+                // if ( (m.weekday() !== 6) && (m.weekday() !== 0) ) {
                     if ( jQuery.inArray(m.format("YYYY-MM-DD"), arrayJaiEgunak) !== -1 ) {
                         erantzuna += 1;
                     }
 
-                }
+                // }
             }
 
             return erantzuna;
@@ -486,7 +487,9 @@
             d = 0;
 
             const hasi = $("#appbundle_eskaera_hasi").val();
+            console.log(hasi);
             const amaitu = $("#appbundle_eskaera_amaitu").val();
+            console.log(amaitu);
             d = workday_count(hasi, amaitu);
             if ( isNaN(d) ) {
                 d = 0;
