@@ -47,6 +47,7 @@ class TypeType extends AbstractType
                 'placeholder' => 'Aukeratu bat',
                 'choices' => [
                     'Jai Egunak' => 'hours_free',
+                    'Aurreko Urteko Jai egunak' => 'hours_free_last_year',
                     'Norberarentzakoak' => 'hours_self',
                     'Konpentsatuak' => 'hours_compensed',
                     'Sindikalak' => 'hours_sindical',

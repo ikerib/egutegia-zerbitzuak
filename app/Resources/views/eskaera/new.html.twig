@@ -59,7 +59,13 @@
                     {{ form_widget(form.egunak, { 'attr': {'class': 'form-control', 'autocomplete': 'null'} }) }}
                 </div>
                 <div class="col-sm-3">
-                    <p class="">Dituzun egunak: {{ (calendar.hoursSelf / calendar.hoursDay) | round (2) }} egun ( {{ calendar.hoursSelf }} ordu ) </p>
+                    {% if  eskaera.type.related == 'hours_free_last_year' %}
+                        <p class="">Dituzun egunak: {{ (calendar.hoursFreeLastYear / calendar.hoursDay) | round (2) }} egun ( {{ calendar.hoursFreeLastYear }} ordu ) </p>
+                    {% elseif  eskaera.type.related == 'hours_free' %}
+                        <p class="">Dituzun egunak: {{ (calendar.hoursFree / calendar.hoursDay) | round (2) }} egun ( {{ calendar.hoursFree }} ordu ) </p>
+                    {% elseif  eskaera.type.related == 'hours_self' %}
+                        <p class="">Dituzun egunak: {{ (calendar.hoursSelf / calendar.hoursDay) | round (2) }} egun ( {{ calendar.hoursSelf }} ordu ) </p>
+                    {% endif %}
                 </div>
             </div>
 
@@ -166,7 +172,14 @@
 
 
     <input type="hidden" id="txtJaiEgunak" value="{{ jaiegunak |  serialize('json') }}" />
-{#    <textarea  rows="40" cols="100">{{ jaiegunak |  serialize('json') }}" </textarea>#}
+    {% if  eskaera.type.related == 'hours_free_last_year' %}
+        {% set disponible=calendar.hoursFreeLastYear %}
+    {% elseif  eskaera.type.related == 'hours_free' %}
+        {% set disponible=calendar.hoursFree %}
+    {% elseif  eskaera.type.related == 'hours_self' %}
+        {% set disponible=calendar.hoursSelf %}
+    {% endif %}
+    <input type="hidden" id="disponible" value="{{ disponible }}" />
 
 {% endblock %}
 
@@ -362,8 +375,10 @@
             // Begiratu ea eskatu dituen ordu kopurua hartu ahal dituen ordu kopurua baina txikiagoa den
             if ( (naeda === true) || (oporrada === true) ) {
                 var eskaera_egunak_ordutan = parseFloat($('#appbundle_eskaera_egunak').val()) * parseFloat($('#txtJornada').val());
-                var egutegi_orduak = parseFloat($('#hoursFree').val());
-                if (eskaera_egunak_ordutan > egutegi_orduak) {
+                //var egutegi_orduak = parseFloat($('#hoursFree').val());
+                var disponible = parseFloat($('#disponible').val())
+
+                if (eskaera_egunak_ordutan > disponible) {
                     bootbox.alert("Dituzun ordu/egun kopurua baina gehiago eskatzea ezinezkoa da.");
                     ongi = false;
                     return;

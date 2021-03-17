@@ -58,6 +58,10 @@ class CalendarType extends AbstractType
                 'label' => 'Opor orduak hartuta',
                 'required' => true,
             ])
+            ->add('hoursFreeLastYear', NumberType::class, [
+                'label' => 'Aurreko urtekoak',
+                'required' => true,
+            ])
             ->add('hoursSelf', NumberType::class, [
                 'label' => 'Norberarentzako orduak',
                 'required' => true,

@@ -40,7 +40,11 @@
                         {% else %}
                             <span>Datuak falta dira</span>
                         {% endif %}
-
+                        {% if calendar.hoursFreeLastYear > 0 %}
+                            <strong>Aurreko urtekoak</strong>
+                            <span id="hoursFreeLastYear">{{ calendar.hoursFreeLastYear }} ({{ (calendar.hoursFreeLastYear / calendar.hoursDay) | round (2) }} egun) </span>
+                            <input id="txtHoursFree" type="hidden" value="{{ calendar.hoursFreeLastYear }}">
+                        {% endif %}
                     </div>
                 </div>
 

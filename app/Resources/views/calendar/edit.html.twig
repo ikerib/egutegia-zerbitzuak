@@ -60,6 +60,10 @@
                         <span id="hoursFree">{{ calendar.hoursFree }}
                             ({{ (calendar.hoursFree / calendar.hoursDay) | round (2) }} egun) </span>
                         <input id="txtHoursFree" type="hidden" value="{{ calendar.hoursFree }}">
+                        <strong>Aurreko urtekoak</strong>
+                        <span id="hoursFreeLastYear">{{ calendar.hoursFreeLastYear }}
+                            ({{ (calendar.hoursFreeLastYear / calendar.hoursDay) | round (2) }} egun) </span>
+                        <input id="txtHoursFreeLastYear" type="hidden" value="{{ calendar.hoursFreeLastYear }}">
                     </div>
                 </div>
 
@@ -143,6 +147,7 @@
                             {{ form_widget(edit_form.name, { 'attr': {'class': 'form-control'} }) }}
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="min-date" class="col-sm-3 control-label">{{ 'msg.urteko.orduak' | trans }}</label>
                         <div class="col-sm-7">
@@ -154,6 +159,13 @@
                         <label for="min-date" class="col-sm-3 control-label">{{ 'msg.opor.orduak' | trans }}</label>
                         <div class="col-sm-7">
                             {{ form_widget(edit_form.hoursFree, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">Aurreko urtekoak</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hoursFreeLastYear, { 'attr': {'class': 'form-control'} }) }}
                         </div>
                     </div>
 

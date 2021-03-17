@@ -78,6 +78,14 @@ class Calendar
      * @var decimal
      * @Expose
      *
+     * @ORM\Column(name="hours_free_last_year", type="decimal", precision=10, scale=2)
+     */
+    private $hours_free_last_year = 0; // Opor orduak hartuta
+
+    /**
+     * @var decimal
+     * @Expose
+     *
      * @ORM\Column(name="hours_self", type="decimal", precision=10, scale=2)
      */
     private $hours_self = 0; // Urteko norberarentzako orduak
@@ -356,6 +364,30 @@ class Calendar
     public function getHoursFree()
     {
         return $this->hours_free;
+    }
+
+    /**
+     * Set hoursFreeLastYear
+     *
+     * @param string $hoursFreeLastYear
+     *
+     * @return Calendar
+     */
+    public function setHoursFreeLastYear($hoursFreeLastYear)
+    {
+        $this->hours_free_last_year = $hoursFreeLastYear;
+
+        return $this;
+    }
+
+    /**
+     * Get hoursFreeLastYear
+     *
+     * @return string
+     */
+    public function getHoursFreeLastYear()
+    {
+        return $this->hours_free_last_year;
     }
 
     /**
