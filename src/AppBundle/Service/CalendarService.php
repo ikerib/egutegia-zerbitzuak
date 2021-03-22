@@ -75,6 +75,9 @@ class CalendarService
             if ( $t->getRelated() === 'hours_free' ) {
                 $calendar->setHoursFree( (float)$calendar->getHoursFree() - (float)$datuak[ 'event_hours' ]);
             }
+            if ( $t->getRelated() === 'hours_free_last_year' ) {
+                $calendar->setHoursFreeLastYear( (float)$calendar->getHoursFreeLastYear() - (float)$datuak[ 'event_hours' ]);
+            }
             if ( $t->getRelated() === 'hours_self' ) {
 
                 /**
