@@ -374,11 +374,11 @@
 
             // Begiratu ea eskatu dituen ordu kopurua hartu ahal dituen ordu kopurua baina txikiagoa den
             if ( (naeda === true) || (oporrada === true) ) {
-                var eskaera_egunak_ordutan = parseFloat($('#appbundle_eskaera_egunak').val()) * parseFloat($('#txtJornada').val());
+                var eskaera_egunak_ordutan = parseFloat($('#appbundle_eskaera_egunak').val(),2) * parseFloat($('#txtJornada').val(),2);
                 //var egutegi_orduak = parseFloat($('#hoursFree').val());
-                var disponible = parseFloat($('#disponible').val())
-
-                if (eskaera_egunak_ordutan.toFixed(2) > disponible.toFixed(2)) {
+                var disponible = parseFloat($('#disponible').val(),2)
+                if (eskaera_egunak_ordutan > disponible) {
+                    console.log("sartu da")
                     bootbox.alert("Dituzun ordu/egun kopurua baina gehiago eskatzea ezinezkoa da.");
                     ongi = false;
                     return;
@@ -387,9 +387,9 @@
 
             // Begiratu ea eskatu dituen ordu kopurua hartu ahal dituen ordu kopurua baina txikiagoa den
             if ( (naeda === true) || (oporrada === true) ) {
-                var eskaera_egunak_ordutan = parseFloat($('#appbundle_eskaera_egunak').val()) * parseFloat($('#txtJornada').val());
-                var egutegi_orduak = parseFloat($('#disponible').val());
-                if (eskaera_egunak_ordutan.toFixed(2) > egutegi_orduak.toFixed(2)) {
+                var eskaera_egunak_ordutan = parseFloat($('#appbundle_eskaera_egunak').val(),2) * parseFloat($('#txtJornada').val(),2);
+                var egutegi_orduak = parseFloat($('#disponible').val(),2);
+                if (eskaera_egunak_ordutan > egutegi_orduak) {
                     bootbox.alert("Dituzun ordu/egun kopurua baina gehiago eskatzea ezinezkoa da.");
                     ongi = false;
                     return;
