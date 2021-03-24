@@ -378,7 +378,7 @@
                 //var egutegi_orduak = parseFloat($('#hoursFree').val());
                 var disponible = parseFloat($('#disponible').val())
 
-                if (eskaera_egunak_ordutan > disponible) {
+                if (eskaera_egunak_ordutan.toFixed(2) > disponible.toFixed(2)) {
                     bootbox.alert("Dituzun ordu/egun kopurua baina gehiago eskatzea ezinezkoa da.");
                     ongi = false;
                     return;
@@ -388,10 +388,8 @@
             // Begiratu ea eskatu dituen ordu kopurua hartu ahal dituen ordu kopurua baina txikiagoa den
             if ( (naeda === true) || (oporrada === true) ) {
                 var eskaera_egunak_ordutan = parseFloat($('#appbundle_eskaera_egunak').val()) * parseFloat($('#txtJornada').val());
-                console.log(eskaera_egunak_ordutan);
                 var egutegi_orduak = parseFloat($('#disponible').val());
-                console.log(egutegi_orduak);
-                if (eskaera_egunak_ordutan > egutegi_orduak) {
+                if (eskaera_egunak_ordutan.toFixed(2) > egutegi_orduak.toFixed(2)) {
                     bootbox.alert("Dituzun ordu/egun kopurua baina gehiago eskatzea ezinezkoa da.");
                     ongi = false;
                     return;
