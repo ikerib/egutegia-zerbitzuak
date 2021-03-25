@@ -1,11 +1,10 @@
-{% extends 'base2.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block content_div_start %}{% endblock %}
 {% block content_div_end %}{% endblock %}
 {% block headline %}{{ saila }} {% endblock %}
 
 {% block content_row %}
-sailaindez
     <form id="frmCompare" method="post" action="{{ path('calendar_compare') }}">
         <input id="txtUsers" type="hidden" name="users" value="" title="Users">
     </form>
@@ -63,7 +62,9 @@ sailaindez
             <th data-halign="center" data-align="center">{{ 'Opor orduakaaaa' | trans }}</th>
             <th data-halign="center" data-align="center">{{ 'Norberarentzako orduak' | trans }}</th>
             <th data-halign="center" data-align="center">{{ 'Konpentsatutako orduak' | trans }}</th>
-            <th></th>
+            {% if is_granted('ROLE_ENKARGATUA')  == false %}
+                <th></th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -133,16 +134,16 @@ sailaindez
                         {% endif %}
                     </td>
                     <td>{{ user.calendars[0].hoursCompensed }} </td>
-                    <td>
-                        <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"
-                           data-username="{{ user.username }}">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
-                        </a>
-                    </td>
+                    {% if is_granted('ROLE_ENKARGATUA') == false %}
+                        <td>
+                            <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs" data-username="{{ user.username }}">
+                                <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
+                            </a>
+                        </td>
+                    {% endif %}
                 {% else %}
                     <td>
-                        <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs"
-                           data-username="{{ user.username }}">
+                        <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs" data-username="{{ user.username }}">
                             <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
                         </a>
                     </td>
@@ -150,8 +151,9 @@ sailaindez
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-
+                    {% if is_granted('ROLE_ENKARGATUA') == false %}
+                        <td></td>
+                    {% endif %}
                 {% endif %}
             </tr>
         {% endfor %}
