@@ -355,12 +355,14 @@ class EskaeraController extends Controller {
             return $this->redirectToRoute('eskaera_add_to_calendar', array('id' => $eskaera->getId()));
         }
 
-        $jaiegunak = $em->getRepository('AppBundle:TemplateEvent')->findBy(
-            array(
-                'template' => $calendar->getTemplate()->getId(),
-            )
-        );
+//        $jaiegunak = $em->getRepository('AppBundle:TemplateEvent')->findBy(
+//            array(
+//                'template' => $calendar->getTemplate()->getId(),
+//                ''
+//            )
+//        );
 
+        $jaiegunak = $em->getRepository('AppBundle:TemplateEvent')->getPintatuGorriz();
 
         return $this->render(
             'eskaera/new.html.twig',

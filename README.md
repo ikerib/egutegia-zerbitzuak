@@ -25,3 +25,7 @@ Requirements:
     - lib barruan dagoena instalatu (Debian 8 bertsioa)
     - eskuratu non instalatua dagoen => whereis wkhtmltopdf
 
+Gorri margotu:
+Jai Eguna
+Larunbata / Igande Jai
+Zubia

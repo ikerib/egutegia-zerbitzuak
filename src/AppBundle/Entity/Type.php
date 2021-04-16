@@ -115,6 +115,12 @@ class Type
      */
     private $lizentziamotabehar;
 
+    /**
+     * @var bool
+     * @ORM\Column(name="instantziaegutegianerakutsi", type="boolean", nullable=true)
+     */
+    private $instantziaegutegianerakutsi;
+
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
     /*****************************************************************************************************************/
@@ -562,5 +568,29 @@ class Type
     public function getLizentziamotabehar()
     {
         return $this->lizentziamotabehar;
+    }
+
+    /**
+     * Set instantziaegutegianerakutsi.
+     *
+     * @param bool|null $instantziaegutegianerakutsi
+     *
+     * @return Type
+     */
+    public function setInstantziaegutegianerakutsi($instantziaegutegianerakutsi = null)
+    {
+        $this->instantziaegutegianerakutsi = $instantziaegutegianerakutsi;
+
+        return $this;
+    }
+
+    /**
+     * Get instantziaegutegianerakutsi.
+     *
+     * @return bool|null
+     */
+    public function getInstantziaegutegianerakutsi()
+    {
+        return $this->instantziaegutegianerakutsi;
     }
 }

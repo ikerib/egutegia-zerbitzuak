@@ -37,4 +37,20 @@ class TemplateEventRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function getPintatuGorriz()
+    {
+        $em = $this->getEntityManager();
+        /** @var $query QueryBuilder */
+        $query = $em->createQuery('
+            SELECT te
+                FROM AppBundle:TemplateEvent te
+                  LEFT JOIN te.type tt
+                WHERE tt.instantziaegutegianerakutsi=1
+        ');
+
+
+        return $query->getResult();
+    }
+
 }

@@ -68,6 +68,11 @@ class TypeType extends AbstractType
                 'label' => 'Lizentzia Motak',
                 'translation_domain' => 'messages',
             ])
+            ->add('instantziaegutegianerakutsi', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Gorriz margotu',
+                'translation_domain' => 'messages',
+            ])
 
         ;
     }

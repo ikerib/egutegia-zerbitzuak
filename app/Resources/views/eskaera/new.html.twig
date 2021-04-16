@@ -171,7 +171,7 @@
     </div>
 
 
-    <input type="hidden" id="txtJaiEgunak" value="{{ jaiegunak |  serialize('json') }}" />
+    <input type="text" id="txtJaiEgunak" value="{{ jaiegunak |  serialize('json') }}" />
     {% if  eskaera.type.related == 'hours_free_last_year' %}
         {% set disponible=calendar.hoursFreeLastYear %}
     {% elseif  eskaera.type.related == 'hours_free' %}

@@ -53,6 +53,7 @@
                     <th data-halign="center" data-align="center" data-field="erakutsiEskaera" data-sortable="true" >{{ 'Eskaeretan' | trans }}</th>
                     <th data-halign="center" data-align="center" data-field="related" data-sortable="true">{{ 'Erlazioa' | trans }}</th>
                     <th data-halign="center" data-align="center" data-field="lizentziamotabehar" data-sortable="true">{{ 'Lizentzia Motak' | trans }}</th>
+                    <th data-halign="center" data-align="center" data-field="instantziaegutegianerakutsi" data-sortable="true">{{ 'Gorriz Margotu' | trans }}</th>
                     <th data-halign="center" data-align="center"></th>
                 </tr>
             </thead>
@@ -80,6 +81,13 @@
                     <td>{{ type.related }}</td>
                     <td>
                         {% if type.lizentziamotabehar == true %}
+                            <span class="label label-success">{{ 'Bai'|trans }}</span>
+                        {% else %}
+                            <span class="label label-danger">{{ 'Ez'|trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if type.instantziaegutegianerakutsi == true %}
                             <span class="label label-success">{{ 'Bai'|trans }}</span>
                         {% else %}
                             <span class="label label-danger">{{ 'Ez'|trans }}</span>
