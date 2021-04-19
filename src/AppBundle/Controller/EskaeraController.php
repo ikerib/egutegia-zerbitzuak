@@ -362,7 +362,7 @@ class EskaeraController extends Controller {
 //            )
 //        );
 
-        $jaiegunak = $em->getRepository('AppBundle:TemplateEvent')->getPintatuGorriz();
+        $jaiegunak = $em->getRepository('AppBundle:TemplateEvent')->getPintatuGorriz($calendar->getTemplate()->getId());
 
         return $this->render(
             'eskaera/new.html.twig',

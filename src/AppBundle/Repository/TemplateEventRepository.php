@@ -38,7 +38,7 @@ class TemplateEventRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getPintatuGorriz()
+    public function getPintatuGorriz($templateid)
     {
         $em = $this->getEntityManager();
         /** @var $query QueryBuilder */
@@ -46,8 +46,9 @@ class TemplateEventRepository extends EntityRepository
             SELECT te
                 FROM AppBundle:TemplateEvent te
                   LEFT JOIN te.type tt
-                WHERE tt.instantziaegutegianerakutsi=1
-        ');
+                  INNER JOIN te.template t
+                WHERE tt.instantziaegutegianerakutsi=1 and t.id=:templateid
+        ')->setParameter('templateid',$templateid);
 
 
         return $query->getResult();
