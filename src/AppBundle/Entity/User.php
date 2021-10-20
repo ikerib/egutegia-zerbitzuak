@@ -88,6 +88,12 @@ class User extends BaseUser implements LdapUserInterface
      */
     protected $notes;
 
+    /**
+     * @ORM\Column(type="boolean", length=255, nullable=true, options={"default": false})
+     * @Expose
+     */
+    protected $aktibo;
+
 
     /**
      * @ORM\Column(type="json_array", nullable=true)
@@ -670,5 +676,29 @@ class User extends BaseUser implements LdapUserInterface
     public function getRola()
     {
         return $this->rola;
+    }
+
+    /**
+     * Set aktibo.
+     *
+     * @param bool|null $aktibo
+     *
+     * @return User
+     */
+    public function setAktibo($aktibo = null)
+    {
+        $this->aktibo = $aktibo;
+
+        return $this;
+    }
+
+    /**
+     * Get aktibo.
+     *
+     * @return bool|null
+     */
+    public function getAktibo()
+    {
+        return $this->aktibo;
     }
 }

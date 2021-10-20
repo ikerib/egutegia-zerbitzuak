@@ -49,6 +49,7 @@
                 <th data-halign="left" data-align="left" data-field="azpisaila"    data-sortable="true">{{ 'Azpi Saila' | trans }}</th>
                 <th data-halign="left" data-align="left" data-field="nan"           data-sortable="true">{{ 'Nan' | trans }}</th>
                 <th data-halign="left" data-align="left" data-field="lanpostua"     data-sortable="true">{{ 'Lanpostua' | trans }}</th>
+                <th data-halign="center" data-align="center" data-field="aktibo"     data-sortable="true">Alta/Baja</th>
                 <th></th>
             </tr>
         </thead>
@@ -61,6 +62,13 @@
                 <td>{{ user.azpisaila }}</td>
                 <td>{{ user.nan }}</td>
                 <td>{{ user.lanpostua }}</td>
+                <td>
+                    {% if user.aktibo == false %}
+                        <span class="label label-danger"><a class="lblBaja" href="{{path('admin_user_alta', {'id': user.id})}}">Baja</a></span>
+                    {% else %}
+                        <span class="label label-success"><a class="lblAlta" href="{{path('admin_user_baja', {'id': user.id})}}">Alta</a></span>
+                    {% endif %}
+                </td>
                 <td>
                     <ul class="list-unstyled list-inline">
                         <li>

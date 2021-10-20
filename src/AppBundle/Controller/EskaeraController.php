@@ -351,17 +351,8 @@ class EskaeraController extends Controller {
             $em->persist($eskaera);
             $em->flush();
 
-//            return $this->redirectToRoute('eskaera_gauzatua', array('id' => $eskaera->getId()));
             return $this->redirectToRoute('eskaera_add_to_calendar', array('id' => $eskaera->getId()));
         }
-
-//        $jaiegunak = $em->getRepository('AppBundle:TemplateEvent')->findBy(
-//            array(
-//                'template' => $calendar->getTemplate()->getId(),
-//                ''
-//            )
-//        );
-
         $jaiegunak = $em->getRepository('AppBundle:TemplateEvent')->getPintatuGorriz($calendar->getTemplate()->getId());
 
         return $this->render(

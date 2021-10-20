@@ -150,4 +150,36 @@ class UserController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * @Route("/alta/{id}", name="admin_user_alta")
+     * @Method("GET")
+     */
+    public function altaAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $em->getRepository('AppBundle:User')->find($id);
+        $user->setAktibo(1);
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_user_index');
+    }
+
+    /**
+     * @Route("/baja/{id}", name="admin_user_baja")
+     * @Method("GET")
+     */
+    public function bajaAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        /** @var User $user */
+        $user = $em->getRepository('AppBundle:User')->find($id);
+        $user->setAktibo(0);
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_user_index');
+    }
 }
