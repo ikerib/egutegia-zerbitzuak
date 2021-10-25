@@ -84,12 +84,14 @@ index
                 <td>{{ user.azpisaila }}</td>
                 <td>
                     {% if user.calendars is defined %}
-                    <select name="year" class="cmbYear" style="width: 100px;">
-                        <option value="-1">Aukeratu</option>
-                        {% for e in user.calendars %}
-                            <option value="{{ url('admin_calendar_edit', { 'id': e.id }) }}">{{ e.name }}</option>
-                        {% endfor %}
-                    </select>
+                        <a href="#" data-username="{{ user.username }}" class="btn btn-primary btn-xs btnCalendarSelect">Aukeratu</a>
+
+{#                    <select name="year" class="cmbYear" style="width: 100px;">#}
+{#                        <option value="-1">Aukeratu</option>#}
+{#                        {% for e in user.calendars %}#}
+{#                            <option value="{{ url('admin_calendar_edit', { 'id': e.id }) }}">{{ e.name }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
                     {% endif %}
                 </td>
 
@@ -181,7 +183,35 @@ index
         </div>
     </div>
 
+    <div class="modal fade" id="select-calendar" tabindex="-1" role="dialog" aria-labelledby="Modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">{{ 'Itxi' | trans }}</span></button>
+                    <h4 class="modal-title">
+                        Aukeratu egutegia
+                    </h4>
+                </div>
+                <div class="modal-body" id="divModalCalendarSelect">
+                    <table id="tableCalendarSelect" class="table table-hover">
+                        <thead>
+                        <th>#</th>
+                        <th>Urtea</th>
+                        <th>Egutegia</th>
+                        <th></th>
+                        </thead>
+                        <tbody id="tableCalendarSelectBody">
 
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Ezeztatu' | trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 {% block foot_script %}
@@ -207,6 +237,36 @@ index
         $( function () {
 
             initTable();
+
+            $(document).on('click', '.btnCalendarSelect', function () {
+                var $username = $(this).data('username');
+                var url = Routing.generate('get_calendars', { username: $username } );
+                $('#tableCalendarSelectBody').empty();
+                $.ajax( {
+                    url: url,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data) {
+                            var myHtml = "";
+                            data.forEach(function (d) {
+                                var editUrl = Routing.generate('admin_calendar_edit', { id: d.id } );
+                                myHtml += "<tr>";
+                                myHtml += "<td>" + d.id + "</td>";
+                                myHtml += "<td>" + d.year + "</td>";
+                                myHtml += "<td>" + d.name + "</td>";
+                                myHtml += "<td><a class='btn btn-xs btn-primary' target='_blank' href=\"" +editUrl + "\">Aukeratu</a></td>";
+                                myHtml += "</tr>";
+                            });
+                            $('#tableCalendarSelectBody').html(myHtml);
+                        }
+                        $( "#select-calendar" ).modal();
+                    },
+                    error: function () {
+                        alert( "Datuak ez dira gorde, akats bar gertatu da." );
+                    }
+                } );
+            });
 
             // Compare button click
             $( document ).on( "click", "#btnCompare", function () {

@@ -1433,4 +1433,27 @@ class ApiController extends FOSRestController
         return $lm;
     }
     // "get_lizentziamota"             [GET] /lizentziamota/{id}
+
+
+    /**
+     *
+     * @param $username
+     *
+     * @return Calendar|View
+     * @Annotations\View()
+     */
+    public function getCalendarsAction($username)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Calendar $calendars */
+        $calendars = $em->getRepository('AppBundle:Calendar')->findAllCalendarsByUsername($username);
+
+        if (null === $calendars) {
+            return new View('Ez da egutegirik topatzen.', Response::HTTP_NOT_FOUND);
+        }
+
+        return $calendars;
+    }
+    // "get_calendars"             [GET] /calendars/{username}
 }
