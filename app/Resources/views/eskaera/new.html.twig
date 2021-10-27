@@ -76,7 +76,12 @@
                 </div>
                 <div class="col-sm-3">
 {#                    <p class="">Dituzun orduak: {{ (calendar.hoursSelfHalf / calendar.hoursDay) | round (2) }} egun ( {{ calendar.hoursSelfHalf }} ordu ) </p>#}
-                    <p class="">Dituzun orduak:  {{ calendar.hoursSelfHalf }} ordu  </p>
+                    {% if eskaera.type.name == "Lizentziak" %}
+                    {% else %}
+                        <div class="col-sm-3">
+                            <p class="">Dituzun orduak:  {{ calendar.hoursSelfHalf }} ordu  </p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
