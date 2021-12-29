@@ -119,6 +119,13 @@ class User extends BaseUser implements LdapUserInterface
     private $calendars;
 
     /**
+     * @var kuadranteak[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Kuadrantea", mappedBy="user",cascade={"persist"})
+     */
+    private $kuadranteak;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Message", mappedBy="user",cascade={"persist"})
      * @ORM\OrderBy({"name" = "ASC"})
      */
@@ -700,5 +707,41 @@ class User extends BaseUser implements LdapUserInterface
     public function getAktibo()
     {
         return $this->aktibo;
+    }
+
+    /**
+     * Add kuadranteak.
+     *
+     * @param \AppBundle\Entity\Kuadrantea $kuadranteak
+     *
+     * @return User
+     */
+    public function addKuadranteak(\AppBundle\Entity\Kuadrantea $kuadranteak)
+    {
+        $this->kuadranteak[] = $kuadranteak;
+
+        return $this;
+    }
+
+    /**
+     * Remove kuadranteak.
+     *
+     * @param \AppBundle\Entity\Kuadrantea $kuadranteak
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeKuadranteak(\AppBundle\Entity\Kuadrantea $kuadranteak)
+    {
+        return $this->kuadranteak->removeElement($kuadranteak);
+    }
+
+    /**
+     * Get kuadranteak.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getKuadranteak()
+    {
+        return $this->kuadranteak;
     }
 }
