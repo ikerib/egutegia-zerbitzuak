@@ -21,6 +21,12 @@
     </div>
 </div>
 <div class="form-group">
+    <label for="min-date" class="col-sm-4 control-label">{{ 'Kuadranterako izen laburra' | trans }}</label>
+    <div class="col-sm-7">
+        {{ form_widget(edit_form.labur, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+</div>
+<div class="form-group">
     <label for="min-date" class="col-sm-4 control-label">{{ 'Deskribapena' | trans }}</label>
     <div class="col-sm-7">
         {{ form_widget(edit_form.description, { 'attr': {'class': 'form-control'} }) }}

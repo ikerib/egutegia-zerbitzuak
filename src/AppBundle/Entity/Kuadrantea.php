@@ -23,226 +23,233 @@ class Kuadrantea
     private $id;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="urtea", type="integer", nullable=true)
+     */
+    private $urtea;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="hilabetea", type="string", length=20)
+     * @ORM\Column(name="hilabetea", type="string", length=20, nullable=true)
      */
     private $hilabetea;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day01", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day01", type="string", length=50, nullable=true)
      */
     private $day01;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day02", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day02", type="string", length=50, nullable=true)
      */
     private $day02;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day03", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day03", type="string", length=50, nullable=true)
      */
     private $day03;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day04", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day04", type="string", length=50, nullable=true)
      */
     private $day04;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day05", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day05", type="string", length=50, nullable=true)
      */
     private $day05;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day06", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day06", type="string", length=50, nullable=true)
      */
     private $day06;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day07", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day07", type="string", length=50, nullable=true)
      */
     private $day07;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day08", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day08", type="string", length=50, nullable=true)
      */
     private $day08;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day09", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day09", type="string", length=50, nullable=true)
      */
     private $day09;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day10", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day10", type="string", length=50, nullable=true)
      */
     private $day10;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day11", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day11", type="string", length=50, nullable=true)
      */
     private $day11;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day12", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day12", type="string", length=50, nullable=true)
      */
     private $day12;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day13", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day13", type="string", length=50, nullable=true)
      */
     private $day13;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day14", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day14", type="string", length=50, nullable=true)
      */
     private $day14;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day15", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day15", type="string", length=50, nullable=true)
      */
     private $day15;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day16", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day16", type="string", length=50, nullable=true)
      */
     private $day16;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day17", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day17", type="string", length=50, nullable=true)
      */
     private $day17;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day18", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day18", type="string", length=50, nullable=true)
      */
     private $day18;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day19", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day19", type="string", length=50, nullable=true)
      */
     private $day19;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day20", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day20", type="string", length=50, nullable=true)
      */
     private $day20;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day21", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day21", type="string", length=50, nullable=true)
      */
     private $day21;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day22", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day22", type="string", length=50, nullable=true)
      */
     private $day22;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day23", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day23", type="string", length=50, nullable=true)
      */
     private $day23;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day24", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day24", type="string", length=50, nullable=true)
      */
     private $day24;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day25", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day25", type="string", length=50, nullable=true)
      */
     private $day25;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day26", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day26", type="string", length=50, nullable=true)
      */
     private $day26;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day27", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day27", type="string", length=50, nullable=true)
      */
     private $day27;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day28", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day28", type="string", length=50, nullable=true)
      */
     private $day28;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day29", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day29", type="string", length=50, nullable=true)
      */
     private $day29;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day30", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day30", type="string", length=50, nullable=true)
      */
     private $day30;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="day31", type="string", length=20, nullable=true)
+     * @ORM\Column(name="day31", type="string", length=50, nullable=true)
      */
     private $day31;
 
@@ -250,14 +257,6 @@ class Kuadrantea
     /*** ERLAZIOAK ***************************************************************************************************/
     /*****************************************************************************************************************/
 
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function __toString()
     {
@@ -275,10 +274,6 @@ class Kuadrantea
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
     /*****************************************************************************************************************/
-
-
-
-
 
 
 
@@ -1082,5 +1077,29 @@ class Kuadrantea
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set urtea.
+     *
+     * @param int $urtea
+     *
+     * @return Kuadrantea
+     */
+    public function setUrtea($urtea)
+    {
+        $this->urtea = $urtea;
+
+        return $this;
+    }
+
+    /**
+     * Get urtea.
+     *
+     * @return int
+     */
+    public function getUrtea()
+    {
+        return $this->urtea;
     }
 }

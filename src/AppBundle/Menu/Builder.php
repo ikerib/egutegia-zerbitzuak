@@ -76,6 +76,11 @@ class Builder implements ContainerAwareInterface
                 'route' => 'admin_message_list',
                 'routeParameters'   => ['q'=>'unread']
             ])->setLinkAttribute('class', 'childClass')->setExtra('translation_domain', 'messages');
+
+            $menu->addChild('Kuadrantea', [
+                'icon' => 'envelope',
+                'route' => 'admin_kuadrantea',
+            ])->setLinkAttribute('class', 'childClass')->setExtra('translation_domain', 'messages');
         }
 
 
@@ -142,21 +147,6 @@ class Builder implements ContainerAwareInterface
                 ]
             )->setExtra('translation_domain', 'messages');
 
-//            $menu[ 'User' ]->addChild(
-//                'Fitxategiak',
-//                array(
-//                    'route' => 'user_documents',
-//                    'icon'  => 'folder-open',
-//                )
-//            )->setExtra('translation_domain', 'messages');
-
-//            $menu[ 'User' ]->addChild(
-//                'user_menu.eskaerak',
-//                array(
-//                    'route' => 'eskaera_index',
-//                    'icon'  => 'send',
-//                )
-//            )->setExtra('translation_domain', 'messages');
 
             $menu[ 'User' ]->addChild('divider', ['divider' => true]);
 
@@ -170,6 +160,17 @@ class Builder implements ContainerAwareInterface
                         'extras' => array('safe_label' => true),
                     )
                 )->setExtra('translation_domain', 'messages');
+
+                $menu[ 'User' ]->addChild(
+                    'Kuadrantea',
+                    array(
+                        'label'  => $this->container->get('translator')->trans('Kuadrantea'),
+                        'route'  => 'saila_kuadrantea',
+                        'icon'   => 'bullhorn',
+                        'extras' => array('safe_label' => true),
+                    )
+                )->setExtra('translation_domain', 'messages');
+
                 $menu[ 'User' ]->addChild('divider2', ['divider' => true]);
             }
 

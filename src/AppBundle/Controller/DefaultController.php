@@ -303,6 +303,18 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/saila/kuadrantea", name="saila_kuadrantea")
+     *
+     * @return Response
+     *
+     * @internal param Request $request
+     */
+    public function sailaKuadranteaAction()
+    {
+
+    }
+
+    /**
      * Compare calendars
      *
      * @Route("/compare", name="calendar_compare", methods={"POST"})
@@ -348,7 +360,7 @@ class DefaultController extends Controller
                     $events[]       = $temp;
                 }
 
-                
+
 
                 $calendarcolors[] = array(
                     'username' => $u,

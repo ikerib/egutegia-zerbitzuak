@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-hover table-condensed table-bordered">
+            <thead>
+            <tr>
+                <th>Langilea</th>
+                <th>Lanpostua</th>
+                <th>01</th>
+                <th>02</th>
+                <th>03</th>
+                <th>04</th>
+                <th>05</th>
+                <th>06</th>
+                {% if egunak > 6 %}
+                    <th>07</th>
+                    <th>08</th>
+                    <th>09</th>
+                    <th>10</th>
+                    <th>11</th>
+                    <th>12</th>
+                    <th>13</th>
+                    <th>14</th>
+                    <th>15</th>
+                    <th>16</th>
+                    <th>17</th>
+                    <th>18</th>
+                    <th>19</th>
+                    <th>20</th>
+                    <th>21</th>
+                    <th>22</th>
+                    <th>23</th>
+                    <th>24</th>
+                    <th>25</th>
+                    <th>26</th>
+                    <th>27</th>
+                    <th>28</th>
+                    <th>29</th>
+                {% endif %}
+
+                {% if egunak >= 30 %}
+                    <th>30</th>
+                {% endif %}
+                {% if egunak >= 31 %}
+                    <th>31</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for r in results if r.hilabetea == hilabetea and r.urtea == year%}
+                <tr>
+                    <td>{{ r.user.displayname }}</td>
+                    <td>{{ r.user.lanpostua }}</td>
+                    <td class="text-center">{{ r.day01 }}</td>
+                    <td class="text-center">{{ r.day02 }}</td>
+                    <td class="text-center">{{ r.day03 }}</td>
+                    <td class="text-center">{{ r.day04 }}</td>
+                    <td class="text-center">{{ r.day05 }}</td>
+                    <td class="text-center">{{ r.day06 }}</td>
+                    {% if egunak > 6 %}
+                        <td class="text-center">{{ r.day07 }}</td>
+                        <td class="text-center">{{ r.day08 }}</td>
+                        <td class="text-center">{{ r.day09 }}</td>
+                        <td class="text-center">{{ r.day10 }}</td>
+                        <td class="text-center">{{ r.day11 }}</td>
+                        <td class="text-center">{{ r.day12 }}</td>
+                        <td class="text-center">{{ r.day13 }}</td>
+                        <td class="text-center">{{ r.day14 }}</td>
+                        <td class="text-center">{{ r.day15 }}</td>
+                        <td class="text-center">{{ r.day16 }}</td>
+                        <td class="text-center">{{ r.day17 }}</td>
+                        <td class="text-center">{{ r.day18 }}</td>
+                        <td class="text-center">{{ r.day19 }}</td>
+                        <td class="text-center">{{ r.day20 }}</td>
+                        <td class="text-center">{{ r.day21 }}</td>
+                        <td class="text-center">{{ r.day22 }}</td>
+                        <td class="text-center">{{ r.day23 }}</td>
+                        <td class="text-center">{{ r.day24 }}</td>
+                        <td class="text-center">{{ r.day25 }}</td>
+                        <td class="text-center">{{ r.day26 }}</td>
+                        <td class="text-center">{{ r.day27 }}</td>
+                        <td class="text-center">{{ r.day28 }}</td>
+                        <td class="text-center">{{ r.day29 }}</td>
+                    {% endif %}
+                    {% if egunak >= 30 %}
+                        <td class="text-center">{{ r.day30 }}</td>
+                    {% endif %}
+                    {% if egunak >= 31 %}
+                        <td class="text-center">{{ r.day31 }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+

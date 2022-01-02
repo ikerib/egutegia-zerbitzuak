@@ -27,6 +27,9 @@ class TypeType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('labur',null,[
+                'label' => 'Kuadranterako izen laburra:'
+            ])
             ->add(
                 'description',
                 CKEditorType::class,

@@ -139,4 +139,23 @@ class EventRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getUserYearEvents($userid, $year) {
+        $start = $year . "-01-01";
+        ++$year;
+        $end = $year . "-01-06";
+        $qb = $this->createQueryBuilder('e')
+            ->select('e,c,u')
+            ->innerJoin('e.calendar', 'c')
+            ->innerJoin('c.user', 'u')
+            ->andWhere('e.start_date between :start and :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->andWhere('u.id = :userid')
+            ->setParameter('userid', $userid)
+            ->orderBy('e.start_date','ASC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

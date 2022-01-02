@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block content_div_start %}{% endblock %}
+{% block content_div_end %}{% endblock %}
+{% block headline %}{{ 'Koadrantea' | trans }} {% endblock %}
+
+{% block content_row %}
+
+    <ul class="nav nav-tabs" id="myTabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#urtarrila" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Urtarrila</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#otsaila" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Otsaila</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#martxoa" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Martxoa</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#apirila" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Apirila</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#maiatza" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Maiatza</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#ekaina" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Ekaina</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#uztaila" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Uztaila</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#abuztua" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Abuztua</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#iraila" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Iraila</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#urria" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Urria</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#azaroa" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Azaroa</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#abendua" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Abendua</a>
+        </li>
+        <li role="presentation" class="">
+            <a href="#urtarrila2" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Urtarrila {{ year +1 }}</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade active in" role="tabpanel" id="urtarrila" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'January', 'egunak': 31, 'year': year} %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="otsaila" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'February', 'egunak': 29 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="martxoa" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'March', 'egunak': 31 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="apirila" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'April', 'egunak': 30 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="maiatza" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'May', 'egunak': 31 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="ekaina" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'June', 'egunak': 30 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="uztaila" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'July', 'egunak': 31 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="abuztua" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'August', 'egunak': 31 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="iraila" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'September', 'egunak': 30 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="urria" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'October', 'egunak': 31 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="azaroa" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'November', 'egunak': 30 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="abendua" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'December', 'egunak': 31 } %}
+        </div>
+        <div class="tab-pane fade active in" role="tabpanel" id="urtarrila2" aria-labelledby="home-tab">
+            {% include ':default:_tab_content.html.twig' with {'hilabetea': 'January', 'egunak': 6, 'year': year+1} %}
+        </div>
+    </div>
+{% endblock %}

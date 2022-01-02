@@ -45,6 +45,14 @@ class Type
     /**
      * @var string
      *
+     * @ORM\Column(name="labur", type="string", length=3)
+     * @Expose()
+     */
+    private $labur;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @Expose()
      */
@@ -592,5 +600,29 @@ class Type
     public function getInstantziaegutegianerakutsi()
     {
         return $this->instantziaegutegianerakutsi;
+    }
+
+    /**
+     * Set labur.
+     *
+     * @param string $labur
+     *
+     * @return Type
+     */
+    public function setLabur($labur)
+    {
+        $this->labur = $labur;
+
+        return $this;
+    }
+
+    /**
+     * Get labur.
+     *
+     * @return string
+     */
+    public function getLabur()
+    {
+        return $this->labur;
     }
 }

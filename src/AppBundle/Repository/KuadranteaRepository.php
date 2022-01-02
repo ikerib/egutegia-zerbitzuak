@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class KuadranteaRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAllOrderByYearAndUserDisplayName()
+    {
+        $qb = $this->createQueryBuilder('k')
+            ->select('k,u')
+            ->innerJoin('k.user','u')
+            ->orderBy('k.urtea', 'ASC')
+            ->orderBy('u.lanpostua', 'ASC')
+            ->orderBy('u.displayname', 'ASC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
