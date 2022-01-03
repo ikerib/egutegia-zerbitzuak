@@ -58,6 +58,8 @@ class KuadranteaCommand extends ContainerAwareCommand
             $connection->rollback();
         }
 
+
+
         $year = date('Y');
         // urteko lehen astea bada, aurreko urtea aukeratu
         $date_now = new DateTime();
@@ -71,29 +73,53 @@ class KuadranteaCommand extends ContainerAwareCommand
         $users = $this->em->getRepository('AppBundle:User')->findAll();
         /** @var User $user */
         foreach ($users as $user) {
+            $months = ['January', "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            $i = 0;
+            $len = count($months);
+            foreach ($months as $month) {
+                $k = new Kuadrantea();
+                $k->setUser($user);
+                $k->setUrtea($year);
+                $k->setHilabetea($month);
+                $this->em->persist($k);
+                if ($i == $len - 1) {
+                    $k = new Kuadrantea();
+                    $k->setUser($user);
+                    $k->setUrtea($year+1);
+                    $k->setHilabetea('january');
+                    $this->em->persist($k);
+                }
+                $i++;
+                $this->em->persist($k);
+            }
+
+            $this->em->flush();
+
 
             // get current user all events
             /** @var Event $events */
             $events = $this->em->getRepository('AppBundle:Event')->getUserYearEvents($user->getId(), $year);
-
             $hilabetea = "";
-
+            $kua = null;
             /** @var Event $event */
             foreach ($events as $event) {
 
-                if ($hilabetea !== $event->getStartDate()->format('F')) {
-                    $hilabetea = $event->getStartDate()->format('F');
-                    $k = new Kuadrantea();
+                $kuadranteak = $this->em->getRepository('AppBundle:Kuadrantea')->findByUserYearMonth(
+                    $user->getId(),
+                    $event->getStartDate()->format('Y'),
+                    $event->getStartDate()->format('F')
+                );
+
+                if (count($kuadranteak) === 0) {
+                    continue;
                 }
 
-                if ($event->getStartDate() == $event->getEndDate()) {
+                $kua = $kuadranteak[0];
 
-                    $k->setUser($user);
-                    $k->setUrtea($event->getStartDate()->format('Y'));
-                    $k->setHilabetea($event->getStartDate()->format('F'));
+                if ($event->getStartDate() == $event->getEndDate()) {
                     $field = "setDay".$event->getStartDate()->format('d');
-                    $k->{$field}($event->getType()->getLabur());
-                    $this->em->persist($k);
+                    $kua->{$field}($event->getType()->getLabur());
+
                 } else {
                     $begin = new \DateTime($event->getStartDate()->format('Y-m-d'));
 
@@ -103,21 +129,16 @@ class KuadranteaCommand extends ContainerAwareCommand
                         $end = new \DateTime($event->getEndDate()->format('Y-m-d'));
                     }
 
-
                     $interval = DateInterval::createFromDateString('1 day');
                     $period = new DatePeriod($begin, $interval, $end);
 
                     foreach ($period as $dt) {
 
-                        $k->setUser($user);
-                        $k->setUrtea($event->getStartDate()->format('Y'));
-                        $k->setHilabetea($dt->format('F'));
                         $field = "setDay".$dt->format('d');
-                        $k->{$field}($event->getType()->getLabur());
-                        $this->em->persist($k);
+                        $kua->{$field}($event->getType()->getLabur());
                     }
-
                 }
+                $this->em->persist($kua);
             }
         }
         $this->em->flush();

@@ -44,7 +44,6 @@ class Type
 
     /**
      * @var string
-     *
      * @ORM\Column(name="labur", type="string", length=3)
      * @Expose()
      */
