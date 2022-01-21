@@ -92,7 +92,8 @@
 
 
                     <div class="col-sm-4">
-
+                        <strong>{{ 'Hiru Urtekoak' }}</strong>
+                        <span id="hiruurtekoa">{{ calendar.hirurtekoa }}</span>
                     </div>
 
                     <div class="col-sm-4">
@@ -135,7 +136,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
                                 class="sr-only">{{ 'Itxi' | trans }}</span></button>
                     <h4 class="modal-title">
-                        {{ calendar.name }} - ({{ calendar.percentYear }}
+                        {{ calendar.name }} - ({{ calendar.percentYear }} %)
                     </h4>
                 </div>
                 <div class="modal-body">
@@ -147,6 +148,22 @@
                             {{ form_widget(edit_form.name, { 'attr': {'class': 'form-control'} }) }}
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'Urtea' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.year, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min-date" class="col-sm-3 control-label">{{ 'Hirurtekoak:' | trans }}</label>
+                        <div class="col-sm-7">
+                            {{ form_widget(edit_form.hirurtekoa, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <hr/>
 
                     <div class="form-group">
                         <label for="min-date" class="col-sm-3 control-label">{{ 'msg.urteko.orduak' | trans }}</label>
