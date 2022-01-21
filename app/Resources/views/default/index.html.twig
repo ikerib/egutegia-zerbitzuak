@@ -98,7 +98,7 @@ index
                 {% if user.calendars | length > 0 %}
                     <td>
                         {% if user.calendars | length > 0 %}
-                            <a href="{{ path('admin_calendar_edit', {'id': user.calendars.first.id}) }}" target="_blank" title="{{ user.calendars.first.name }}">{{ user.calendars.first.year }}</a>
+                            <a href="{{ path('admin_calendar_edit', {'id': user.calendars.last.id}) }}" target="_blank" title="{{ user.calendars.last.name }}">{{ user.calendars.first.year }}</a>
                         {% endif %}
                     </td>
                     <td>
