@@ -114,4 +114,19 @@ class AdminController extends Controller
         ]);
     }
 
+
+    /**
+     * @Route ("/print/{id}", name="print_calendar")
+     */
+    public function printCalendarAction($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $calendar = $em->getRepository('AppBundle:Calendar')->find($id);
+
+        return $this->render('default/calendar_print.html.twig', [
+            'calendar' => $calendar
+        ]);
+    }
 }

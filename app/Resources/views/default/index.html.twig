@@ -140,6 +140,12 @@ index
                            data-username="{{ user.username }}">
                             <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
                         </a>
+{#                        {% if user.calendars | length > 0 %}#}
+{#                            <a href="{{ path('print_calendar', {'id': user.calendars[0].id})}}" class="btn btn-primary btn-xs"#}
+{#                               data-username="{{ user.username }}" target="_blank">#}
+{#                                <i class="fa fa-print" aria-hidden="true"> Inprimatu</i>#}
+{#                            </a>#}
+{#                        {% endif %}#}
                     </td>
                 {% else %}
                     <td>
@@ -147,6 +153,8 @@ index
                            data-username="{{ user.username }}">
                             <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
                         </a>
+
+
                     </td>
                     <td></td>
                     <td></td>

@@ -6,21 +6,21 @@
 {% endblock %}
 
 {% block page_header %}
-    {% if app.debug %}
-        <div class="row">
+{#    {% if app.debug %}#}
+{#        <div class="row">#}
 
-            <p><strong>hours_compensed:</strong>{{ calendar.hoursCompensed }}</p>
-            <p><strong>hours_day:</strong>{{ calendar.hoursDay }}</p>
-            <p><strong>hours_free:</strong>{{ calendar.hoursFree }}</p>
-            <p><strong>hours_self:</strong>{{ calendar.hoursSelf }}</p>
-            <p><strong>hours_self_half:</strong>{{ calendar.hoursSelfHalf }}</p>
-            <p><strong>hours_sindikal:</strong>{{ calendar.hoursSindikal}}</p>
-            <p><strong>hours_year:</strong>{{ calendar.hoursYear }}</p>
-            <p><strong>selfHoursPartial:</strong>{{ selfHoursPartial }}</p>
-            <p><strong>selfHoursComplete:</strong>{{ selfHoursComplete }}</p>
+{#            <p><strong>hours_compensed:</strong>{{ calendar.hoursCompensed }}</p>#}
+{#            <p><strong>hours_day:</strong>{{ calendar.hoursDay }}</p>#}
+{#            <p><strong>hours_free:</strong>{{ calendar.hoursFree }}</p>#}
+{#            <p><strong>hours_self:</strong>{{ calendar.hoursSelf }}</p>#}
+{#            <p><strong>hours_self_half:</strong>{{ calendar.hoursSelfHalf }}</p>#}
+{#            <p><strong>hours_sindikal:</strong>{{ calendar.hoursSindikal}}</p>#}
+{#            <p><strong>hours_year:</strong>{{ calendar.hoursYear }}</p>#}
+{#            <p><strong>selfHoursPartial:</strong>{{ selfHoursPartial }}</p>#}
+{#            <p><strong>selfHoursComplete:</strong>{{ selfHoursComplete }}</p>#}
 
-        </div>
-    {% endif %}
+{#        </div>#}
+{#    {% endif %}#}
 
     <input type="hidden" id="calendarHoursSelf" value="{{ calendar.hoursSelf }}">
     <input type="hidden" id="calendarHoursSelfHalf" value="{{ calendar.hoursSelfHalf }}">

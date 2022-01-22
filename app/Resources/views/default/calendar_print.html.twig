@@ -1,0 +1,21 @@
+{% extends 'print.html.twig' %}
+
+
+
+{% block content_content %}
+
+    <div id="calendar" class="calendar"></div>
+
+    <input type="hidden" id="templateid" value="{{ calendar.template.id }}">
+    <input type="hidden" id="calendarid" value="{{ calendar.id }}">
+    <input type="hidden" id="calendarYear" value="{{ calendar.year }}">
+
+{% endblock %}
+
+
+
+{% block foot_script %}
+    {{ parent() }}
+    <script src="{{ asset('js/calendar-admin.js') }}"></script>
+    <script src="{{ asset('js/calendar-edit-admin.js') }}"></script>
+{% endblock %}
