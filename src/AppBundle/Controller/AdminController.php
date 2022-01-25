@@ -44,7 +44,7 @@ class AdminController extends Controller
             }
         }
 
-        if ($sailaRol === null) {
+        if ( ($sailaRol === null) || ($this->isGranted('ROLE_ADMIN')) ){
             $users = $em->getRepository('AppBundle:User')->findAll();
         } else {
             /** @var Saila $sailak */
@@ -126,7 +126,7 @@ class AdminController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $results = $em->getRepository('AppBundle:Kuadrantea')->getAllOrderByYearAndUserDisplayName();
+        $results = $em->getRepository('AppBundle:Kuadrantea')->getAllOrderByYearAndUserDisplayNameGrouped();
 
         $year = date('Y');
         // urteko lehen astea bada, aurreko urtea aukeratu

@@ -23,6 +23,21 @@ class KuadranteaRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getAllOrderByYearAndUserDisplayNameGrouped()
+    {
+        $qb = $this->createQueryBuilder('k')
+            ->select('k,u')
+            ->innerJoin('k.user','u')
+            ->orderBy('k.urtea', 'ASC')
+            ->orderBy('k.hilabetea','ASC')
+            ->orderBy('u.lanpostua', 'ASC')
+            ->orderBy('u.displayname', 'ASC')
+            ->groupBy('k.urtea', 'k.hilabetea')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findByUserYearMonth($userid, $year, $hilabetea)
     {
         $qb = $this->createQueryBuilder('k')
