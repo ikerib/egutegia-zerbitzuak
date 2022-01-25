@@ -44,7 +44,7 @@ class AdminController extends Controller
             }
         }
 
-        if ( ($sailaRol === null) || ($this->isGranted('ROLE_ADMIN')) ){
+        if ( ($sailaRol === null) || ($this->isGranted('ROLE_BIDERATZAILEA')) ){
             $users = $em->getRepository('AppBundle:User')->findAll();
         } else {
             /** @var Saila $sailak */
