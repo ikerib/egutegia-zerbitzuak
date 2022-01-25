@@ -45,6 +45,7 @@ class AppKernel extends Kernel
             new ApiBundle\ApiBundle(),
             new SunCat\MobileDetectBundle\MobileDetectBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
+            new \Egyg33k\CsvBundle\Egyg33kCsvBundle()
 
         ];
 

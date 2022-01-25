@@ -28,6 +28,7 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "egeloen/form-extra-bundle": "^2.0",
+        "egyg33k/csv-bundle": "^1.0",
         "eightpoints/guzzle-bundle": "^7.3",
         "fr3d/ldap-bundle": "^3.0",
         "friendsofsymfony/ckeditor-bundle": "^1.2",

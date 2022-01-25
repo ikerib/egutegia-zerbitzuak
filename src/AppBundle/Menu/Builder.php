@@ -51,13 +51,15 @@ class Builder implements ContainerAwareInterface
             $em       = $this->container->get('doctrine.orm.entity_manager');
             $eskaerak = $em->getRepository('AppBundle:Eskaera')->findBideratugabeak();
 
-            $menu->addChild('Langileak', [
+            $menu->addChild('Herramintak', ['icon' => 'wrench'])->setExtra('translation_domain', 'messages');
+
+            $menu[ 'Herramintak' ]->addChild('Langileak', [
                 'icon' => 'user',
                 'route' => 'admin_user_index'
             ])->setLinkAttribute('class', 'childClass')->setExtra('translation_domain', 'messages');
 
             if (\count($eskaerak) > 0) {
-                $menu->addChild(
+                $menu[ 'Herramintak' ]->addChild(
                     'Eskaerak',
                     array(
                         'route'           => 'admin_eskaera_list',
@@ -68,18 +70,22 @@ class Builder implements ContainerAwareInterface
                     )
                 );
             } else {
-                $menu->addChild('Eskaerak', ['icon' => 'inbox', 'route' => 'admin_eskaera_list'])
+                $menu[ 'Herramintak' ]->addChild('Eskaerak', ['icon' => 'inbox', 'route' => 'admin_eskaera_list'])
                      ->setLinkAttribute('class', 'childClass')->setExtra('translation_domain', 'messages');
             }
-            $menu->addChild('Mezuak', [
+            $menu[ 'Herramintak' ]->addChild('Mezuak', [
                 'icon' => 'envelope',
                 'route' => 'admin_message_list',
                 'routeParameters'   => ['q'=>'unread']
             ])->setLinkAttribute('class', 'childClass')->setExtra('translation_domain', 'messages');
 
-            $menu->addChild('Kuadrantea', [
+            $menu[ 'Herramintak' ]->addChild('Kuadrantea', [
                 'icon' => 'envelope',
                 'route' => 'admin_kuadrantea',
+            ])->setLinkAttribute('class', 'childClass')->setExtra('translation_domain', 'messages');
+            $menu[ 'Herramintak' ]->addChild('Kuadrantea - Excel', [
+                'icon' => 'envelope',
+                'route' => 'admin_kuadrantea_excel',
             ])->setLinkAttribute('class', 'childClass')->setExtra('translation_domain', 'messages');
         }
 
