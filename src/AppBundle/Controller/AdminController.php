@@ -126,7 +126,7 @@ class AdminController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $results = $em->getRepository('AppBundle:Kuadrantea')->getAllOrderByYearAndUserDisplayNameGrouped();
+        $results = $em->getRepository('AppBundle:Kuadrantea')->getAllOrderByYearAndUserDisplayName();
 
         $year = date('Y');
         // urteko lehen astea bada, aurreko urtea aukeratu
