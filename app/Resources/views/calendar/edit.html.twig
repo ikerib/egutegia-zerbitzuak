@@ -663,4 +663,77 @@
     <script src="{{ asset('js/calendar-admin.js') }}"></script>
     <script src="{{ asset('js/vertical-timeline.js') }}"></script>
     <script src="{{ asset('js/calendar-edit-admin.js') }}"></script>
+    <script>
+        $(function () {
+            $( document ).on( "change", "#appbundle_calendar_percentYear", function () {
+                birkalkulatu();
+                birkalkulatuNorbere();
+            } );
+
+            $( document ).on( "change", "#appbundle_calendar_hirurtekoa", function () {
+                birkalkulatuNorbere();
+            } );
+
+
+            function birkalkulatu() {
+                var ori = $( "#appbundle_calendar_percentYear" ); // portzentaia
+                var vori = parseFloat( $( ori ).val() );
+
+                var hiru = $( "#appbundle_calendar_hirurtekoa" ); // hirurtekoa
+                var vhiru = parseFloat( $( hiru ).val() );
+
+                // Jornada
+                var des3 = $( "#appbundle_calendar_hoursDay" );
+                var vdes3 = parseFloat( $( des3 ).val() );
+                if ( (vdes3 !== 0) && (vori !== 0) ) {
+                    vdes3 = vdes3 * vori / 100;
+                    $( des3 ).val( vdes3.toFixed( 2 ) );
+                }
+
+                // Oporrak
+                var des1 = $( "#appbundle_calendar_hoursFree" );
+                var vdes1 = parseFloat( $( des1 ).val() );
+                if ( (vdes1 !== 0) && (vori !== 0) ) {
+                    vdes1 = vdes1 * vori / 100;
+                    $( des1 ).val( vdes1.toFixed( 2 ) );
+                }
+
+                // Norberarentzako
+                var des2 = $( "#appbundle_calendar_hoursSelf" );
+                var vdes2 = parseFloat( $( des2 ).val() );
+                // Gehitu hirurtekoak
+                vdes2 = vdes2 + (vdes3 * vhiru);
+                if ( (vdes2 !== 0) && (vori !== 0) ) {
+                    vdes2 = vdes2 * vori / 100;
+                    $( des2 ).val( vdes2.toFixed( 2 ) );
+                }
+            }
+
+            function birkalkulatuNorbere() {
+                var ori = $( "#appbundle_calendar_percentYear" ); // portzentaia
+                var vori = parseFloat( $( ori ).val() );
+                var hiru = $( "#appbundle_calendar_hirurtekoa" ); // hirurtekoa
+                var vhiru = parseFloat( $( hiru ).val() );
+                var des3 = $( "#appbundle_calendar_hoursDay" );
+                var vdes3 = parseFloat( $( des3 ).val() );
+                // Norberarentzako
+                var des2 = $( "#appbundle_calendar_hoursSelf" );
+                var vdes2 = parseFloat( $( des2 ).val() );
+                // Gehitu hirurtekoak
+                vdes2 = vdes2 + (vdes3 * vhiru);
+                $( des2 ).val( vdes2.toFixed( 2 ) );
+
+                // Zatituta Max izango da jornada * 2
+                var zatituta = vdes3 * 2;
+                // ezin du izan norbere orduen baino gehiago noski
+                if ( zatituta > vdes2 ) {
+                    zatituta = vdes2;
+                }
+
+                $( "#appbundle_calendar_hoursSelfHalf" ).val( zatituta );
+
+
+            }
+        });
+    </script>
 {% endblock %}
