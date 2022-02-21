@@ -58,9 +58,8 @@
             <th>{{ 'Urtea' | trans }}</th>
 
             <th data-halign="left" data-align="left">{{ 'Egutegia' | trans }}</th>
-            <th data-halign="left" data-align="left">{{ 'Txantiloia' | trans }}</th>
             <th data-halign="left" data-align="left">{{ 'Urteko orduak' | trans }}</th>
-            <th data-halign="center" data-align="center">{{ 'Opor orduakaaaa' | trans }}</th>
+            <th data-halign="center" data-align="center">{{ 'Opor orduak' | trans }}</th>
             <th data-halign="center" data-align="center">{{ 'Norberarentzako orduak' | trans }}</th>
             <th data-halign="center" data-align="center">{{ 'Konpentsatutako orduak' | trans }}</th>
             {% if is_granted('ROLE_ENKARGATUA')  == false %}
@@ -101,13 +100,7 @@
                             <a href="{{ path('user_calendar', {'userid': user.id}) }}" target="_blank" title="{{ user.calendars.last.name }}" >{{ user.calendars.last.year }}</a>
                         {% endif %}
                     </td>
-                    <td>
-                        {% if user.calendars.first.template is not null %}
-                            <a href="{{ path('admin_template_edit', { 'id': user.calendars[0].template.id }) }}">{{ user.calendars[0].template }}</a>
-                        {% else %}
-                            Ez du
-                        {% endif %}
-                    </td>
+
                     <td>
                         {% if user.calendars | length > 0 %}
                             {{ user.calendars[0].hoursYear }} /
