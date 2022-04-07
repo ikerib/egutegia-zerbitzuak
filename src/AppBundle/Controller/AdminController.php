@@ -103,7 +103,8 @@ class AdminController extends Controller
         $year = date('Y');
         // urteko lehen astea bada, aurreko urtea aukeratu
         $date_now = new DateTime();
-        $date2    = new DateTime("06/01/".$year);
+        //        $date2    = new DateTime("06/01/".$year);
+        $date2    = new DateTime($year.'-01-06');
 
         if ($date_now <= $date2) {
             --$year;
