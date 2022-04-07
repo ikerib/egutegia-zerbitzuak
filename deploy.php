@@ -29,6 +29,19 @@ host('172.28.64.61')
 
 // Tasks
 
+set('bin/composer', function() {
+    if (commandExist('composer')) {
+        $composer = locateBinaryPath('composer');
+    }
+
+    if (empty($composer)) {
+        run("cd {{release_path}} && curl -sS https://getcomposer.org/download/2.2.6/composer.phar -o composer.phar");
+        $composer = '{{bin/php}} {{release_path}}/composer.phar';
+    }
+
+    return $composer;
+});
+
 task('build', function () {
     run('cd {{release_path}} && build');
 });
