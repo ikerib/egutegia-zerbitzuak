@@ -158,26 +158,8 @@ class Builder implements ContainerAwareInterface
             $menu[ 'User' ]->addChild('divider', ['divider' => true]);
 
             if ($checker->isGranted('ROLE_SAILBURUA') || $checker->isGranted('ROLE_SUPER_ADMIN') || $checker->isGranted('ROLE_ARDURADUNA')) {
-//                $menu[ 'User' ]->addChild(
-//                    'Saila',
-//                    array(
-//                        'label'  => $this->container->get('translator')->trans('Saila'),
-//                        'route'  => 'saila_dashboard',
-//                        'icon'   => 'bullhorn',
-//                        'extras' => array('safe_label' => true),
-//                    )
-//                )->setExtra('translation_domain', 'messages');
-                $menu[ 'User' ]->addChild('Saila', ['icon' => 'home', 'route' => 'dashboard'])->setExtra('translation_domain', 'messages');
 
-//                $menu[ 'User' ]->addChild(
-//                    'Kuadrantea',
-//                    array(
-//                        'label'  => $this->container->get('translator')->trans('Kuadrantea'),
-//                        'route'  => 'saila_kuadrantea',
-//                        'icon'   => 'bullhorn',
-//                        'extras' => array('safe_label' => true),
-//                    )
-//                )->setExtra('translation_domain', 'messages');
+                $menu[ 'User' ]->addChild('Saila', ['icon' => 'home', 'route' => 'dashboard'])->setExtra('translation_domain', 'messages');
 
                 $menu[ 'User' ]->addChild('divider2', ['divider' => true]);
             }

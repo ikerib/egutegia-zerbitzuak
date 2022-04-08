@@ -146,7 +146,7 @@ class AdminController extends Controller
                 $result->getUrtea(),
                 $result->getHilabetea(),
                 $result->getUser()->getDisplayName(),
-                $result->getUser()->getDepartment(),
+                $result->getUser()->getLanpostua(),
                 $result->getDay01(),
                 $result->getDay02(),
                 $result->getDay03(),
