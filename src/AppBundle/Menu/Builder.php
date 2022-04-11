@@ -179,6 +179,13 @@ class Builder implements ContainerAwareInterface
                 $menu[ 'User' ]->addChild('divider2', ['divider' => true]);
             }
 
+
+            if ( $checker->isGranted('ROLE_READONLY') ) {
+                $menu = $factory->createItem('root', ['navbar' => true, 'icon' => 'user']);
+                $menu->addChild('User', array('label' => $user->getDisplayname(), 'dropdown' => true, 'icon' => 'user'));
+                $menu[ 'User' ]->addChild('Kuadrante', ['icon' => 'list', 'route' => 'admin_kuadrantea'])->setExtra('translation_domain', 'messages');
+                $menu[ 'User' ]->addChild('Kuadrante Excel', ['icon' => 'list', 'route' => 'admin_kuadrantea_excel'])->setExtra('translation_domain', 'messages');
+            }
             $menu[ 'User' ]->addChild(
                 'Irten',
                 array(

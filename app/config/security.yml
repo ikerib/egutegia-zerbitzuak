@@ -48,4 +48,6 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/kuadrantea, role: [ROLE_ARDURADUNA] }
+        - { path: ^/admin/kuadranteaexcel, role: [ROLE_ARDURADUNA] }
         - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_BIDERATZAILEA, ROLE_SUPER_ADMIN] }

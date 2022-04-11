@@ -133,6 +133,11 @@ class UserHydrator implements HydratorInterface
         $user->setEnabled(true);
         $user->setPassword('');
 
+        // ROLE_READONLY
+        if ($ldapEntry[ 'samaccountname' ][ 0 ] === 'igomez') {
+            $user->addRole('ROLE_READONLY');
+        }
+
 
         return $user;
     }

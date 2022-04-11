@@ -79,6 +79,10 @@ class DefaultController extends Controller
         /** @var $user User */
         $user = $this->getUser();
 
+        if ($this->isGranted('ROLE_READONLY')) {
+            return $this->redirectToRoute('admin_kuadrantea');
+        }
+
         $unreadMessages = $em->getRepository('AppBundle:Message')->findUserUnreadMessages($user->getId());
 
         // impertsonalizazioa bada ez du erakutsi behar
