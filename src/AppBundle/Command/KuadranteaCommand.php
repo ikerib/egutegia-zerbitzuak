@@ -119,7 +119,7 @@ class KuadranteaCommand extends ContainerAwareCommand
 
                 if ($event->getStartDate() == $event->getEndDate()) {
                     $field = "setDay".$event->getStartDate()->format('d');
-                    $kua->{$field}($event->getType()->getLabur());
+                    $kua->{$field}($event->getType()->getLabur() . ' => ' . $event->getType()->getName());
 
                 } else {
                     $begin = new \DateTime($event->getStartDate()->format('Y-m-d'));
@@ -136,7 +136,7 @@ class KuadranteaCommand extends ContainerAwareCommand
                     foreach ($period as $dt) {
 
                         $field = "setDay".$dt->format('d');
-                        $kua->{$field}($event->getType()->getLabur());
+                        $kua->{$field}($event->getType()->getLabur() . ' => ' . $event->getType()->getName());
                     }
                 }
                 $this->em->persist($kua);
