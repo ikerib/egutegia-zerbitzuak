@@ -2,7 +2,7 @@
 
 {% block content_div_start %}{% endblock %}
 {% block content_div_end %}{% endblock %}
-{% block headline %}{{ saila }} {% endblock %}
+{% block headline %}{% endblock %}
 
 {% block content_row %}
     <form id="frmCompare" method="post" action="{{ path('calendar_compare') }}">
@@ -68,89 +68,92 @@
         </tr>
         </thead>
         <tbody>
-        {% for user in userdata  %}
-            <tr>
-                <td></td>
-                <td>{{ user.username }}</td>
-                {% if is_granted('ROLE_BIDERATZAILEA') or is_granted('ROLE_SUPER_ADMIN') %}
-                    <td class="nireTD">
-                        <a href="{{ path('homepage', { _switch_user: user.username }) }}">
-                            <i class="fa fa-user-o" aria-hidden="true" title="Inpertsonalizatu"></i>
-                        </a>
-                    </td>
-                {% endif %}
-
-                <td>{{ user.displayname }}</td>
-                <td>{{ user.saila }}</td>
-                <td>{{ user.azpisaila }}</td>
-                <td>
-                    {% if user.calendars is defined %}
-                    <select name="year" class="cmbYear" style="width: 100px;">
-                        <option value="-1">Aukeratu</option>
-                        {% for e in user.calendars %}
-                            <option value="{{ url('admin_calendar_edit', { 'id': e.id }) }}">{{ e.year }}</option>
-                        {% endfor %}
-                    </select>
+        {% for saila in sailak %}
+            {% for user in saila.user  %}
+                <tr>
+                    <td></td>
+                    <td>{{ user.username }}</td>
+                    {% if is_granted('ROLE_BIDERATZAILEA') or is_granted('ROLE_SUPER_ADMIN') %}
+                        <td class="nireTD">
+                            <a href="{{ path('homepage', { _switch_user: user.username }) }}">
+                                <i class="fa fa-user-o" aria-hidden="true" title="Inpertsonalizatu"></i>
+                            </a>
+                        </td>
                     {% endif %}
-                </td>
 
-                {% if user.calendars | length > 0 %}
+                    <td>{{ user.displayname }}</td>
+                    <td>{{ user.saila }}</td>
+                    <td>{{ user.azpisaila }}</td>
                     <td>
-                        {% if user.calendars | length > 0 %}
-                            <a href="{{ path('user_calendar', {'userid': user.id}) }}" target="_blank" title="{{ user.calendars.last.name }}" >{{ user.calendars.last.year }}</a>
+                        {% if user.calendars is defined %}
+                            <select name="year" class="cmbYear" style="width: 100px;">
+                                <option value="-1">Aukeratu</option>
+                                {% for e in user.calendars %}
+                                    <option value="{{ url('admin_calendar_edit', { 'id': e.id }) }}">{{ e.year }}</option>
+                                {% endfor %}
+                            </select>
                         {% endif %}
                     </td>
 
-                    <td>
-                        {% if user.calendars | length > 0 %}
-                            {{ user.calendars[0].hoursYear }} /
+                    {% if user.calendars | length > 0 %}
+                        <td>
+                            {% if user.calendars | length > 0 %}
+                                <a href="{{ path('user_calendar', {'userid': user.id}) }}" target="_blank" title="{{ user.calendars.last.name }}" >{{ user.calendars.last.year }}</a>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if user.calendars | length > 0 %}
+                                {{ user.calendars[0].hoursYear }} /
+                                {% if user.calendars[0].template is not null %}
+                                    {{ user.calendars[0].template.hoursYear }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ user.calendars[0].hoursFree }} /
                             {% if user.calendars[0].template is not null %}
-                                {{ user.calendars[0].template.hoursYear }}
+                                {{ user.calendars[0].template.hoursFree }}
                             {% else %}
                                 -
                             {% endif %}
+                        </td>
+                        <td>
+                            {{ user.calendars[0].hoursSelf }} /
+                            {% if user.calendars[0].template is not null %}
+                                {{ user.calendars[0].template.hoursSelf }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>{{ user.calendars[0].hoursCompensed }} </td>
+                        {% if is_granted('ROLE_ENKARGATUA') == false %}
+                            <td>
+                                <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs" data-username="{{ user.username }}">
+                                    <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
+                                </a>
+                            </td>
                         {% endif %}
-                    </td>
-                    <td>
-                        {{ user.calendars[0].hoursFree }} /
-                        {% if user.calendars[0].template is not null %}
-                            {{ user.calendars[0].template.hoursFree }}
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
-                    <td>
-                        {{ user.calendars[0].hoursSelf }} /
-                        {% if user.calendars[0].template is not null %}
-                            {{ user.calendars[0].template.hoursSelf }}
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
-                    <td>{{ user.calendars[0].hoursCompensed }} </td>
-                    {% if is_granted('ROLE_ENKARGATUA') == false %}
+                    {% else %}
                         <td>
                             <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs" data-username="{{ user.username }}">
                                 <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
                             </a>
                         </td>
-                    {% endif %}
-                {% else %}
-                    <td>
-                        <a href="javascript:void(0);" class="btnNewCalendar btn btn-primary btn-xs" data-username="{{ user.username }}">
-                            <i class="fa fa-plus-square-o" aria-hidden="true"> Sortu</i>
-                        </a>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    {% if is_granted('ROLE_ENKARGATUA') == false %}
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {% if is_granted('ROLE_ENKARGATUA') == false %}
+                            <td></td>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            </tr>
+                </tr>
+            {% endfor %}
         {% endfor %}
+
         </tbody>
     </table>
 

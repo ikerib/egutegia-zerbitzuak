@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\Query\Expr\Orx;
+
 /**
  * SailaRepository
  *
@@ -11,27 +13,25 @@ namespace AppBundle\Repository;
 class SailaRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function findUsersBySailaRoles($role)
+    public function findUsersBySailaRoles($roles)
     {
-//        $qm = $this->createQueryBuilder('s')
-//            ->select('s')
-//            ->where('s.rola LIKE :role')
-//            ->setParameter('role', $role)
-//        ;
         $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')
+            ->from('AppBundle:Saila', 's');
 
-        $qb
-            ->select('s')
-            ->from('AppBundle:Saila', 's')
-            ->where($qb->expr()->andX(
-                $qb->expr()->like('UPPER(s.rola)', '?1'),
-            ))
-            ->setParameter('1', '%' . strtoupper($role) . '%');
+        $conditions = [];
+        foreach ( $roles as $index => $role ) {
+            $conditions[] = "UPPER(s.rola) LIKE :role$index";
+            $qb->setParameter("role$index", '%' . strtoupper($role) . '%');
+        }
 
+        if (empty($conditions)) {
+            throw new \LogicException('Conditions are empty.');
+        }
+
+        $qb->andWhere(new Orx($conditions));
 
         return $qb->getQuery()->execute();
-
-//        return $qm->getQuery()->getResult();
     }
 
 }

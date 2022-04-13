@@ -37,10 +37,10 @@ class AdminController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $sailaRol=null;
+        $sailaRol=[];
         foreach ($this->getUser()->getRoles() as $rol) {
             if (strpos($rol, 'WEB_EGUTEGIA_ZERBITZUAK' ) > 0) {
-                $sailaRol = $rol;
+                $sailaRol[] = $rol;
             }
         }
 
@@ -49,27 +49,19 @@ class AdminController extends Controller
         } else {
             /** @var Saila $sailak */
             $sailak = $em->getRepository('AppBundle:Saila')->findUsersBySailaRoles($sailaRol);
-            if ($sailak)
-            {
-                /** @var Saila $saila */
-                $saila = $sailak[0];
-                $users = $saila->getUser();
+
+
+            $users = [];
+            foreach ($sailak as $saila) {
+                $users[] = $saila->getUser();
             }
 
-            $sailaName = '';
-            /** @var User $logedUser */
-            $logedUser = $this->getUser();
-            /** @var Saila $logedUserSaila */
-            $logedUserSaila = $logedUser->getSaila();
-            if ( $logedUserSaila) {
-                $sailaName = $logedUserSaila->getName();
-            }
+
 
             return $this->render(
                 'default/sailaindex.html.twig',
                 [
-                    'saila' => $sailaName,
-                    'userdata' => $users
+                    'sailak' => $sailak
                 ]
             );
         }
