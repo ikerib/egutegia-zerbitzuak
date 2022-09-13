@@ -270,7 +270,7 @@ mobile_detect:
 snc_redis:
     clients:
         session_client:
-            dsn: 'redis://localhost'
+            dsn: 'redis://redis'
             logging: false # https://github.com/snc/SncRedisBundle/issues/161
             type: phpredis
     session:

@@ -1,0 +1,76 @@
+version: "3.7"
+services:
+
+  db:
+    container_name: egutegia-zerbitzuak_mysql
+    image: mysql
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: ${DOCKER_MYSQL_USER}
+      MYSQL_PASSWORD: ${DOCKER_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DOCKER_MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${DOCKER_MYSQL_DATABASE}
+    volumes:
+      - v_egutegia-zerbitzuak_db:/var/lib/mysql
+
+  app:
+    container_name: egutegia-zerbitzuak_app
+    env_file: ./.env.local
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        - DOCKER_TIMEZONE=${DOCKER_TIMEZONE}
+        - USER_ID=${USER_ID}
+        - GROUP_ID=${GROUP_ID}
+        - DEBUGMODE=${DEBUGMODE}
+        - FOSJSDUMP=${FOSJSDUMP}
+    user: "${USER_ID}:${GROUP_ID}"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ".:/usr/src/app"
+      - "./docker/php/conf/php.ini:/usr/local/etc/php/php.ini:ro"
+      - "./docker/php/conf/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro"
+      - "./docker/uploads/:/usr/src/app/web/uploads"
+    working_dir: /usr/src/app
+
+  nginx:
+    container_name: egutegia-zerbitzuak_nginx
+    build:
+      context: ./
+      dockerfile: docker/nginx/Dockerfile
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "./docker/nginx/ssl/:/etc/nginx/ssl/"
+    volumes_from:
+      - app
+    working_dir: /usr/src/app
+
+  redis:
+    container_name: egutegia-zerbitzuak_redis
+    image: redis:alpine
+    ports:
+      - "6380:637"
+    volumes:
+      - v_egutegia-zerbitzuak_redis:/data
+
+volumes:
+  v_egutegia-zerbitzuak_db:
+  v_egutegia-zerbitzuak_redis:
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.213.0.0/16
