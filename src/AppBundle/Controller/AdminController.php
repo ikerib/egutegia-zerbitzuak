@@ -190,9 +190,13 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $calendar = $em->getRepository('AppBundle:Calendar')->find($id);
+        $selfHoursPartial = round($calendar->getHoursSelfHalf(), 2);
+        $selfHoursComplete = round($calendar->getHoursSelf(), 2);
 
         return $this->render('default/calendar_print.html.twig', [
-            'calendar' => $calendar
+            'calendar' => $calendar,
+            'selfHoursPartial'    => $selfHoursPartial,
+            'selfHoursComplete'   => $selfHoursComplete,
         ]);
     }
 }
