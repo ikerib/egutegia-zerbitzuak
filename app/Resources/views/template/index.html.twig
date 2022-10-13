@@ -45,18 +45,23 @@
                     <th data-halign="center" data-align="right" data-field="Hours_year" data-sortable="true">{{ 'Lan orduak guztira' | trans }}</th>
                     <th data-halign="center" data-align="right" data-field="Hours_free" data-sortable="true">{{ 'Opor orduak guztira' | trans }}</th>
                     <th data-halign="center" data-align="right" data-field="Hours_self" data-sortable="true">{{ 'Norberarentzako orduak' | trans }}</th>
-                    <th>Actions</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
             {% for template in templates %}
                 <tr>
-                    <td>{{ template.name }}</td>
+                    <td class="templateid-{{ template.id }}">{{ template.name }}</td>
                     <td>{{ template.hoursyear }}</td>
                     <td>{{ template.hoursfree }}</td>
                     <td>{{ template.hoursself }}</td>
-                    <td>
+                    <td class="text-center">
                         <ul class="list-unstyled list-inline">
+                            <li>
+                                <a href="{{ path('admin_template_copy', { id: template.id}) }}">
+                                    <i class="fa fa-copy" aria-hidden="true"></i>
+                                </a>
+                            </li>
                             <li>
                                 <a class="btnEditRow" data-id="{{ template.id }}" href="{{ path('admin_template_edit', { 'id': template.id }) }}">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -69,6 +74,7 @@
                                 </a>
                                 {{ form_end(deleteforms[template.id]) }}
                             </li>
+
                         </ul>
                     </td>
                 </tr>

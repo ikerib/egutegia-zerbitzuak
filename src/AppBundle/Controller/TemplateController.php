@@ -10,6 +10,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Template;
+use AppBundle\Entity\TemplateEvent;
 use AppBundle\Form\TemplateType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -148,6 +149,46 @@ class TemplateController extends Controller
                 'delete_form' => $deleteForm->createView(),
             ]
         );
+    }
+
+    /**
+     *
+     * @Route("/{id}/copy", name="admin_template_copy")
+     * @Method({"GET"})
+     *
+     * @param Request  $request
+     * @param Template $template
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function copyAction(Request $request, Template $template)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $t = new Template();
+        $t->setName($template->getName() . '-kopia');
+        $t->setHoursCompensed($template->getHoursCompensed());
+        $t->setHoursDay($template->getHoursDay());
+        $t->setHoursFree($template->getHoursFree());
+        $t->setHoursSelf($template->getHoursSelf());
+        $t->setHoursYear($template->getHoursYear());
+        $t->setSlug($template->getSlug());
+
+        /** @var TemplateEvent $templateEvent */
+        foreach ($template->getTemplateEvents() as $templateEvent) {
+            $te = new TemplateEvent();
+            $te->setName($templateEvent->getName());
+            $te->setEndDate($templateEvent->getEndDate());
+            $te->setStartDate($templateEvent->getStartDate());
+            $te->setTemplate($t);
+            $te->setType($templateEvent->getType());
+            $em->persist($te);
+        }
+
+        $em->persist($t);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_template_edit', ['id' => $t->getId()]);
+
     }
 
     /**
