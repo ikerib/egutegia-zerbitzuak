@@ -87,6 +87,23 @@
             <div class="form-group">
                 <div class="col-sm-4">
                     {#{{ form_label(form.hoursYear, null, {'label_attr': {'class': 'control-label'}}) }}#}
+                    <label class="control-label required" for="appbundle_calendar_hoursFreeLastYear">
+                        {{ 'Aurreko urteko lan orduak:' | trans }}
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.hoursFreeLastYear, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control" type="text" id="hoursFreeLastYear" value="{% if lastCalendar.hoursFreeLastYear is defined %}{{ lastCalendar.hoursFreeLastYear }}{% endif %}" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    {#{{ form_label(form.hoursYear, null, {'label_attr': {'class': 'control-label'}}) }}#}
                     <label class="control-label required" for="appbundle_calendar_hoursYear">
                         {{ 'Urteko lan orduak:' | trans }}
                     </label>

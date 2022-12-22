@@ -69,8 +69,8 @@
                             </li>
                             <li>
                                 {{ form_start(deleteforms[template.id],{'attr': {'id': template.id}}) }}
-                                <a class="btnRemoveRow" data-id="{{ template.id }}" href="javascript:void(0);">
-                                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                <a class="btnRemoveRow" data-id="{{ template.id }}" href="#">
+                                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>aaaaaaaaaaaa
                                 </a>
                                 {{ form_end(deleteforms[template.id]) }}
                             </li>
@@ -120,6 +120,7 @@
             });
 
             $('.btnRemoveRow').on('click', function () {
+                console.log("hemen");
                 var that = $(this);
                 bootbox.confirm({
                     title: "{{ 'Adi!' | trans }}",
