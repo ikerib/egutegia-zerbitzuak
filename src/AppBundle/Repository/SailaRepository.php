@@ -34,4 +34,14 @@ class SailaRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->execute();
     }
 
+    public function findJose()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')
+            ->from('AppBundle:Saila', 's');
+
+
+        return $qb->getQuery()->execute();
+    }
+
 }
