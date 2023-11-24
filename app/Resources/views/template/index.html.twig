@@ -16,8 +16,8 @@
                data-search="true"
                {#data-height="300"#}
 
-               data-sort-name="name"
-               data-sort-order="asc"
+               data-sort-name="id"
+               data-sort-order="desc"
 
                data-icon-size="sm"
                data-show-refresh="true"
@@ -41,6 +41,7 @@
 
             <thead>
                 <tr>
+                    <th data-halign="center" data-align="left" data-field="id" data-sortable="true">#</th>
                     <th data-halign="center" data-align="left" data-field="name" data-sortable="true">Name</th>
                     <th data-halign="center" data-align="right" data-field="Hours_year" data-sortable="true">{{ 'Lan orduak guztira' | trans }}</th>
                     <th data-halign="center" data-align="right" data-field="Hours_free" data-sortable="true">{{ 'Opor orduak guztira' | trans }}</th>
@@ -51,6 +52,7 @@
             <tbody>
             {% for template in templates %}
                 <tr>
+                    <td>{{ template.id }}</td>
                     <td class="templateid-{{ template.id }}">{{ template.name }}</td>
                     <td>{{ template.hoursyear }}</td>
                     <td>{{ template.hoursfree }}</td>
@@ -70,7 +72,7 @@
                             <li>
                                 {{ form_start(deleteforms[template.id],{'attr': {'id': template.id}}) }}
                                 <a class="btnRemoveRow" data-id="{{ template.id }}" href="#">
-                                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>aaaaaaaaaaaa
+                                    <i class="fa fa-trash text-danger" aria-hidden="true"></i>
                                 </a>
                                 {{ form_end(deleteforms[template.id]) }}
                             </li>
@@ -119,7 +121,8 @@
                 $('#appbundle_type_name').focus()
             });
 
-            $('.btnRemoveRow').on('click', function () {
+            $(document).on( 'click', '.btnRemoveRow', function(){
+            // $('.btnRemoveRow').on('click', function () {
                 console.log("hemen");
                 var that = $(this);
                 bootbox.confirm({
