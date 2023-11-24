@@ -194,7 +194,7 @@ class TemplateController extends Controller
     /**
      * Deletes a template entity.
      *
-     * @Route("/{id}", name="admin_template_delete")
+     * @Route("/{id}/delete", name="admin_template_delete")
      * @Method("DELETE")
      *
      * @param Request  $request
