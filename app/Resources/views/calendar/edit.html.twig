@@ -677,14 +677,14 @@
 
             function birkalkulatu() {
                 var ori = $( "#appbundle_calendar_percentYear" ); // portzentaia
-                var vori = parseFloat( $( ori ).val() );
+                var vori = parseFloat( $( ori ).val().replace(',', '.') );
 
                 var hiru = $( "#appbundle_calendar_hirurtekoa" ); // hirurtekoa
-                var vhiru = parseFloat( $( hiru ).val() );
+                var vhiru = parseFloat( $( hiru ).val().replace(',', '.') );
 
                 // Jornada
                 var des3 = $( "#appbundle_calendar_hoursDay" );
-                var vdes3 = parseFloat( $( des3 ).val() );
+                var vdes3 = parseFloat( $( des3 ).val().replace(',', '.') );
                 if ( (vdes3 !== 0) && (vori !== 0) ) {
                     vdes3 = vdes3 * vori / 100;
                     $( des3 ).val( vdes3.toFixed( 2 ) );
@@ -692,7 +692,7 @@
 
                 // Oporrak
                 var des1 = $( "#appbundle_calendar_hoursFree" );
-                var vdes1 = parseFloat( $( des1 ).val() );
+                var vdes1 = parseFloat( $( des1 ).val().replace(',', '.') );
                 if ( (vdes1 !== 0) && (vori !== 0) ) {
                     vdes1 = vdes1 * vori / 100;
                     $( des1 ).val( vdes1.toFixed( 2 ) );
@@ -700,7 +700,7 @@
 
                 // Norberarentzako
                 var des2 = $( "#appbundle_calendar_hoursSelf" );
-                var vdes2 = parseFloat( $( des2 ).val() );
+                var vdes2 = parseFloat( $( des2 ).val().replace(',', '.') );
                 // Gehitu hirurtekoak
                 vdes2 = vdes2 + (vdes3 * vhiru);
                 if ( (vdes2 !== 0) && (vori !== 0) ) {
@@ -711,14 +711,14 @@
 
             function birkalkulatuNorbere() {
                 var ori = $( "#appbundle_calendar_percentYear" ); // portzentaia
-                var vori = parseFloat( $( ori ).val() );
+                var vori = parseFloat( $( ori ).val().replace(',', '.') );
                 var hiru = $( "#appbundle_calendar_hirurtekoa" ); // hirurtekoa
-                var vhiru = parseFloat( $( hiru ).val() );
+                var vhiru = parseFloat( $( hiru ).val().replace(',', '.') );
                 var des3 = $( "#appbundle_calendar_hoursDay" );
-                var vdes3 = parseFloat( $( des3 ).val() );
+                var vdes3 = parseFloat( $( des3 ).val().replace(',', '.') );
                 // Norberarentzako
                 var des2 = $( "#appbundle_calendar_hoursSelf" );
-                var vdes2 = parseFloat( $( des2 ).val() );
+                var vdes2 = parseFloat( $( des2 ).val().replace(',', '.') );
                 // Gehitu hirurtekoak
                 vdes2 = vdes2 + (vdes3 * vhiru);
                 $( des2 ).val( vdes2.toFixed( 2 ) );
