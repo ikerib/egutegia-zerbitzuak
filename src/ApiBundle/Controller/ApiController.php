@@ -490,9 +490,9 @@ class ApiController extends FOSRestController
 
         $event = $em->getRepository('AppBundle:Event')->find($id);
 
-        if (null === $event) {
-            return new View('Event ez da aurkitu', Response::HTTP_NOT_FOUND);
-        }
+//        if (null === $event) {
+//            return new View('Event ez da aurkitu', Response::HTTP_NOT_FOUND);
+//        }
 
         /** @var Calendar $calendar */
         $calendar = $event->getCalendar();
