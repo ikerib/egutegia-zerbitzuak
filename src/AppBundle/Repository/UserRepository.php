@@ -77,4 +77,16 @@ class UserRepository extends EntityRepository
             throw new $e;
         }
     }
+
+    public function getLangileak()
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u.id, u.username, u.department, u.displayname, u.nan, u.sailburuada, u.ldapsaila, u.hizkuntza, u.lanpostua, u.notes, u.aktibo')
+            ->from($this->_entityName, 'u')
+            ;
+
+
+
+        return $qb->getQuery()->getResult();
+    }
 }
